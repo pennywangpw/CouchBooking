@@ -10,6 +10,10 @@ router.use(restoreUser);
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
+
+router.use('/spots', spotsRouter);
+
+
 // backend/routes/api/index.js
 
 // router.post('/test', function(req, res) {
