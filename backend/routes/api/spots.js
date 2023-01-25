@@ -18,26 +18,45 @@ router.get('/', async (req,res)=>{
 
         let reviews = await Review.findAll({
             where:{spotId: spotJSON.id},
-            attributes:[[Sequelize.fn('AVG', Sequelize.col('start')),'avRating']]
+            attributes:[[Sequelize.fn('AVG', Sequelize.col('stars')),'avRating']]
         })
-        spotJSON.avgRating = reviews[0].toJSON()
+        spotJSON.avgRating = reviews[0].toJSON().avgRating
         spotsArray.push(spotJSON)
     }
 
-    return res.json(spotsArray)
+    // const returnSpotId = {
+    //     "ownerId":req.user.id,
+    //     "address": spotId.address,
+    //     "city":spotId.city,
+    //     "state":spotId.state,
+    //     "country":spotId.country,
+    //     "lat":spotId.lat,
+    //     "lng":spotId.lng,
+    //     "name":spotId.name,
+    //     "description":spotId.description,
+    //     "price":spotId.price
+    // }
+
+    return res.json({Sport: spotsArray})
 })
 
 
 //Get all spots owned by the current user
-router.get('/current', async (req,res)=>{
-    console.log(req)
-    requireAuth
+router.get('/current', requireAuth, async (req,res)=>{
+    console.log("penny test:", req)
     const spots = await Spot.findAll({
-        // where:{
-        //     ownerId :{req.params.current}
-        // }
+        where:{
+            ownerId : req.user.id
+        }
     })
     return res.json(spots)
+})
+
+
+//Get details of a Spot from an id
+router.get('/:spotId', async (req,res)=>{
+    const allspots = await Spot.findAll()
+    console.log(allspots)
 })
 
 //delete a spot

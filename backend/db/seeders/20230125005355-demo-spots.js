@@ -21,19 +21,50 @@ module.exports = {
     */
     return queryInterface.bulkInsert(options, [
       {
-        address: '1300 Yellowstone Rd.',
-        city: 'San Jose',
-        state: 'CA',
-        name:'ABC resort',
-        price:'150'
+      ownerId: 2,
+      address: "123 Disney Lane",
+      city: "San Francisco",
+      state: "California",
+      country: "United States of America",
+      lat: 37.7645358,
+      lng: -122.4730327,
+      name: "App Academy",
+      description: "Place where web developers are created",
+      price: 123,
+      createdAt: "2021-11-19 20:39:36",
+      updatedAt: "2021-11-19 20:39:36",
+
       },
       {
-        address: '1650 NewYork Rd.',
-        city: 'New York',
-        state: 'NY',
-        name:'ooo resort',
-        price:'120'
+      ownerId: 2,
+      address: "150 Happy Street",
+      city: "San Deigo",
+      state: "California",
+      country: "United States of America",
+      lat: 80.7645358,
+      lng: -170.4730327,
+      name: "Nice sunset",
+      description: "asdfjkfl",
+      price: 155,
+      createdAt: "2021-11-19 20:39:36",
+      updatedAt: "2021-11-19 20:39:36",
+
       },
+      {
+      ownerId: 1,
+      address: "2500 Disney Lane",
+      city: "Tokyo",
+      state: "n/a",
+      country: "Japan",
+      lat: 99.7645358,
+      lng: -100.4730327,
+      name: "Disney",
+      description: "Magical palce",
+      price: 200,
+      createdAt: "2021-11-19 20:39:36",
+      updatedAt: "2021-11-19 20:39:36",
+
+        },
 
 
     ], {});
