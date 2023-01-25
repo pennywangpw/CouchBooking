@@ -3,17 +3,30 @@ const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const router = express.Router();
 const { Spot } = require('../../db/models');
+const { Review } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
+const Sequelize = require('sequelize')
 
 
 //Get all Spots
 router.get('/', async (req,res)=>{
-    console.log(req)
     const spots = await Spot.findAll()
-    console.log("spots: ",spots)
-    return res.json(spots)
+    let spotsArray= []
+    for(let spot of spots){
+        console.log('spot: ', spot)
+        const spotJSON = spot.toJSON()
+
+        let reviews = await Review.findAll({
+            where:{spotId: spotJSON.id},
+            attributes:[[Sequelize.fn('AVG', Sequelize.col('start')),'avRating']]
+        })
+        spotJSON.avgRating = reviews[0].toJSON()
+        spotsArray.push(spotJSON)
+    }
+
+    return res.json(spotsArray)
 })
 
 
@@ -27,6 +40,11 @@ router.get('/current', async (req,res)=>{
         // }
     })
     return res.json(spots)
+})
+
+//delete a spot
+router.delete(':spotId',(req,res)=>{
+    res.json("Successfully deleted")
 })
 
 module.exports = router;
