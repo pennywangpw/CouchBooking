@@ -8,13 +8,11 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 
 //Get all Spots
-router.get('/spots', async (req,res)=>{
+router.get('/', async (req,res)=>{
     console.log(req)
     const spots = await Spot.findAll()
     console.log("spots: ",spots)
-    return res.json({
-        spots
-    })
+    return res.json(spots)
 })
 
 
