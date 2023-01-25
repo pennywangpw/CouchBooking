@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Review.hasMany(
-        models.Review,{foreignKey: 'reviewId',onDelete: 'CASCADE', hooks: true}
+        models.Spot,{foreignKey: 'reviewId',onDelete: 'CASCADE', hooks: true}
       )
 
       //doesn't work for me
