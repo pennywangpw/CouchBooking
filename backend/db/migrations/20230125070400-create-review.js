@@ -19,27 +19,31 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        references:{model: "Spots"},
-        onDelete: 'cascade'
+        unique:true,
+        // references:{model: "Spots"},
+        // onDelete: 'cascade'
       },
       userId: {
         type: Sequelize.INTEGER,
-        references:{model: "Users"},
-        onDelete: 'cascade'
+        unique:true,
+        // references:{model: "Users"},
+        // onDelete: 'cascade'
       },
       review: {
         type: Sequelize.STRING
       },
-      starts: {
+      stars: {
         type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
   },
