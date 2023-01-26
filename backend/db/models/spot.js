@@ -22,14 +22,14 @@ module.exports = (sequelize, DataTypes) => {
       )
 
       Spot.belongsTo(
-        models.User,{foreignKey:'ownerId',onDelete: 'CASCADE', hooks: true}
+        models.User,{foreignKey:'ownerId'}
       )
 
       Spot.belongsToMany(
-        models.User,{through: models.Review}
+        models.User,{foreignKey: 'spotId', otherKey:'userId',through: models.Review}
       )
       Spot.belongsToMany(
-        models.User,{through: models.Booking}
+        models.User,{foreignKey:'spotId',otherKey: 'userId',through: models.Booking}
       )
     }
   }
