@@ -14,8 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Review.hasMany(
         models.ReviewImage,{foreignKey: 'reviewId',onDelete: 'CASCADE', hooks: true}
       )
+      //no delete cascade only in hadmany
       Review.belongsTo(
-        models.Spot,{foreignKey:'spotId',onDelete: 'CASCADE', hooks: true}
+        models.Spot,{foreignKey:'spotId'}
+      )
+
+      Review.belongsTo(
+        models.User,{foreignKey:'userId'}
       )
 
     }
