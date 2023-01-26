@@ -84,8 +84,13 @@ router.get('/current', requireAuth, async (req,res)=>{
     spots.forEach(spot=>{spotlist.push(spot.toJSON())})
 
     //add avgRating
-    spotlist.forEach((spot,i)=>{
-        spot.avgRating = spot.Reviews[i].stars
+    spotlist.forEach(spot=>{
+        let total =0
+        spot.Reviews.forEach(review=>{
+            total += review.stars
+        })
+        spot.avgRating = total/spot.Reviews.length
+
 
     //add previewimage
     spot.SpotImages.forEach(image=>{

@@ -19,13 +19,13 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        unique:true,
+        // unique:true,
         references:{model: "Spots"},
         onDelete: 'cascade'
       },
       userId: {
         type: Sequelize.INTEGER,
-        unique:true,
+        // unique:true,
         references:{model: "Users"},
         onDelete: 'cascade'
       },

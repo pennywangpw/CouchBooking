@@ -27,6 +27,18 @@ module.exports = {
         userId: 3,
         review: 'bad',
         stars: 3,
+      },
+      {
+        spotId: 2,
+        userId: 1,
+        review: 'noisy',
+        stars: 3.8,
+      },
+      {
+        spotId: 1,
+        userId: 2,
+        review: 'convenient',
+        stars: 4,
       }
     ], {});
   },
