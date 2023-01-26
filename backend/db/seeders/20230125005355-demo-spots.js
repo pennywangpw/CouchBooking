@@ -38,8 +38,8 @@ module.exports = {
       {
       ownerId: 2,
       address: "150 Happy Street",
-      city: "San Deigo",
-      state: "California",
+      city: "Seattle",
+      state: "Washington",
       country: "United States of America",
       lat: 80.7645358,
       lng: -170.4730327,
