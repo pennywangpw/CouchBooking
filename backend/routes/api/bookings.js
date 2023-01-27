@@ -13,20 +13,30 @@ router.get('/current', requireAuth, async(req,res)=>{
     const bookings = await Booking.findAll({
         where:{
             userId: req.user.id
-        },
+        }
+        ,
         include:[
             {
-                model: Spot
+                model: Spot,
+                attributes:["id","ownerId","address","city","state","country","lat","lng","name","price"],
+                include:[
+                    {model: SpotImage}
+                ]
             }
         ]
     })
     // console.log("在這: ", bookings)
     let bookingList = []
     bookings.forEach(booking=>{bookingList.push(booking.toJSON())})
-    console.log("在這: ", bookingList)
 
-    res.json("ues")
+
+    res.json({"Bookings": bookingList})
 })
 
 
+//2.Get all Bookings for a Spot based on the Spot's id
+
+router.get('/:spotId/bookings', requireAuth, async(req,res)=>{
+
+})
 module.exports = router;
