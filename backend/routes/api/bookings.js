@@ -29,14 +29,28 @@ router.get('/current', requireAuth, async(req,res)=>{
     let bookingList = []
     bookings.forEach(booking=>{bookingList.push(booking.toJSON())})
 
+    //get the spotImages> url and add it into bookingList.previewImage
+    bookingList.forEach(booking=>{
+        let bookingSpot = booking.Spot
+        let bookingSpotImage = bookingSpot.SpotImages
+        // console.log("spot裡面:", bookingSpotImage )
+
+        if(bookingSpotImage.length > 0){
+            bookingSpotImage.forEach(img=>{
+                console.log("img.preview: ",img.preview)
+                if(img.preview){
+                    bookingSpot.previewImage = img.url
+
+                }
+            })
+        }
+        delete bookingSpot.SpotImages
+    })
+
 
     res.json({"Bookings": bookingList})
 })
 
 
-//2.Get all Bookings for a Spot based on the Spot's id
 
-router.get('/:spotId/bookings', requireAuth, async(req,res)=>{
-
-})
 module.exports = router;

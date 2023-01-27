@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Spot, Review, SpotImage } = require('../../db/models');
+const { User, Spot, Review, SpotImage, Booking } = require('../../db/models');
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -324,6 +324,49 @@ router.delete('/:spotId', requireAuth, async (req,res,next)=>{
         next(err)
     }else{
         res.json("Successfully deleted")
+    }
+
+})
+
+//8.Get all Bookings for a Spot based on the Spot's id
+
+router.get('/:spotId/bookings', requireAuth, async(req,res)=>{
+    const spotId = req.params.spotId
+    const userId = req.user.id
+
+    //find ownerId
+    const searchingSpot = await Spot.findOne({
+        where:{id: spotId}
+    })
+    console.log(searchingSpot.ownerId)
+
+
+    //find all the bookings by spotId
+    const allBookings = await Booking.findAll({
+        where:{
+            spotId: spotId
+        },
+        include:{
+            model:User,
+            attributes:["id","firstName","lastName"]
+        }
+
+    })
+
+    //check if current User equals to ownerId
+    if(searchingSpot.ownerId !== userId){
+        let bookingList =[]
+        allBookings.forEach(booking=>{
+            bookingList.push(booking.toJSON())
+            // console.log("booking的內容:",booking)
+            // console.log("booking的人:",booking.User)
+        })
+        bookingList.forEach(booking=>{
+            delete booking.User
+        })
+        res.json(bookingList)
+    }else{
+        res.json(allBookings)
     }
 
 })
