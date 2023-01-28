@@ -260,7 +260,7 @@ router.post('/', requireAuth,validateCreate, async (req,res,next)=>{
 })
 
 //5.Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, async (req,res,next)=>{
+router.post('/:spotId/images', requireAuth, existingSpot, existingOwner, async (req,res,next)=>{
     // const url = req.body.url
     // const preview = req.body.preview
     let newImage
@@ -270,15 +270,6 @@ router.post('/:spotId/images', requireAuth, async (req,res,next)=>{
     //check if there is an existing spot
     const existingSpot = await Spot.findByPk(spotId)
 
-
-    if(!existingSpot){
-
-        const err = new Error("Spot couldn't be found")
-        err.status = 404
-        next(err)
-
-    }else{
-
         newImage = await existingSpot.createSpotImage({
            spotId:spotId,
            url,
@@ -286,7 +277,7 @@ router.post('/:spotId/images', requireAuth, async (req,res,next)=>{
         })
         //為什不需要轉換成obj就可以在res.json拿資料?
         // console.log("新增加的:",newImage)
-    }
+
 
     res.json({
         id: newImage.spotId,

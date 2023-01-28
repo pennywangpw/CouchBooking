@@ -7,6 +7,44 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const Sequelize = require('sequelize')
 
+//check if current user is the owner of the booking
+const validateCurrentUser = async(req,res,next)=>{
+const userId = req.user.id
+const validUser = await Booking.findOne({
+    where:{userId: userId}
+})
+
+if(!validUser){
+    return res.status(401).json({
+        "message":"Booking must belong to the current user",
+        "statusCode":401
+    })
+}
+return next()
+}
+
+//check if current user is the owner of the booking
+const validateCxlBooking = async(req,res,next)=>{
+    const bookingId = req.params.bookingId
+    const cxlBooking = await Booking.findByPk(bookingId)
+    if(!cxlBooking){
+        return res.status(404).json({
+            "message":"Booking couldn't be found",
+            "statusCode":404
+        })
+    }
+return next()
+}
+
+// //Edit validation
+// const validateEdit = [
+//     check('endDate')
+//       .exists({ checkFalsy: true })
+//       .notEmpty()
+//       .isAfter()
+//       .withMessage('endDate cannot come before startDate'),
+//     handleValidationErrors
+//   ];
 
 //1.Get all of the Current User's Bookings
 router.get('/current', requireAuth, async(req,res)=>{
@@ -51,7 +89,42 @@ router.get('/current', requireAuth, async(req,res)=>{
     res.json({"Bookings": bookingList})
 })
 
-//2.Edit a Booking
-// router
+// //2.Edit a Booking
+// router.put('/:bookingId', requireAuth, validateEdit, validateCurrentUser, async(req,res,next)=>{
+//     const {id, spotId, userId, startDate, endDate, createdAt, updatedAt} = req.body
+//     const modifiedBooking = await Booking.findOne({
+//         where:{
+//             id: req.params.bookingId
+//         }
+//     })
+
+//     modifiedBooking.id = id
+//     modifiedBooking.spotId = spotId
+//     modifiedBooking.userId = userId
+//     modifiedBooking.startDate = startDate
+//     modifiedBooking.endDate = endDate
+//     modifiedBooking.createdAt = createdAt
+//     modifiedBooking.updatedAt = updatedAt
+
+//     res.json(modifiedBooking)
+// })
+
+//3.Delete a Booking
+router.delete('/:bookingId', requireAuth, validateCurrentUser, validateCxlBooking, async(req,res)=>{
+
+    let today = new Date()
+    if(new Date(startDate) <= today){
+        res.json({
+            "message": "Bookings that have been started can't be deleted",
+            "statusCode": 403
+          })
+    }else{
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        })
+    }
+
+})
 
 module.exports = router;
