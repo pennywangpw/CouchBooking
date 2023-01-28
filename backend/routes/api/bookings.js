@@ -7,34 +7,34 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const Sequelize = require('sequelize')
 
-//check if current user is the owner of the booking
-const validateCurrentUser = async(req,res,next)=>{
-const userId = req.user.id
-const validUser = await Booking.findOne({
-    where:{userId: userId}
-})
+// //check if current user is the owner of the booking
+// const validateCurrentUser = async(req,res,next)=>{
+// const userId = req.user.id
+// const validUser = await Booking.findOne({
+//     where:{userId: userId}
+// })
 
-if(!validUser){
-    return res.status(401).json({
-        "message":"Booking must belong to the current user",
-        "statusCode":401
-    })
-}
-return next()
-}
+// if(!validUser){
+//     return res.status(401).json({
+//         "message":"Booking must belong to the current user",
+//         "statusCode":401
+//     })
+// }
+// return next()
+// }
 
 //check if current user is the owner of the booking
-const validateCxlBooking = async(req,res,next)=>{
-    const bookingId = req.params.bookingId
-    const cxlBooking = await Booking.findByPk(bookingId)
-    if(!cxlBooking){
-        return res.status(404).json({
-            "message":"Booking couldn't be found",
-            "statusCode":404
-        })
-    }
-return next()
-}
+// const validateCxlBooking = async(req,res,next)=>{
+//     const bookingId = req.params.bookingId
+//     const cxlBooking = await Booking.findByPk(bookingId)
+//     if(!cxlBooking){
+//         return res.status(404).json({
+//             "message":"Booking couldn't be found",
+//             "statusCode":404
+//         })
+//     }
+// return next()
+// }
 
 // //Edit validation
 // const validateEdit = [
@@ -110,9 +110,32 @@ router.get('/current', requireAuth, async(req,res)=>{
 // })
 
 //3.Delete a Booking
-router.delete('/:bookingId', requireAuth, validateCurrentUser, validateCxlBooking, async(req,res)=>{
+router.delete('/:bookingId', requireAuth, async(req,res)=>{
+    //can't find the bookingId
+    const bookingId = req.params.bookingId
+    const cxlBooking = await Booking.findByPk(bookingId)
 
+    if(!cxlBooking){
+        return res.status(404).json({
+            "message":"Booking couldn't be found",
+            "statusCode":404
+        })
+    }
+
+    //if current user is not booking owner then can't cxl it
+        const userId = req.user.id
+    if(userId !== cxlBooking.userId){
+        return res.status(401).json({
+            "message":"Booking must belong to the current user",
+            "statusCode":401
+        })
+    }
+
+    //check if the date can't be modified anymore
     let today = new Date()
+    const startDate = cxlBooking.startDate
+    // console.log("今天: ", typeof today)
+    // console.log("入住日: ", typeof startDate)
     if(new Date(startDate) <= today){
         res.json({
             "message": "Bookings that have been started can't be deleted",
