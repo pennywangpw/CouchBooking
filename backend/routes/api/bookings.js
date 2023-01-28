@@ -51,6 +51,7 @@ router.get('/current', requireAuth, async(req,res)=>{
     res.json({"Bookings": bookingList})
 })
 
-
+//2.Edit a Booking
+// router
 
 module.exports = router;
