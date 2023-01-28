@@ -198,7 +198,7 @@ router.get('/:spotId', existingSpot, async (req,res,next)=>{
                 },{
                     model: User,
                     // as: "Owner",
-                    attributes:["id","firstName","lastName"]
+                    attributes:["id","firstname","lastname"]
                 }
             ]
         })
@@ -224,8 +224,8 @@ router.get('/:spotId', existingSpot, async (req,res,next)=>{
             // spot.Owner = {
 
             //     "id":User.id,
-            //     "firstName": User.firstName,
-            //     "lastName": User.lastName
+            //     "firstname": User.firstName,
+            //     "lastname": User.lastName
             // }
             delete spot.Reviews
             delete spot.User
@@ -362,7 +362,7 @@ router.get('/:spotId/bookings', requireAuth, existingSpot, async(req,res,next)=>
         attributes:["id","spotId","userId","startDate","endDate","createdAt","updatedAt"],
         include:{
             model:User,
-            attributes:["id","firstName","lastName"]
+            attributes:["id","firstname","lastname"]
         }
     })
 
