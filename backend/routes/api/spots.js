@@ -8,6 +8,79 @@ const { requireAuth } = require('../../utils/auth');
 const Sequelize = require('sequelize')
 
 
+const validateCreate = [
+    check('address')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Latitude is not valid'),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Longitude is not valid'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Price per day is required'),
+    handleValidationErrors
+  ];
+
+  //check if spotId exists
+  const existingSpot = async(req,res,next)=>{
+    const spot = await Spot.findByPk(req.params.spotId)
+    if(!spot){
+        return res.status(404).json({
+            "message":"Spot couldn't be found",
+            "statusCode":404
+        })
+        // const err = new Error("Spot couldn't be found")
+        // err.status = 404
+        // next(err)
+    }
+    return next()
+  }
+
+  //check if current user is the owner of the spot
+  const existingOwner = async(req,res,next)=>{
+    const userId = req.user.id
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if(userId !== spot.ownerId){
+        return res.status(401).json({
+            "message":"Spot must belong to the current user",
+            "statusCode":401
+        })
+    }
+    return next()
+  }
+
 //1.Get all Spots
 router.get('/', async(req,res)=>{
     //get all the columns with associate Authentication
@@ -108,14 +181,10 @@ router.get('/current', requireAuth, async (req,res)=>{
 
 
 //3.Get details of a Spot from an id
-router.get('/:spotId', async (req,res,next)=>{
+router.get('/:spotId', existingSpot, async (req,res,next)=>{
     const spotId = req.params.spotId
-    console.log("spotId: ", spotId)
-    //先找id看存在嗎
-    const spot = await Spot.findByPk(spotId)
 
     //如果存在
-    if(spot){
         const spotwithid = await Spot.findAll({
             where: {id: spotId},
             include:[
@@ -159,69 +228,22 @@ router.get('/:spotId', async (req,res,next)=>{
             //     "lastName": User.lastName
             // }
             delete spot.Reviews
+            delete spot.User
         })
 
         return res.json(spotwithidarr)
 
         }
-    } else if (!spot) {
-        const err = new Error("Spot couldn't be found")
-        err.status = 404
-        next(err)
-    }
+
 })
 
 
 
 
 //4.create a spot
-
-const validateCreate = [
-    check('address')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Street address is required'),
-    check('city')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('City is required'),
-    check('state')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('State is required'),
-    check('country')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Country is required'),
-    check('lat')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isNumeric()
-      .withMessage('Latitude is not valid'),
-    check('lng')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isNumeric()
-      .withMessage('Longitude is not valid'),
-    check('name')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isLength({ max: 50 })
-      .withMessage('Name must be less than 50 characters'),
-    check('description')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Description is required'),
-    check('price')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isNumeric()
-      .withMessage('Price per day is required'),
-    handleValidationErrors
-  ];
-
 router.post('/', requireAuth,validateCreate, async (req,res,next)=>{
     const newspot = await Spot.create({
+    "ownerId": req.body.ownerId,
     "address": req.body.address,
     "city": req.body.city,
     "state": req.body.state,
@@ -274,7 +296,8 @@ router.post('/:spotId/images', requireAuth, async (req,res,next)=>{
 })
 
 //6.Edit a Spot
-router.put('/:spotId',requireAuth,validateCreate,async(req,res,next)=>{
+router.put('/:spotId',requireAuth, existingSpot, existingOwner, validateCreate,async(req,res,next)=>{
+
     const{address,city,state,country, lat, lng, name, description, price} = req.body
     // console.log("全部的body:",req.body)
     const spotId = req.params.spotId
@@ -283,45 +306,38 @@ router.put('/:spotId',requireAuth,validateCreate,async(req,res,next)=>{
     let updateSpot = await Spot.findByPk(spotId)
     console.log("需要被update:",updateSpot)
 
-    if(!updateSpot){
-        const err = new Error("Spot couldn't be found")
-        err.status = 404
-        next(err)
-    }else{
-        updateSpot.address= address
-        updateSpot.city= city
-        updateSpot.state= state
-        updateSpot.country= country
-        updateSpot.lat= lat
-        updateSpot.lng= lng
-        updateSpot.name= name
-        updateSpot.description= description
-        updateSpot.price= price
+    updateSpot.address= address
+    updateSpot.city= city
+    updateSpot.state= state
+    updateSpot.country= country
+    updateSpot.lat= lat
+    updateSpot.lng= lng
+    updateSpot.name= name
+    updateSpot.description= description
+    updateSpot.price= price
 
         // updateSpot = req.body
-    }
+
 
     res.json(updateSpot)
 })
 
 //7.delete a spot
-router.delete('/:spotId', requireAuth, async (req,res,next)=>{
+router.delete('/:spotId', requireAuth, existingSpot, async (req,res,next)=>{
     const spotId = req.params.spotId
     const userId = req.user.id
 
     //try to see if spotId obj exsits
     const deletSpot = await Spot.findByPk(spotId)
 
-    if(!deletSpot){
-
-        const err = new Error("Spot couldn't be found")
-        err.status = 404
-        next(err)
-
-    }else if(userId !== deletSpot.ownerId){
-        const err = new Error("Forbidden")
-        err.status = 403
-        next(err)
+    if(userId !== deletSpot.ownerId){
+        return res.status(403).json({
+            "message":"Forbidden",
+            "statusCode":403
+        })
+        // const err = new Error("Forbidden")
+        // err.status = 403
+        // next(err)
     }else{
         res.json("Successfully deleted")
     }
@@ -329,8 +345,7 @@ router.delete('/:spotId', requireAuth, async (req,res,next)=>{
 })
 
 //8.Get all Bookings for a Spot based on the Spot's id
-
-router.get('/:spotId/bookings', requireAuth, async(req,res)=>{
+router.get('/:spotId/bookings', requireAuth, existingSpot, async(req,res,next)=>{
     const spotId = req.params.spotId
     const userId = req.user.id
 
@@ -338,21 +353,20 @@ router.get('/:spotId/bookings', requireAuth, async(req,res)=>{
     const searchingSpot = await Spot.findOne({
         where:{id: spotId}
     })
-    console.log(searchingSpot.ownerId)
-
 
     //find all the bookings by spotId
     const allBookings = await Booking.findAll({
         where:{
             spotId: spotId
         },
+        attributes:["id","spotId","userId","startDate","endDate","createdAt","updatedAt"],
         include:{
             model:User,
             attributes:["id","firstName","lastName"]
         }
-
     })
 
+    //check if spotId exists
     //check if current User equals to ownerId
     if(searchingSpot.ownerId !== userId){
         let bookingList =[]
@@ -363,6 +377,10 @@ router.get('/:spotId/bookings', requireAuth, async(req,res)=>{
         })
         bookingList.forEach(booking=>{
             delete booking.User
+            delete booking.id
+            delete booking.userId
+            delete booking.createdAt
+            delete booking.updatedAt
         })
         res.json(bookingList)
     }else{

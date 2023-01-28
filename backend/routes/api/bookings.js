@@ -14,7 +14,7 @@ router.get('/current', requireAuth, async(req,res)=>{
         where:{
             userId: req.user.id
         }
-        ,
+        ,attributes:["id","spotId","userId","startDate","endDate","createdAt","updatedAt"],
         include:[
             {
                 model: Spot,
