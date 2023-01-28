@@ -24,17 +24,17 @@ const Sequelize = require('sequelize')
 // }
 
 //check if current user is the owner of the booking
-// const validateCxlBooking = async(req,res,next)=>{
-//     const bookingId = req.params.bookingId
-//     const cxlBooking = await Booking.findByPk(bookingId)
-//     if(!cxlBooking){
-//         return res.status(404).json({
-//             "message":"Booking couldn't be found",
-//             "statusCode":404
-//         })
-//     }
-// return next()
-// }
+const exsitingBooking = async(req,res,next)=>{
+    const bookingId = req.params.bookingId
+    const cxlBooking = await Booking.findByPk(bookingId)
+    if(!cxlBooking){
+        return res.status(404).json({
+            "message":"Booking couldn't be found",
+            "statusCode":404
+        })
+    }
+return next()
+}
 
 // //Edit validation
 // const validateEdit = [
@@ -45,6 +45,12 @@ const Sequelize = require('sequelize')
 //       .withMessage('endDate cannot come before startDate'),
 //     handleValidationErrors
 //   ];
+
+//0.Get all bookings
+router.get('/', async(req,res)=>{
+    const allbookings = await Booking.findAll()
+    res.json(allbookings)
+})
 
 //1.Get all of the Current User's Bookings
 router.get('/current', requireAuth, async(req,res)=>{
@@ -90,13 +96,22 @@ router.get('/current', requireAuth, async(req,res)=>{
 })
 
 // //2.Edit a Booking
-// router.put('/:bookingId', requireAuth, validateEdit, validateCurrentUser, async(req,res,next)=>{
+// router.put('/:bookingId', requireAuth, exsitingBooking, async(req,res,next)=>{
 //     const {id, spotId, userId, startDate, endDate, createdAt, updatedAt} = req.body
-//     const modifiedBooking = await Booking.findOne({
-//         where:{
-//             id: req.params.bookingId
-//         }
-//     })
+//     const bookingId = req.params.bookingId
+
+//     const modifiedBooking = await Booking.findByPk(bookingId)
+
+//     //check if the endDate is not before startDate
+//      if(Date(endDate) <= Date(startDate)){
+//         res.json({
+//             "message": "Validation error",
+//             "statusCode": 400,
+//             "errors": {
+//               "endDate": "endDate cannot come before startDate"
+//             }
+//           })
+//     }
 
 //     modifiedBooking.id = id
 //     modifiedBooking.spotId = spotId
@@ -110,17 +125,17 @@ router.get('/current', requireAuth, async(req,res)=>{
 // })
 
 //3.Delete a Booking
-router.delete('/:bookingId', requireAuth, async(req,res)=>{
-    //can't find the bookingId
+router.delete('/:bookingId', requireAuth, exsitingBooking, async(req,res)=>{
+    // //can't find the bookingId
     const bookingId = req.params.bookingId
     const cxlBooking = await Booking.findByPk(bookingId)
 
-    if(!cxlBooking){
-        return res.status(404).json({
-            "message":"Booking couldn't be found",
-            "statusCode":404
-        })
-    }
+    // if(!cxlBooking){
+    //     return res.status(404).json({
+    //         "message":"Booking couldn't be found",
+    //         "statusCode":404
+    //     })
+    // }
 
     //if current user is not booking owner then can't cxl it
         const userId = req.user.id
@@ -134,8 +149,7 @@ router.delete('/:bookingId', requireAuth, async(req,res)=>{
     //check if the date can't be modified anymore
     let today = new Date()
     const startDate = cxlBooking.startDate
-    // console.log("今天: ", typeof today)
-    // console.log("入住日: ", typeof startDate)
+
     if(new Date(startDate) <= today){
         res.json({
             "message": "Bookings that have been started can't be deleted",
