@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Spot, Review, SpotImage } = require('../../db/models');
+const { User, Spot, Review, SpotImage, Booking } = require('../../db/models');
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -8,9 +8,82 @@ const { requireAuth } = require('../../utils/auth');
 const Sequelize = require('sequelize')
 
 
+const validateCreate = [
+    check('address')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Latitude is not valid'),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Longitude is not valid'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isNumeric()
+      .withMessage('Price per day is required'),
+    handleValidationErrors
+  ];
+
+  //check if spotId exists
+  const existingSpot = async(req,res,next)=>{
+    const spot = await Spot.findByPk(req.params.spotId)
+    if(!spot){
+        return res.status(404).json({
+            "message":"Spot couldn't be found",
+            "statusCode":404
+        })
+        // const err = new Error("Spot couldn't be found")
+        // err.status = 404
+        // next(err)
+    }
+    return next()
+  }
+
+  //check if current user is the owner of the spot
+  const existingOwner = async(req,res,next)=>{
+    const userId = req.user.id
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if(userId !== spot.ownerId){
+        return res.status(401).json({
+            "message":"Spot must belong to the current user",
+            "statusCode":401
+        })
+    }
+    return next()
+  }
+
 //1.Get all Spots
 router.get('/', async(req,res)=>{
-    //get all the columns with associate table
+    //get all the columns with associate Authentication
     const allspots = await Spot.findAll({
         include:[
             {
@@ -103,19 +176,15 @@ router.get('/current', requireAuth, async (req,res)=>{
     delete spot.Reviews
     delete spot.SpotImages
     })
-    return res.json(spotlist)
+    return res.json({"Spots":spotlist})
 })
 
 
 //3.Get details of a Spot from an id
-router.get('/:spotId', async (req,res,next)=>{
+router.get('/:spotId', existingSpot, async (req,res,next)=>{
     const spotId = req.params.spotId
-    console.log("spotId: ", spotId)
-    //先找id看存在嗎
-    const spot = await Spot.findByPk(spotId)
 
     //如果存在
-    if(spot){
         const spotwithid = await Spot.findAll({
             where: {id: spotId},
             include:[
@@ -124,7 +193,12 @@ router.get('/:spotId', async (req,res,next)=>{
                     attributes:["stars"]
 
                 },{
-                    model: SpotImage
+                    model: SpotImage,
+                    attributes:["id","url","preview"]
+                },{
+                    model: User,
+                    // as: "Owner",
+                    attributes:["id","firstName","lastName"]
                 }
             ]
         })
@@ -132,42 +206,187 @@ router.get('/:spotId', async (req,res,next)=>{
         console.log(spotwithid)
 
         let spotwithidarr =[]
-        if(spotwithid.length > 0){
-
+        if(spotwithid){
         spotwithid.forEach(spot=>{spotwithidarr.push(spot.toJSON())})
         console.log("array 裡面: ",spotwithidarr)
+
+        //numReviews
+
+        spotwithidarr.forEach(spot=>{
+            let total =0
+            console.log("spot:",spot)
+            spot.Reviews.forEach(review=>{
+                total += review.stars
+            })
+            spot.numReviews = spot.Reviews.length
+            spot.avgRating = total/spot.Reviews.length
+            spot.Owner = spot.User
+            // spot.Owner = {
+
+            //     "id":User.id,
+            //     "firstName": User.firstName,
+            //     "lastName": User.lastName
+            // }
+            delete spot.Reviews
+            delete spot.User
+        })
+
         return res.json(spotwithidarr)
 
         }
-    } else if (!spot) {
-        const err = new Error("Spot couldn't be found")
-        err.status = 404
-        next(err)
-    }
 
-    // return res.json("test")
 })
 
 
 
 
-// //4.create a spot
-// router.post('/', requireAuth, async (req,res)=>{
+//4.create a spot
+router.post('/', requireAuth,validateCreate, async (req,res,next)=>{
+    const newspot = await Spot.create({
+    "ownerId": req.body.ownerId,
+    "address": req.body.address,
+    "city": req.body.city,
+    "state": req.body.state,
+    "country": req.body.country,
+    "lat": req.body.lat,
+    "lng": req.body.lng,
+    "name": req.body.name,
+    "description": req.body.description,
+    "price": req.body.price
+    })
+    res.status(201)
+    res.json(newspot)
 
-//     "address": req.body.address,
-//     "city": "San Francisco",
-//     "state": "California",
-//     "country": "United States of America",
-//     "lat": 37.7645358,
-//     "lng": -122.4730327,
-//     "name": "App Academy",
-//     "description": "Place where web developers are created",
-//     "price": 123
-// })
+})
 
-//delete a spot
-router.delete(':spotId',(req,res)=>{
-    res.json("Successfully deleted")
+//5.Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, async (req,res,next)=>{
+    // const url = req.body.url
+    // const preview = req.body.preview
+    let newImage
+    const spotId = req.params.spotId
+    const {url,preview}= req.body
+
+    //check if there is an existing spot
+    const existingSpot = await Spot.findByPk(spotId)
+
+
+    if(!existingSpot){
+
+        const err = new Error("Spot couldn't be found")
+        err.status = 404
+        next(err)
+
+    }else{
+
+        newImage = await existingSpot.createSpotImage({
+           spotId:spotId,
+           url,
+           preview
+        })
+        //為什不需要轉換成obj就可以在res.json拿資料?
+        // console.log("新增加的:",newImage)
+    }
+
+    res.json({
+        id: newImage.spotId,
+        url: newImage.url,
+        preview: newImage.preview
+    })
+})
+
+//6.Edit a Spot
+router.put('/:spotId',requireAuth, existingSpot, existingOwner, validateCreate,async(req,res,next)=>{
+
+    const{address,city,state,country, lat, lng, name, description, price} = req.body
+    // console.log("全部的body:",req.body)
+    const spotId = req.params.spotId
+
+    //find the existing obj by spotId which needs to be changed
+    let updateSpot = await Spot.findByPk(spotId)
+    console.log("需要被update:",updateSpot)
+
+    updateSpot.address= address
+    updateSpot.city= city
+    updateSpot.state= state
+    updateSpot.country= country
+    updateSpot.lat= lat
+    updateSpot.lng= lng
+    updateSpot.name= name
+    updateSpot.description= description
+    updateSpot.price= price
+
+        // updateSpot = req.body
+
+
+    res.json(updateSpot)
+})
+
+//7.delete a spot
+router.delete('/:spotId', requireAuth, existingSpot, async (req,res,next)=>{
+    const spotId = req.params.spotId
+    const userId = req.user.id
+
+    //try to see if spotId obj exsits
+    const deletSpot = await Spot.findByPk(spotId)
+
+    if(userId !== deletSpot.ownerId){
+        return res.status(403).json({
+            "message":"Forbidden",
+            "statusCode":403
+        })
+        // const err = new Error("Forbidden")
+        // err.status = 403
+        // next(err)
+    }else{
+        res.json("Successfully deleted")
+    }
+
+})
+
+//8.Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, existingSpot, async(req,res,next)=>{
+    const spotId = req.params.spotId
+    const userId = req.user.id
+
+    //find ownerId
+    const searchingSpot = await Spot.findOne({
+        where:{id: spotId}
+    })
+
+    //find all the bookings by spotId
+    const allBookings = await Booking.findAll({
+        where:{
+            spotId: spotId
+        },
+        attributes:["id","spotId","userId","startDate","endDate","createdAt","updatedAt"],
+        include:{
+            model:User,
+            attributes:["id","firstName","lastName"]
+        }
+    })
+
+    //check if spotId exists
+    //check if current User equals to ownerId
+    if(searchingSpot.ownerId !== userId){
+        let bookingList =[]
+        allBookings.forEach(booking=>{
+            bookingList.push(booking.toJSON())
+            // console.log("booking的內容:",booking)
+            // console.log("booking的人:",booking.User)
+        })
+        bookingList.forEach(booking=>{
+            delete booking.User
+            delete booking.id
+            delete booking.userId
+            delete booking.createdAt
+            delete booking.updatedAt
+        })
+        res.json(bookingList)
+    }else{
+        res.json(allBookings)
+    }
+
 })
 
 module.exports = router;

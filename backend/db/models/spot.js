@@ -21,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
         models.Review,{foreignKey:'spotId',onDelete: 'CASCADE', hooks: true}
       )
 
+//刪掉on delete cascade then spot and booking could connect to eachother
+      Spot.hasMany(
+
+        models.Booking,{foreignKey:'spotId'}
+      )
+
       Spot.belongsTo(
         models.User,{foreignKey:'ownerId'}
       )
