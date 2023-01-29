@@ -36,6 +36,10 @@ router.post(
 
       await setTokenCookie(res, user);
 
+      // //in order to not display createdAt and updatedAt on Postman 沒有用
+      // delete user.createdAt
+      // console.log("user: ",user)
+
       return res.json({
         user: user
       });

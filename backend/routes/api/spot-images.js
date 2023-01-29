@@ -25,24 +25,37 @@ const exsitingImage = async(req,res,next)=>{
 //check if current user is the owner of the spot
 const validateCurrentUser = async(req,res,next)=>{
 const userId = req.user.id
-const validUser = await Spot.findOne({
-    where:{ownerId: userId}
-})
+const imageId = req.params.imageId
+const spotImg = await SpotImage.findByPk(imageId)
+const spotId = spotImg.spotId
+const spot = await Spot.findByPk(spotId)
 
-if(!validUser){
-    return res.status(401).json({
+
+if(userId !== spot.ownerId){
+    return res.status(403).json({
         "message":"Booking must belong to the current user",
-        "statusCode":401
+        "statusCode":403
     })
 }
 return next()
 }
 
 
+//0.Get all Spot Image
+router.get('/', async(req,res)=>{
+    const allSpotImgs = await SpotImage.findAll()
+    res.json(allSpotImgs)
+})
+
 //1.Delete a Spot Image
 router.delete('/:imageId', requireAuth, exsitingImage, validateCurrentUser, async(req, res)=>{
+    const imageId = req.params.imageId
 
-    
+    //find the image
+    const deleteSpotImg = await SpotImage.findByPk(imageId)
+
+    await deleteSpotImg.destroy()
+
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200

@@ -22,7 +22,8 @@ module.exports = {
     */
     return queryInterface.bulkInsert(options, [
       {
-        reviewId: 1
+        reviewId: 1,
+
       },
       {
         reviewId: 2,
@@ -38,6 +39,7 @@ module.exports = {
       },
       {
         reviewId: 5,
+
       },
     ], {});
 

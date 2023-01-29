@@ -7,6 +7,28 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const Sequelize = require('sequelize')
 
+//check if the reviewId exsits
+const exsitingReviewId = async(req,res,next)=>{
+    const reviewId = req.params.reviewId
+    const review = await Review.findByPk(reviewId)
+    if(!review){
+        return res.status(404).json({
+            "message":"Review couldn't be found",
+            "statusCode":404
+        })
+    }
+return next()
+}
+
+//0.Get all Reviews
+router.get('/', requireAuth, async(req,res)=>{
+    const userId = req.user.id
+
+    const allReviews = await Review.findAll()
+
+    res.json(allReviews)
+})
+
 //1.Get all Reviews of the Current User
 router.get('/current', requireAuth, async(req,res)=>{
     const userId = req.user.id
@@ -18,7 +40,7 @@ router.get('/current', requireAuth, async(req,res)=>{
         include:[
             {
                 model: User,
-                attributes:["id","firstname","lastname"]
+                attributes:["id","firstName","lastName"]
 
             },
             {
@@ -29,12 +51,12 @@ router.get('/current', requireAuth, async(req,res)=>{
                 ]
             },
             {
-                model: ReviewImage
+                model: ReviewImage,
+                attributes:["id","url"]
             },
 
         ]
     })
-
 
 
     let reviewList = []
@@ -52,9 +74,40 @@ router.get('/current', requireAuth, async(req,res)=>{
         delete reviewSpot.SpotImages
     })
 
-
-
-    res.json({"Reviews": allReview})
+    res.json({"Reviews": reviewList})
 })
+
+//2. Add an Image to a Review based on the Review's id
+router.post('/:reviewId/images', exsitingReviewId, async(req,res)=>{
+    const reviewId = req.params.reviewId
+    const {url} = req.body
+
+    // const reviewAddImg = await Review.findByPk(reviewId)
+
+    // const newImage = await reviewAddImg.createReviewImage({
+    //     url: url
+    // })
+
+    const newImage = await ReviewImage.create({
+        url: url
+    })
+
+    res.json(newImage)
+})
+
+//其他方案,但上面的成功了
+// router.post('/:reviewId/images',requireAuth, async(req,res)=>{
+//     const reviewId = Number(req.params.reviewId)
+//     const {url} = req.body
+//     console.log("印出來: ", typeof reviewId)
+
+//     let newImage = await ReviewImage.create({
+//         reviewId: reviewId
+//     })
+
+//     res.json(newImage)
+// })
+
+
 
 module.exports = router;

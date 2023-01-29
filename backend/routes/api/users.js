@@ -26,15 +26,12 @@ const validateSignup = [
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
-    // //Penny adds test
-    // check('firstname')
-    //   .exists({ checkFalsy: true })
-    //   .withMessage('require firstname.'),
-
-    // check('lastname')
-    //   .exists({ checkFalsy: true })
-    //   .withMessage('require lastname.'),
-
+    check('firstName')
+      .exists({ checkFalsy: true })
+      .withMessage('First Name is required'),
+    check('lastName')
+      .exists({ checkFalsy: true })
+      .withMessage('Last Name is required'),
     handleValidationErrors
   ];
 
@@ -43,9 +40,15 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-      const { email, password, username, firstname, lastname } = req.body;
-      const user = await User.signup({ email, username, password, firstname, lastname });
+      const { email, password, username, firstName, lastName } = req.body;
+      const user = await User.signup({ email, username, password, firstName, lastName });
 
+      // //check if user exsits in the system
+      // const allUsers = await User.findAll()
+      // console.log("所有user: ", allUsers)
+      // // if(email === deletSpot.ownerId){
+
+      // // }
       await setTokenCookie(res, user);
 
       return res.status(400).json({
