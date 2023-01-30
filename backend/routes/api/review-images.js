@@ -26,13 +26,14 @@ const exsitingImage = async(req,res,next)=>{
 const validateCurrentUser = async(req,res,next)=>{
     const currentUserId = req.user.id
     const imageId = req.params.imageId
-    const reviewImg = await ReviewImage.findByPk(imageId)
-    const userId = reviewImg.userId
+    const review = await Review.findOne({
+        where:{id: imageId}
+    })
 
 
-    if(currentUserId !==userId){
+    if(currentUserId !== review.userId){
         return res.status(403).json({
-            "message":"Booking must belong to the current user",
+            "message":"Review must belong to the current user",
             "statusCode":403
         })
     }
@@ -47,7 +48,7 @@ router.get('/', async(req,res)=>{
 })
 
 //1.Delete a Review Image
-router.delete('/:imageId', requireAuth, exsitingImage, async(req, res)=>{
+router.delete('/:imageId', requireAuth, exsitingImage,validateCurrentUser, async(req, res)=>{
     const imageId = req.params.imageId
 
     const deleteReviewImg = await ReviewImage.findByPk(imageId)

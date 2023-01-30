@@ -49,10 +49,19 @@ router.post(
       // // if(email === deletSpot.ownerId){
 
       // // }
-      await setTokenCookie(res, user);
+      const token = await setTokenCookie(res, user);
 
-      return res.status(400).json({
-        user: user
+      const returnUser ={
+        "id": user.id,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "email":user.email,
+        "username": user.username,
+        "token": token
+      }
+
+      return res.json({
+        user: returnUser
       });
     }
   );
