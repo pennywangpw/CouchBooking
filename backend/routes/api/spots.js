@@ -306,7 +306,7 @@ router.get('/:spotId', existingSpot, async (req,res,next)=>{
 //4.create a spot
 router.post('/', requireAuth,validateCreate, async (req,res,next)=>{
     const newspot = await Spot.create({
-    "ownerId": req.body.ownerId,
+    "ownerId": req.user.id,
     "address": req.body.address,
     "city": req.body.city,
     "state": req.body.state,
@@ -317,6 +317,7 @@ router.post('/', requireAuth,validateCreate, async (req,res,next)=>{
     "description": req.body.description,
     "price": req.body.price
     })
+
     res.status(201)
     res.json(newspot)
 

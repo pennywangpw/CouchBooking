@@ -112,24 +112,33 @@ router.get('/current', requireAuth, async(req,res)=>{
 //2. Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', exsitingReviewId,validateCurrentUser, async(req,res,next)=>{
     const reviewId = req.params.reviewId
+
+
+    const reviewTobeAddedImg = await Review.findByPk(reviewId,{
+        include:{model: ReviewImage}
+    })
+    // console.log("here: ", reviewTobeAddedImg.ReviewImages.length)
+
+    if (reviewTobeAddedImg.ReviewImages.length >= 10) {
+        return res.status(403).json({
+            "message": "Maximum number of images for this resource was reached",
+            "statusCode": 403
+        })
+    }
+
+
     const {url} = req.body
 
 
-    const reviewTobeAddedImg = await Review.findByPk(reviewId)
-    console.log("看一下: ",reviewTobeAddedImg)
-    // if(reviewTobeAddedImg.ReviewImages.length >= 10){
-    //     return res.status(403).json({
-    //         "message": "Maximum number of images for this resource was reached",
-    //         "statusCode": 403
-    //       })
-
-    // }
-
-    const newImage = await ReviewImage.create({
-        url: url
+    const newImage = await reviewTobeAddedImg.createReviewImage({
+        reviewId: reviewId,
+        url
     })
 
-    res.json(newImage)
+    res.json({
+        id:newImage.id,
+        url: newImage.url
+    })
 })
 
 //solution2
