@@ -24,14 +24,20 @@ module.exports = {
       {
         spotId: 1,
         userId: 1,
-        startDate:"2021-10-19",
-        endDate:"2021-10-22"
+        startDate:"2023-05-19",
+        endDate:"2023-05-22"
       },
       {
         spotId: 2,
         userId: 2,
         startDate:"2021-12-10",
         endDate:"2021-12-18"
+      },
+      {
+        spotId: 2,
+        userId: 2,
+        startDate:"2023-12-10",
+        endDate:"2023-12-18"
       },
       {
         spotId: 3,
@@ -55,10 +61,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      startDate: { [Op.in]: ["2021-10-19", "2021-12-10", "2021-10-20"] }
-    }, {});
+    return queryInterface.bulkDelete(options, {}, {});
+    // const Op = Sequelize.Op;
+    // return queryInterface.bulkDelete(options, {
+    //   startDate: { [Op.in]: ["2021-10-19", "2021-12-10", "2021-10-20"] }
+    // }, {});
   }
 };

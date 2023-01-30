@@ -20,6 +20,29 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    return queryInterface.bulkInsert(options, [
+      {
+        reviewId: 1,
+
+      },
+      {
+        reviewId: 2,
+        url: "url 000"
+      },
+      {
+        reviewId: 3,
+        url: "url 123"
+      },
+      {
+        reviewId: 4,
+        url: "url 456",
+      },
+      {
+        reviewId: 5,
+
+      },
+    ], {});
+
   },
 
   async down (queryInterface, Sequelize) {
@@ -29,5 +52,12 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+
+    // return queryInterface.bulkDelete(options, {}, {});
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      reviewId: { [Op.in]: [1, 2, 3, 4, 5] }
+    }, {});
+
   }
 };

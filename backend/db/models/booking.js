@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Booking.init({
+    //自己在做get all booking postman顯示不出來
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
     spotId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     startDate: DataTypes.DATEONLY,
