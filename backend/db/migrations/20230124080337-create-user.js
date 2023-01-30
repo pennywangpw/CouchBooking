@@ -24,6 +24,12 @@ module.exports = {
         //解決delete
         // unique: true
       },
+      firstName: {
+        type: Sequelize.STRING(30),
+      },
+      lastName: {
+        type: Sequelize.STRING(30),
+      },
       email: {
         type: Sequelize.STRING(256),
         allowNull: false,
