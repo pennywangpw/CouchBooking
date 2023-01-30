@@ -142,7 +142,7 @@ router.get('/', async(req,res)=>{
 
 
 
-    return res.json({ Spots: spot, page, size});
+    // return res.json({ Spots: spot, page, size});
 
 
 
@@ -165,7 +165,7 @@ router.get('/', async(req,res)=>{
     let allspotsarr =[]
 
     allspots.forEach(spot=>{allspotsarr.push(spot.toJSON())})
-    // console.log("所有的spots:", allspotsarr)
+    console.log("所有的spots:", allspotsarr)
 
     //nested loop to get each spot > review > stars
     allspotsarr.forEach(spot=>{
@@ -191,7 +191,9 @@ router.get('/', async(req,res)=>{
         delete spot.SpotImages
 
     })
-    res.json({"Spots": allspotsarr})
+
+    // return res.json({ Spots: spot, page, size});
+    return res.json({"Spots": allspotsarr, page, size})
 })
 
 
