@@ -34,14 +34,22 @@ router.post(
         return next(err);
       }
 
-      await setTokenCookie(res, user);
+      const token = await setTokenCookie(res, user);
 
+      const returnUser ={
+        "id": user.id,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "email":user.email,
+        "username": user.username,
+        "token": token
+      }
       // //in order to not display createdAt and updatedAt on Postman 沒有用
       // delete user.createdAt
       // console.log("user: ",user)
 
       return res.json({
-        user: user
+        user: returnUser
       });
     }
   );

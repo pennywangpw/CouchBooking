@@ -100,7 +100,53 @@ const validateCreate = [
 
 //1.Get all Spots
 router.get('/', async(req,res)=>{
+    //12. Add Query Filters to Get All Spots
+    let {page, size}= req.query
+    let pagination = {}
+    let where = {}
+    page = parseInt(page)
+    size = parseInt(size)
+
+    const err={
+        "message": "Validation Error",
+        "statusCode": 400,
+        "errors": {}
+    }
+
+    if(page === 0) err.errors.page = "Page must e greater than or equal to 1"
+    if(size ===0) err.errors.size= "Size must be greater than or equal to 1 "
+
+    if(isNaN(page)) page = 1
+    if(isNaN(size)) size = 20
+
+    if(page >=1 && size >=1){
+        if(size >= 20){
+            pagination.limit = 20
+        }else{
+            pagination.limit =size
+            pagination.offset = size *(page -1)
+        }
+    }
+
+
     //get all the columns with associate Authentication
+    const spot = await Spot.findAll({
+        where,
+        ...pagination
+    })
+
+    if(page === 0 || size === 0){
+        return res.status(400).json(err)
+    }
+
+
+
+
+    return res.json({ Spots: spot, page, size});
+
+
+
+
     const allspots = await Spot.findAll({
         include:[
             {
@@ -312,18 +358,22 @@ router.put('/:spotId',requireAuth, existingSpot, existingOwner, validateCreate,a
 
     //find the existing obj by spotId which needs to be changed
     let updateSpot = await Spot.findByPk(spotId)
-    console.log("需要被update:",updateSpot)
 
-    updateSpot.address= address
-    updateSpot.city= city
-    updateSpot.state= state
-    updateSpot.country= country
-    updateSpot.lat= lat
-    updateSpot.lng= lng
-    updateSpot.name= name
-    updateSpot.description= description
-    updateSpot.price= price
+    await updateSpot.update({
+        ...req.body
+    })
+    //缺一個save
+    // updateSpot.address= address
+    // updateSpot.city= city
+    // updateSpot.state= state
+    // updateSpot.country= country
+    // updateSpot.lat= lat
+    // updateSpot.lng= lng
+    // updateSpot.name= name
+    // updateSpot.description= description
+    // updateSpot.price= price
 
+    //await updateSpot.save()
         // updateSpot = req.body
 
 
@@ -449,7 +499,7 @@ router.post('/:spotId/reviews', requireAuth, existingSpot, validateCreateReview,
         }
     })
 
-    //
+    //check if stars must be 1-5
     if(stars <=0 || stars > 5){
         res.status(400).json({
             "message": "Validation error",
@@ -476,13 +526,21 @@ router.post('/:spotId/reviews', requireAuth, existingSpot, validateCreateReview,
 //11. Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, existingSpot, async(req,res)=>{
     const spotId = req.params.spotId
+    const userId = req.user.id
     const{startDate, endDate} = req.body
+    let checkInDate = (new Date(startDate)).getTime()
+    let checkOutDate = (new Date(endDate)).getTime()
 
-    console.log("重新入注入: ",startDate)
-    console.log("重新拓房日: ",endDate)
+    //Spot must NOT belong to the current user
+    const spot = await Spot.findByPk(spotId)
+    if(spot.ownerId === userId){
+        return res.json({
+            message: "Spot must NOT belong to the current user",
+            statusCode: 403
+        })
+    }
+
     //check if the endDate is not before startDate
-    let checkInDate = new Date(startDate)
-    let checkOutDate = new Date(endDate)
     if(checkOutDate <= checkInDate){
         res.json({
             "message": "Validation error",
@@ -495,10 +553,9 @@ router.post('/:spotId/bookings', requireAuth, existingSpot, async(req,res)=>{
 
     //check if there's a booking date conflict
     const allBookings = await Booking.findAll()
-    console.log("所有的booking: ", allBookings)
     allBookings.forEach(booking=>{
         let bookingDate = new Date(booking.startDate)
-        if(checkInDate.getTime() - bookingDate.getTime() === 0){
+        if(checkInDate - bookingDate === 0){
             return res.status(403).json({
                 "message":"Sorry, this spot is already booked for the specified dates",
                 "statusCode":403,
@@ -510,8 +567,9 @@ router.post('/:spotId/bookings', requireAuth, existingSpot, async(req,res)=>{
         }
     })
 
-    const spotAddBooking = await Spot.findByPk(spotId)
-    const newBooking = await spotAddBooking.createBooking({
+    // const spotAddBooking = await Spot.findByPk(spotId)
+    const newBooking = await Booking.create({
+        userId: req.user.id,
         spotId: spotId,
         startDate: startDate,
         endDate: endDate
@@ -522,68 +580,46 @@ router.post('/:spotId/bookings', requireAuth, existingSpot, async(req,res)=>{
 
 
 //12. Add Query Filters to Get All Spots
-router.get('/', async(req,res)=>{
-    const where ={}
-    const pagination = {}
+// router.get('/', async(req,res)=>{
+//     let {page, size}= req.query
+//     let pagination = {}
+//     page = parseInt(page)
+//     size = parseInt(size)
 
-    const {page,size} = req.query
+//     const err={
+//         "message": "Validation Error",
+//         "statusCode": 400,
+//         "errors": {}
+//     }
 
-    if(page >= 1 && page <= 10){
-        pagination.offset = page
-    }else if(page <= 0 ){
-        return res.status(400).json({
-            "message":"Page must be greater than or equal to 1",
-            "statusCode":400
-        })
-    }else if(size <= 0 ){
-        return res.status(400).json({
-            "message":"Size must be greater than or equal to 1",
-            "statusCode":400
-        })
-    }
-    else{
-        pagination.offset = 1
-    }
+//     if(page === 0) err.errors.page = "Page must e greater than or equal to 1"
+//     if(size ===0) err.errors.size= "Size must be greater than or equal to 1 "
 
+//     if(isNaN(page)) page = 1
+//     if(isNaN(size)) size = 20
 
-
-
-
-    if(size >= 1 && size <= 20){
-        pagination.offset = size
-    }else{
-        pagination.offset = 20
-    }
+//     if(page >=1 && size >=1){
+//         if(size >= 20){
+//             pagination.limit = 20
+//         }else{
+//             pagination.limit =size
+//             pagination.offset = size *(page -1)
+//         }
+//     }
 
 
-    const Allspots = await Spot.findAll({
-        where,
-        ...pagination
-    })
+//     const spot = await Spot.findAll({
+//         where,
+//         ...pagination
+//     })
 
-    for(let spot of Allspots){
-        const previewImage = await SpotImage.findOne({
-            where:{spotId: spot.id, preview: true},
-            attributes:["url"]
-        })
+//     if(page === 0 || size === 0){
+//         return res.status(400).json(err)
+//     }
 
-        const spotId = spot.dataValues.id;
-        const averageRating = await sequelize.query(
-            "SELECT AVG(stars) as averageValue FROM Reviews WHERE spotId = :spotId",
-            {
-                replacements: { spotId: spotId },
-                type: sequelize.QueryTypes.SELECT,
-            }
-        );
 
-        let avg = averageRating[0].averageValue.toFixed(2);
 
-        spot.dataValues["previewImage"] = previewImage?.url || null;
-
-        spot.dataValues["averageRating"] = avg || null;
-    }
-
-    return res.status(200).json({ spots: Allspots, page: offset, size: limit });
-})
+//     return res.json({ Spots: page, size});
+// })
 
 module.exports = router;

@@ -33,7 +33,7 @@ const spot = await Spot.findByPk(spotId)
 
 if(userId !== spot.ownerId){
     return res.status(403).json({
-        "message":"Booking must belong to the current user",
+        "message":"Spot must belong to the current user",
         "statusCode":403
     })
 }

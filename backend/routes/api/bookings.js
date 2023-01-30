@@ -27,11 +27,11 @@ const Sequelize = require('sequelize')
 
 
 
-//check if the booking exsits
+//check if the bookinId exsits
 const exsitingBooking = async(req,res,next)=>{
     const bookingId = req.params.bookingId
-    const cxlBooking = await Booking.findByPk(bookingId)
-    if(!cxlBooking){
+    const booking = await Booking.findByPk(bookingId)
+    if(!booking){
         return res.status(404).json({
             "message":"Booking couldn't be found",
             "statusCode":404
@@ -40,22 +40,24 @@ const exsitingBooking = async(req,res,next)=>{
 return next()
 }
 
+//check if current user is the booking user
+const ValidateCurrentUser = async(req,res,next)=>{
+    const userId= req.user.id
+    const bookingId = req.params.bookingId
+    const modifiedBooking = await Booking.findByPk(bookingId)
+    if(userId !== modifiedBooking.userId){
+        return res.status(403).json({
+            "message":"Booking must belong to the current user",
+            "statusCode":403
+        })
+    }
+    return next()
+}
 
-// //Edit validation
-// const validateEdit = [
-//     check('endDate')
-//       .exists({ checkFalsy: true })
-//       .notEmpty()
-//       .isAfter()
-//       .withMessage('endDate cannot come before startDate'),
-//     handleValidationErrors
-//   ];
 
 //0.Get all bookings
 router.get('/', async(req,res)=>{
-    const allbookings = await Booking.findAll({
-        // include:["id","spotId","userId","startDate","endDate","createdAt","updatedAt"]
-    })
+    const allbookings = await Booking.findAll()
     res.json(allbookings)
 })
 
@@ -76,7 +78,7 @@ router.get('/current', requireAuth, async(req,res)=>{
             }
         ]
     })
-    // console.log("在這: ", bookings)
+
     let bookingList = []
     bookings.forEach(booking=>{bookingList.push(booking.toJSON())})
 
@@ -84,11 +86,9 @@ router.get('/current', requireAuth, async(req,res)=>{
     bookingList.forEach(booking=>{
         let bookingSpot = booking.Spot
         let bookingSpotImage = bookingSpot.SpotImages
-        // console.log("spot裡面:", bookingSpotImage )
 
         if(bookingSpotImage.length > 0){
             bookingSpotImage.forEach(img=>{
-                console.log("img.preview: ",img.preview)
                 if(img.preview){
                     bookingSpot.previewImage = img.url
 
@@ -103,56 +103,22 @@ router.get('/current', requireAuth, async(req,res)=>{
 })
 
 //2.Edit a Booking
-router.put('/:bookingId', requireAuth, exsitingBooking, async(req,res,next)=>{
+router.put('/:bookingId', requireAuth, exsitingBooking, ValidateCurrentUser, async(req,res,next)=>{
     const currentuserId= req.user.id
     const {id, spotId, userId, startDate, endDate, createdAt, updatedAt} = req.body
     const bookingId = req.params.bookingId
-    let checkInDate = new Date(startDate)
-    let checkOutDate = new Date(endDate)
+    let checkInDate = (new Date(startDate)).getTime()
+    let checkOutDate = (new Date(endDate)).getTime()
 
 
-    const modifiedBooking = await Booking.findByPk(bookingId)
-    console.log("所有的booking?: ", modifiedBooking)
-    console.log("userId: ", currentuserId, "modifiedBooking.userId: ", modifiedBooking.userId)
-    console.log("現在的booking: ", modifiedBooking)
-
-    //check if current user is the booking user
-    if(currentuserId !== modifiedBooking.userId){
-
-        return res.status(403).json({
-            "message":"Booking must belong to the current user",
-            "statusCode":403
-        })
-    }
-
-
-    //check if the date is in the past, if so, you can't delete it 403
-    let today = new Date()
-
-    if(checkOutDate <= today){
+    //check if the date is in the past, if so, you can't modify it 403
+    let today = Date.now()
+    if(checkOutDate <= today || checkInDate <= today){
         res.status(403).json({
             "message": "Past bookings can't be modified",
             "statusCode": 403
           })
     }
-
-
-    //check if there's a booking date conflict
-    const allBookings = await Booking.findAll()
-    allBookings.forEach(booking=>{
-        let bookingDate = new Date(booking.startDate)
-        if(checkInDate.getTime() - bookingDate.getTime() === 0){
-            return res.status(403).json({
-                "message":"Sorry, this spot is already booked for the specified dates",
-                "statusCode":403,
-                "errors": {
-                    "startDate": "Start date conflicts with an existing booking",
-                    "endDate": "End date conflicts with an existing booking"
-                }
-            })
-        }
-    })
-
 
     //check if the endDate is not before startDate
     if(checkOutDate <= checkInDate){
@@ -165,29 +131,52 @@ router.put('/:bookingId', requireAuth, exsitingBooking, async(req,res,next)=>{
           })
     }
 
-    modifiedBooking.id = id
-    modifiedBooking.spotId = spotId
-    modifiedBooking.userId = userId
-    modifiedBooking.startDate = startDate
-    modifiedBooking.endDate = endDate
-    modifiedBooking.createdAt = createdAt
-    modifiedBooking.updatedAt = updatedAt
+    //check if there's a booking date conflict
+    const allBookings = await Booking.findAll()
+    allBookings.forEach(booking=>{
+        let bookingDate = new Date(booking.startDate)
+        if(checkInDate - bookingDate === 0){
+            return res.status(403).json({
+                "message":"Sorry, this spot is already booked for the specified dates",
+                "statusCode":403,
+                "errors": {
+                    "startDate": "Start date conflicts with an existing booking",
+                    "endDate": "End date conflicts with an existing booking"
+                }
+            })
+        }
+    })
+
+    
+    //find the booking we want to modify
+    const modifiedBooking = await Booking.findByPk(bookingId)
+    await modifiedBooking.update({
+        ...req.body
+    })
+
+    // modifiedBooking.id = id
+    // modifiedBooking.spotId = spotId
+    // modifiedBooking.userId = userId
+    // modifiedBooking.startDate = startDate
+    // modifiedBooking.endDate = endDate
+    // modifiedBooking.createdAt = createdAt
+    // modifiedBooking.updatedAt = updatedAt
+    // await modifiedBooking.save()
 
     res.json(modifiedBooking)
 })
 
 //3.Delete a Booking
 router.delete('/:bookingId', requireAuth, exsitingBooking, async(req,res)=>{
-    // //can't find the bookingId
     const bookingId = req.params.bookingId
-    const cxlBooking = await Booking.findByPk(bookingId)
-    // const spotId = await Spot.findAll()
-    // console.log("所有的spot: ",spotId)
-
+    const deleteBooking = await Booking.findByPk(bookingId)
     const userId = req.user.id
+    //find the booking spot
+    const bookingSpotId = deleteBooking.spotId
+    const bookingSpot = await Spot.findByPk(bookingSpotId)
 
-    if(userId !== cxlBooking.userId){
-
+    //Booking must belong to the current user or the Spot must belong to the current user
+    if(userId !== deleteBooking.userId && userId !== bookingSpot.ownerId){
         return res.status(403).json({
             "message":"Booking must belong to the current user",
             "statusCode":403
@@ -196,7 +185,7 @@ router.delete('/:bookingId', requireAuth, exsitingBooking, async(req,res)=>{
 
     //check if the date is in the past, if so, you can't delete it 403
     let today = new Date()
-    const startDate = cxlBooking.startDate
+    const startDate = deleteBooking.startDate
 
     if(new Date(startDate) <= today){
         res.status(403).json({
@@ -207,7 +196,7 @@ router.delete('/:bookingId', requireAuth, exsitingBooking, async(req,res)=>{
     //if none of above you are able to delete it
     else{
 
-        await cxlBooking.destroy();
+        await deleteBooking.destroy();
 
         res.json({
             "message": "Successfully deleted",
