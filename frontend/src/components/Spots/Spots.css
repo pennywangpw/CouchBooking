@@ -1,0 +1,37 @@
+/* 外層決定內容物 */
+.allSpotImg{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+}
+
+.spotImgOutter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 380px;
+    width: 25%;
+}
+
+.spotImg{
+    height: 250px;
+    width: 270px;
+}
+
+.cityNpriceNrate{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 270px;
+
+}
+
+.city{
+    width: 50%;
+}
+
+.rate{
+    width: 50%;
+    text-align: right;
+}

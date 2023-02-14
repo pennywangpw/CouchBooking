@@ -1,0 +1,15 @@
+.logInSignup{
+    display: flex;
+    right: 10px;
+    font-family: serif;
+    height: 40px;
+}
+
+
+.homeNsession{
+    background-color: red;
+    display: flex;
+    justify-content: space-between;
+    font-family: serif;
+    align-items: center;
+}
