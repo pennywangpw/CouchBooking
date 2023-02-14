@@ -19,7 +19,7 @@ function Navigation({ isLoaded }){
     );
   } else {
     sessionLinks = (
-      <li>
+      <div className='logInSignup'>
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
@@ -28,17 +28,17 @@ function Navigation({ isLoaded }){
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </div>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
+    <div className='homeNsession'>
+      <div>
+        <NavLink exact to="/">CouchBooking (Home)</NavLink>
+      </div>
       {isLoaded && sessionLinks}
-    </ul>
+    </div>
   );
 }
 
