@@ -1,0 +1,43 @@
+.details{
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.descriptionNbtn{
+    display: flex;
+    flex-direction: row;
+    border: solid 5px;
+}
+
+.description{
+    width: 50%;
+}
+
+
+.actionBtn{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    justify-content: space-around;
+    /* text-align: right; */
+}
+
+.reviewDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+
+.numOfcomments{
+    display: flex;
+}
+
+
+.img{
+    width: 50%;
+    height: 412px;
+}

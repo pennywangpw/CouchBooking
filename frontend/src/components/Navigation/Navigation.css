@@ -7,9 +7,15 @@
 
 
 .homeNsession{
-    background-color: red;
     display: flex;
     justify-content: space-between;
     font-family: serif;
     align-items: center;
+}
+
+
+
+.logoIcon{
+    width: 40px;
+    height: 40px;
 }

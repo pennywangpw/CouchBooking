@@ -39,6 +39,54 @@ module.exports = {
         userId: 2,
         review: 'convenient',
         stars: 4,
+      },
+      {
+        spotId: 4,
+        userId: 1,
+        review: 'convenient',
+        stars: 4,
+      },
+      {
+        spotId: 5,
+        userId: 1,
+        review: 'bad',
+        stars: 2,
+      },
+      {
+        spotId: 5,
+        userId: 2,
+        review: 'not recommended',
+        stars: 2,
+      },
+      {
+        spotId: 6,
+        userId: 2,
+        review: 'cozy',
+        stars: 4.5,
+      },
+      {
+        spotId: 7,
+        userId: 2,
+        review: 'the host is nice',
+        stars: 4.8,
+      },
+      {
+        spotId: 8,
+        userId: 2,
+        review: 'it is close to the metro, nice!',
+        stars: 4.3,
+      },
+      {
+        spotId: 9,
+        userId: 2,
+        review: 'I would love to stay here again!',
+        stars: 5,
+      },
+      {
+        spotId: 9,
+        userId: 2,
+        review: 'love the design and staffs are wonderful !',
+        stars: 4.7,
       }
     ], {});
   },

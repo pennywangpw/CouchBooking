@@ -1,12 +1,11 @@
 //reducer . action creators
 //import the token
-import AllSpots from '../components/Spots/AllSpots';
 import { csrfFetch } from './csrf';
 
 
 //action creator
 const GET_AllSpots = 'spots/getAllSpots'
-
+const GET_SpotsDetails ='spots/getSpotsDetails'
 
 const getSpots = (spot) =>{
     return{
@@ -14,6 +13,16 @@ const getSpots = (spot) =>{
         spot
     }
 }
+
+
+const getDetails = (detail) =>{
+    console.log("this is getDetails")
+    return{
+        type: GET_SpotsDetails,
+        detail
+    }
+}
+
 
 //thunk action creator
 export const getAllSpots =() => async (dispatch) =>{
@@ -27,6 +36,16 @@ export const getAllSpots =() => async (dispatch) =>{
     return data
 }
 
+export const getSpotDetails =(spotId) => async (dispatch) =>{
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+    const data = await response.json()
+    console.log("getSpotDetils data: ", data)
+    dispatch(getDetails(data))
+    return data
+}
+
+
+//Reducer
 const initialState = {allSpots:{},singleSpot:{}};
 
 const spotsReducer = (state = initialState, action) => {
@@ -41,6 +60,13 @@ const spotsReducer = (state = initialState, action) => {
         newState.allSpots = newObj
 
         console.log("spotsReducer with newState: ", newState)
+        return newState
+    case GET_SpotsDetails:
+        newState = {...state, singleSpot:{...state.singleSpot}}
+        // const newObjforDetails = {...action.detail[0]}
+        // console.log("spotsReducer wih Get SpotsDetails data: ", newObjforDetails)
+        newState.singleSpot = action.detail[0]
+        console.log("newState: ", newState)
         return newState
     default:
       return state;

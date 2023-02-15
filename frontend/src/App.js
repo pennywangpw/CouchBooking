@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom";
 import AllSpots from './components/Spots/AllSpots'
+import SpotsDetails from "./components/Spots/SpotsDetails/SpotsDetails.js";
 
 
 function App() {
@@ -24,15 +25,15 @@ function App() {
             <AllSpots/>
           </Route>
 
-          {/* <Route path= 'spots/:id'>
+          <Route path= '/spots/:id'>
             <SpotsDetails/>
           </Route>
 
-          <Route path= 'spots/current'>
+          {/* <Route path= '/spots/current'>
             <CurrentDetails/>
           </Route>
 
-          <Route path= 'spots/:id/edit'>
+          <Route path= '/spots/:id/edit'>
             <EditDetails/>
           </Route> */}
 

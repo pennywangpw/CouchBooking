@@ -25,7 +25,7 @@ const AllSpots = () =>{
                   // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
                   <div className="spotImgOutter" key={id} >
                     <NavLink to ={`/spots/${id}`}>
-                      <img className="spotImg" src={previewImage}></img>
+                      <img className="spotImg" src={previewImage}/>
                     </NavLink>
                     <div className="cityNpriceNrate">
                       <div className="city">City, {city}</div>
