@@ -75,7 +75,7 @@ export default function ProfileButton({ user }) {
                         </li>
                         <li className="profile-dropdown-links">
                             <NavLink
-                                exact to="/spots/current"
+                                exact to="/my-spots"
                                 className="profile-dropdown-my-spots"
                             >
                                 Manage Spots

@@ -52,16 +52,11 @@ export default function Navigation({ isLoaded }) {
                 <div className="Navigation-list-right">
                     { sessionUser &&
                         <li className="Navigation-list-modal">
-                            <NavLink exact to ='/spots/new'>
-                                <button>Create A New Spot</button>
-                                {/* <OpenModalButton
-                                    buttonText="Creat A New Spot"
-                                    onButtonClick={closeMenu}
-                                    modalComponent={<CreateASpotForm />}
-                                /> */}
-
-                            </NavLink>
-
+                            <OpenModalButton
+                                buttonText="Creat A New Spot"
+                                onButtonClick={closeMenu}
+                                modalComponent={<CreateASpotForm />}
+                            />
                         </li>
                     }
                     { isLoaded && (

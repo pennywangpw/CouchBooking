@@ -25,14 +25,13 @@ const AllSpots = () =>{
                   // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
                   <div className="spotImgOutter" key={id} >
                     <NavLink to ={`/spots/${id}`}>
-                      <img className="spotImg" src={previewImage}/>
+                      <img className="spotImg" src={previewImage} alt="spot"/>
                     </NavLink>
                     <div className="cityNpriceNrate">
                       <div className="city">City, {city}</div>
                       <div className="rate">{avgRating}</div>
                       <div className="price">${price} night</div>
                     </div>
-
                   </div>
               ))}
         </div>

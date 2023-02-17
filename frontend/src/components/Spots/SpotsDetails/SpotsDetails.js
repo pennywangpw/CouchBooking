@@ -7,28 +7,34 @@ import './SpotsDetails.css'
 
 const SpotsDetails = () =>{
     const dispatch = useDispatch()
+    // const reviews = useSelector(state => state.spots.singleSpot)
     const spots = useSelector(state => state.spots.singleSpot)
-    console.log("SpotsDetails with spots", spots)
+    console.log("SpotsDetails with spots")
+    console.log( spots)
     // console.log("SpotsDeails with spotImages url: ",spots.SpotImages[0].url)
     const {id} = useParams()
 
     useEffect(() => {
         dispatch(getSpotDetails(id));
+        // dispatch(getReviews(id));
     }, [dispatch]);
 
+    //alert function
     function handleAlert(){
         alert("Feature Coming Soon.....")
     }
 
 
     if(!spots.SpotImages) return null
+    console.log("HEREEE URL: ",spots.SpotImages[0].url)
 
     return(
         <div className="details">
+            <br/><br/><br/><br/><br/><br/>
             <div className="name">{spots.name}</div>
             <div className="city">{spots.city}</div>
             <div className="images">
-                <img className="img" src={spots.SpotImages[0].url}/>
+                <img className="img" src={spots.SpotImages[0].url} alt='previewImg'/>
             </div>
             <div className="descriptionNbtn">
                 <div className="description">{spots.description}</div>

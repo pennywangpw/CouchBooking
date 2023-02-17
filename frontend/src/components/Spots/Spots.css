@@ -1,9 +1,9 @@
 /* 外層決定內容物 */
-.allSpotImg{
+
+
+/* .allSpotImg{
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-evenly; */
-
 }
 
 .spotImgOutter{
@@ -25,6 +25,56 @@
     justify-content: space-between;
     width: 270px;
 
+}
+
+.city{
+    width: 50%;
+}
+
+.rate{
+    width: 50%;
+    text-align: right;
+} */
+
+.allSpotImg{
+
+    width:95%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /* 這是 上下&左右間距 */
+    padding: 3% 5%;
+    align-content: space-around;
+
+    /* Grid 布局 */
+    /* display: grid;
+    grid-template-columns: repeat(4, 20%);
+    grid-column-gap: 10px;
+
+    justify-items: center;
+    line-height:20px;
+    border: 1px solid black; */
+}
+
+
+
+.spotImgOutter{
+    box-sizing: border-box;
+    /* background-color: aquamarine; */
+    margin-left: 30px;
+    flex: 0 0 22%;
+}
+
+.spotImg{
+    height: 250px;
+    width: 270px;
+}
+
+.cityNpriceNrate{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 270px;
 }
 
 .city{
