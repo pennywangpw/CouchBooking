@@ -5,8 +5,10 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom";
 import AllSpots from './components/Spots/AllSpots'
-import SpotsDetails from "./components/Spots/SpotsDetails/SpotsDetails.js";
-
+import SpotsDetails from "./components/Spots/SpotsDetails/SpotsDetails";
+import CreateASpotForm from "./components/Spots/CreateASpot/CreateASpot"
+import CurrentSpot from "./components/Spots/CurrentSpot/CurrentSpot";
+import EditASpot from "./components/Spots/EditASpot/EditASpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,17 +27,22 @@ function App() {
             <AllSpots/>
           </Route>
 
+          <Route excat path= '/spots/new'>
+            <CreateASpotForm/>
+          </Route>
+
+          <Route exact path= '/spots/current'>
+            <CurrentSpot/>
+          </Route>
+
+          <Route path= '/spots/:id/edit'>
+            <EditASpot/>
+          </Route>
+
           <Route path= '/spots/:id'>
             <SpotsDetails/>
           </Route>
 
-          {/* <Route path= '/spots/current'>
-            <CurrentDetails/>
-          </Route>
-
-          <Route path= '/spots/:id/edit'>
-            <EditDetails/>
-          </Route> */}
 
         </Switch>
       )}
