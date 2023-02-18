@@ -5,12 +5,13 @@ import { NavLink, useParams, useHistory } from "react-router-dom";
 import { createASpot } from "../../../store/spots";
 import { createSpot, createNewImgs } from "../../../store/spots";
 import SpotForm from "../SpotForm/SpotForm";
-// import SpotForm from "../SpotForm/SpotForm";
+
+
 //get the current spot data
 //set up the validation
 //display the updated form
 
-
+//get existing data
 const EditASpot = () =>{
     const dispatch= useDispatch()
     //get current spotId

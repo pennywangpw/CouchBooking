@@ -6,6 +6,7 @@ import { createASpot } from "../../../store/spots";
 import { createSpot, createNewImgs } from "../../../store/spots";
 import SpotForm from "../SpotForm/SpotForm";
 
+//empty data 
 const CreateASpotForm = () =>{
 
     const spot= {

@@ -9,12 +9,13 @@ const SpotsDetails = () =>{
     const dispatch = useDispatch()
     // const reviews = useSelector(state => state.spots.singleSpot)
     const spots = useSelector(state => state.spots.singleSpot)
-    console.log("SpotsDetails with spots")
+    console.log("SpotsDetails with spots: ")
     console.log( spots)
     // console.log("SpotsDeails with spotImages url: ",spots.SpotImages[0].url)
     const {id} = useParams()
-
+    console.log("id from params: ", id)
     useEffect(() => {
+        console.log("SpotsDetails---useEffect")
         dispatch(getSpotDetails(id));
         // dispatch(getReviews(id));
     }, [dispatch]);
@@ -24,9 +25,10 @@ const SpotsDetails = () =>{
         alert("Feature Coming Soon.....")
     }
 
+    if(!spots  || !spots.SpotImages ) return null
 
-    if(!spots.SpotImages) return null
-    console.log("HEREEE URL: ",spots.SpotImages[0].url)
+    // if(spots.SpotImages.length === 0) return null
+    // console.log("HEREEE URL: ",spots.SpotImages[0].url)
 
     return(
         <div className="details">
