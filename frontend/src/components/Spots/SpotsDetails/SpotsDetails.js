@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { getAllSpots, getSpotDetails } from "../../../store/spots";
 import { getReviews } from "../../../store/reviews";
 import { NavLink, useParams } from "react-router-dom";
+import AllReviews from "../../Reviews/AllReviews";
 import './SpotsDetails.css'
 
 //SpotDetails--
@@ -13,14 +14,16 @@ import './SpotsDetails.css'
 
 const SpotsDetails = () =>{
     const dispatch = useDispatch()
-    // const reviews = useSelector(state => state.spots.singleSpot)
+    const reviews = useSelector(state => state.reviews)
+    // console.log("THIS IS SPOTSDETAILS WITH REVIEWS: ", reviews)
     const spots = useSelector(state => state.spots.singleSpot)
     console.log("SpotsDetails with spots: ")
-    console.log( spots)
+    console.log(spots)
     // console.log("SpotsDeails with spotImages url: ",spots.SpotImages[0].url)
 
     const {id} = useParams()
-    console.log("id from params: ", id)
+    console.log("SD的id from params: ", +id)
+    console.log("SD的 id from params TYPE: ", typeof id)
     useEffect(() => {
         console.log("SpotsDetails---useEffect")
         dispatch(getSpotDetails(id));
@@ -41,11 +44,12 @@ const SpotsDetails = () =>{
         <div className="details">
             <br/><br/><br/><br/><br/><br/>
             <div className="name">{spots.name}</div>
-            <div className="city">{spots.city}</div>
+            <div className="city">{spots.city}, {spots.state}, {spots.country}</div>
             <div className="images">
                 <img className="img" src={spots.SpotImages[0].url} alt='previewImg'/>
             </div>
             <div className="descriptionNbtn">
+                <div>Hosted by {spots.Owner.firstName}{spots.Owner.lastName}</div>
                 <div className="description">{spots.description}</div>
                 <div className="actionBtn">
                     <div>{spots.price}</div>
@@ -61,8 +65,9 @@ const SpotsDetails = () =>{
                         <div>{spots.numReviews}</div>
                     </div>
 
-                    <div>reviews....</div>
-        
+
+                    <AllReviews reviews={reviews}/>
+
                 </div>
             </div>
         </div>

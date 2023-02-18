@@ -1,7 +1,7 @@
 //1.React functional component --LoginFormPage
 //2.import css
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -13,6 +13,15 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+
+
+//validation
+let e =[]
+  useEffect(()=>{
+    if(credential.length < 4) e.push("invalid")
+    if(password.length < 6) e.push("invalid")
+    setErrors(e)
+  },[credential,password])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,7 +63,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" disabled = {errors.length > 0}>Log In</button>
       </form>
     </>
   );

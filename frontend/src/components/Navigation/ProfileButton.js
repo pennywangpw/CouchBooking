@@ -62,7 +62,7 @@ export default function ProfileButton({ user }) {
                         {/* <li className="profile-dropdown-links">{user.username}</li> */}
                         <li className="profile-dropdown-links">
                         <div>
-                          Hello, {user.firstName} {user.lastName}<br/>
+                          Hello, {user.firstName}<br/>
                           {user.email}
                         </div>
                         <div className="profile-dropdown-divide"></div>
