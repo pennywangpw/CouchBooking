@@ -1,9 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllSpots, getSpotDetails } from "../../../store/spots";
+import { getReviews } from "../../../store/reviews";
 import { NavLink, useParams } from "react-router-dom";
 import './SpotsDetails.css'
 
+//SpotDetails--
+//previewImg ({{url}}/spots/:id)
+//price, review count, avg rating, spot img ({{url}}/spots/:id)
+//reviews ('/:spotId/reviews')
+//add reserve button
 
 const SpotsDetails = () =>{
     const dispatch = useDispatch()
@@ -12,12 +18,13 @@ const SpotsDetails = () =>{
     console.log("SpotsDetails with spots: ")
     console.log( spots)
     // console.log("SpotsDeails with spotImages url: ",spots.SpotImages[0].url)
+
     const {id} = useParams()
     console.log("id from params: ", id)
     useEffect(() => {
         console.log("SpotsDetails---useEffect")
         dispatch(getSpotDetails(id));
-        // dispatch(getReviews(id));
+        dispatch(getReviews(id));
     }, [dispatch]);
 
     //alert function
@@ -55,7 +62,7 @@ const SpotsDetails = () =>{
                     </div>
 
                     <div>reviews....</div>
-
+        
                 </div>
             </div>
         </div>

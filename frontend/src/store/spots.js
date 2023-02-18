@@ -11,7 +11,7 @@ const POST_newImg ='spots/newImg'
 const GET_CurrentSpots = 'spots/getCurrentSpots'
 const PUT_EditSpot = 'spots/editSpot'
 const DELETE_deleteSpot ='spots/deleteSpot'
-// const GET_Reviews ='spots/getReviews'
+
 
 export const getSpots = (spot) =>{
     return{
@@ -69,13 +69,6 @@ export const deleteSpot = (id) =>{
         id
     }
 }
-
-// export const getReviewsbySpot =(reviews) =>{
-//     return{
-//         type: GET_Reviews,
-//         reviews
-//     }
-// }
 
 
 //thunk action creator
@@ -177,13 +170,7 @@ export const deleteASpot = (id) => async(dispatch) =>{
     }
 }
 
-// //get the review by spot
-// export const getReviews = (spotId) => async (dispatch)=>{
-//     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
-//     const data = await response.json()
-//     dispatch(getReviewsbySpot(data))
-//     return data
-// }
+
 
 
 //Reducer
@@ -214,6 +201,7 @@ const spotsReducer = (state = initialState, action) => {
         console.log("這個是spotsDetails newState: ", newState)
         return newState
 
+    //we could use getallspots instead
     // case GET_CurrentSpots:
     //     console.log("hello~~~")
     //     newState ={...state}
@@ -252,7 +240,6 @@ const spotsReducer = (state = initialState, action) => {
       return state;
   }
 };
-
 
 
 export default spotsReducer;
