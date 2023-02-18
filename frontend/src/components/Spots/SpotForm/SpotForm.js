@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getSpotDetails } from '../../../store/spots';
+import { getSpotDetails, createASpot, editASpot,createNewImgs } from '../../../store/spots';
 
 import {EditASpot} from '../EditASpot/EditASpot'
 
-
+//目前只有previewImage,
 const SpotForm = ({ spot, formType }) => {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -13,14 +13,14 @@ const SpotForm = ({ spot, formType }) => {
     const [id, setId] = useState(spot.id)
     const [country, setCountry] = useState(spot.country)
     const [address,setAddress] = useState(spot.address)
-    const [city, setCity] = useState("")
-    const [state,setState] = useState("")
+    const [city, setCity] = useState(spot.city)
+    const [state,setState] = useState(spot.state)
     const [lat, setLat] = useState(45.2354)
     const [lng, setLng] = useState(-99.123)
-    const [description, setDescription] = useState("")
-    const [name, setName] = useState("")
-    const [price, setPrice] = useState("")
-    const [url1, setUrl1] = useState("")
+    const [description, setDescription] = useState(spot.description)
+    const [name, setName] = useState(spot.name)
+    const [price, setPrice] = useState(spot.price)
+    const [url1, setUrl1] = useState(spot.previewImage)
     const [url2, setUrl2] = useState("")
     const [url3, setUrl3] = useState("")
     const [url4, setUrl4] = useState("")
@@ -39,7 +39,7 @@ const SpotForm = ({ spot, formType }) => {
         if(description.length < 30) e.push("Description  needs a minimum of 30 characters")
         if(name.length === 0) e.push("Name is required")
         if(price.length === 0) e.push("Price is required")
-        if(url1.length === 0) e.push("Preview image is required")
+        // if(url1.length === 0) e.push("Preview image is required")
         // if(url2.length === 0) e.push("Image URL must end in .png .jpg, or .jpeg")
         console.log("rerender every time")
         setErrors(e)
@@ -61,18 +61,46 @@ const SpotForm = ({ spot, formType }) => {
     const updateUrl5 = (e) => setUrl5(e.target.value)
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     //payload
-    spot = {country, address,city, state, description, name, price, lat, lng};
+    // issue-- create a spot we don't need previewImg, however when we want to display it we need it
+    const payload ={...spot, country, address,city, state, description, name, price, lat, lng, url1, url2, url3, url4, url5};
+    console.log("這裡是payload: ", payload)
 
+    //1.createASpot
+    //2.make sure there's url in Store
     if(formType === "Create Spot") {
-      const updatedSpot = dispatch(getSpotDetails(spot));
-      if(!updatedSpot) history.push(`/spots/${spot.id}`);
+      let createdSpot = await dispatch(createASpot(payload));
+      console.log("SpotForm---createdSpot: ", createdSpot)
+
+
+      let createImg1;
+      let createImg2;
+      let createImg3;
+      let createImg4;
+      let createImg5;
+
+      if(url1)createImg1= await dispatch(createNewImgs({newUrl: url1, spotId: createdSpot.id}))
+      if(url2)createImg2= await dispatch(createNewImgs({newUrl: url2, spotId: createdSpot.id}))
+      if(url3)createImg3= await dispatch(createNewImgs({newUrl: url3, spotId: createdSpot.id}))
+      if(url4)createImg4= await dispatch(createNewImgs({newUrl: url4, spotId: createdSpot.id}))
+      if(url5)createImg5= await dispatch(createNewImgs({newUrl: url5, spotId: createdSpot.id}))
+
+
+      if(createASpot){
+        history.push(`/spots/${createdSpot.id}`);
+     }
 
     }
+
+    //find the spot === parmas id (in EditAspot)
+    //update the current spot
+
     if(formType === "Edit Spot") {
-      const updatedSpot = dispatch(getSpotDetails(spot));
+      console.log("HIT EDIT SPOT with passed in exsiting spot: ", spot)
+      console.log("HIT EDIT SPOT with revised spot: ", payload)
+      const updatedSpot = dispatch(editASpot(payload));
       if(updatedSpot) history.push(`/spots/${spot.id}`);
     }
 
@@ -108,10 +136,25 @@ const SpotForm = ({ spot, formType }) => {
                      <ul className="errors">
                          {errors.length > 0 && errors.map(error=>(<li key={error}>{error}</li>))}
                     </ul>
-                    <input type="text" placeholder="Country" value={country} onChange={updateCountry}/>
-                    <input type="text" placeholder="Address" value={address} onChange={updateAddress}/>
-                    <input type="text" placeholder="City" value={city} onChange={updateCity}/>
-                    <input type="text" placeholder="State" value={state} onChange={updateState}/>
+                    <lable>
+                      Country
+                      <input type="text" placeholder="Country" value={country} onChange={updateCountry}/>
+                    </lable>
+
+                    <label>
+                      Address
+                      <input type="text" placeholder="Address" value={address} onChange={updateAddress}/>
+                    </label>
+
+                    <label>
+                      City
+                      <input type="text" placeholder="City" value={city} onChange={updateCity}/>
+                    </label>
+
+                    <label>
+                      State
+                      <input type="text" placeholder="State" value={state} onChange={updateState}/>
+                    </label>
                     {/* <input type="text" placeholder="lat" value={lat} onChange={updatelat}/>
                     <input type="text" placeholder="lng" value={lng} onChange={updatelng}/> */}
 

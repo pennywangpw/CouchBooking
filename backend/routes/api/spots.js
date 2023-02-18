@@ -273,7 +273,7 @@ router.get('/:spotId', existingSpot, async (req,res,next)=>{
         let spotwithidarr =[]
         if(spotwithid){
         spotwithid.forEach(spot=>{spotwithidarr.push(spot.toJSON())})
-        console.log("array 裡面: ",spotwithidarr)
+        // console.log("array 裡面: ",spotwithidarr)
 
         //numReviews
 
@@ -359,12 +359,15 @@ router.put('/:spotId',requireAuth, existingSpot, existingOwner, validateCreate,a
     // console.log("全部的body:",req.body)
     const spotId = req.params.spotId
 
+    console.log("THIS IS BACKEND EDITSPOT WITH SPOTID: ", spotId)
     //find the existing obj by spotId which needs to be changed
     let updateSpot = await Spot.findByPk(spotId)
 
     await updateSpot.update({
         ...req.body
     })
+
+    console.log("THIS IS BACKEND EDITSPOT WITH UPDATEDSPOT: ", updateSpot)
     //缺一個save
     // updateSpot.address= address
     // updateSpot.city= city

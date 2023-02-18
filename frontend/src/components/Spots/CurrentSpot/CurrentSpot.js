@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import getCurrentSpots from "../../../store/spots";
+import {getCurrentSpots} from "../../../store/spots";
 import { useHistory } from "react-router-dom";
+import DeleteFormModal from '../../DeleteConfirmationModal';
+import OpenModalButton from "../../OpenModalButton";
 
 import './CurrentSpot.css';
 
@@ -36,15 +38,9 @@ const CurrentSpot = () =>{
 
     //to get other images from db, those are not in spot
     //userEffect will happend after 1st render
-    // useEffect(() => {
-    //     dispatch(getCurrentSpots());
-    //   }, [dispatch]);
-
-
-    // const handleUpdate =(e) =>{
-    //     e.preventDefault()
-    //     history.push(`/spots/${id}/edit`)
-    // }
+    useEffect(() => {
+        dispatch(getCurrentSpots());
+      }, [dispatch]);
 
 
     return(
@@ -65,7 +61,12 @@ const CurrentSpot = () =>{
                                 <div className="price">${price} night</div>
                                 <div className="actionBtn">
                                     <button type="button" onClick={()=>{history.push(`/spots/${id}/edit`)}}>Update</button>
-                                    <button>Delete</button>
+                                    <div>
+                                    <OpenModalButton
+                                        buttonText="delete"
+                                        modalComponent={<DeleteFormModal  id={id}/>}
+                                    />
+                                    </div>
                                 </div>
                             </div>
                         </div>

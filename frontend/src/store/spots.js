@@ -9,7 +9,9 @@ const GET_SpotsDetails ='spots/getSpotsDetails'
 const POST_CreateSpot ='spots/createSpot'
 const POST_newImg ='spots/newImg'
 const GET_CurrentSpots = 'spots/getCurrentSpots'
-// const GET_Reviews ='spots/getReviews'
+const PUT_EditSpot = 'spots/editSpot'
+const DELETE_deleteSpot ='spots/deleteSpot'
+
 
 export const getSpots = (spot) =>{
     return{
@@ -29,6 +31,7 @@ export const getDetails = (detail) =>{
 
 
 export const createSpot = (newspot) =>{
+    console.log("this is createSpot function")
     return{
         type: POST_CreateSpot,
         newspot
@@ -37,6 +40,7 @@ export const createSpot = (newspot) =>{
 
 
 export const createImgs = (newImg) =>{
+    console.log("this is createTmgs: ", newImg)
     return{
         type: POST_newImg,
         newImg
@@ -50,12 +54,21 @@ export const getUserSpots = (spot)=>{
     }
 }
 
-// export const getReviewsbySpot =(reviews) =>{
-//     return{
-//         type: GET_Reviews,
-//         reviews
-//     }
-// }
+
+export const editSpot = (editedSpot) =>{
+    return{
+        type: PUT_EditSpot,
+        editedSpot
+    }
+}
+
+
+export const deleteSpot = (id) =>{
+    return{
+        type: DELETE_deleteSpot,
+        id
+    }
+}
 
 
 //thunk action creator
@@ -110,7 +123,7 @@ export const createNewImgs = ({newUrl, spotId}) => async(dispatch) =>{
         const newImg = await response.json()
         //update store
         dispatch(createImgs(newImg))
-
+        return newImg
     }
 
 
@@ -120,28 +133,53 @@ export const createNewImgs = ({newUrl, spotId}) => async(dispatch) =>{
 //get Current user's spots thunk
 export const getCurrentSpots = () => async(dispatch) =>{
     console.log("有道thunk?")
-    const response = await csrfFetch('/spots/current')
+    const response = await csrfFetch('/api/spots/current')
     const data = await response.json()
     console.log("getCurrentSpots data: ", data)
-    dispatch(getUserSpots(data))
+    dispatch(getSpots(data))
     return data
 }
 
 
-// //get the review by spot
-// export const getReviews = (spotId) => async (dispatch)=>{
-//     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
-//     const data = await response.json()
-//     dispatch(getReviewsbySpot(data))
-//     return data
-// }
+export const editASpot = (spot) => async(dispatch) => {
+    console.log("Thunk--editASpot with passed in :", spot)
+    const response = await csrfFetch(`/api/spots/${spot.id}`,{
+        method:"PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify (spot)
+    })
+    if(response.ok){
+        const updatedSpot = await response.json()
+        dispatch(editSpot(updatedSpot))
+        console.log("editASpot---editSpot: ", updatedSpot)
+        return updatedSpot
+    }
+
+}
+
+
+
+export const deleteASpot = (id) => async(dispatch) =>{
+    const response = await csrfFetch(`/api/spots/${id}`,{
+        method:"DELETE"
+    })
+
+    if(response.ok){
+        dispatch(deleteSpot(id))
+
+    }
+}
+
+
 
 
 //Reducer
 const initialState = {allSpots:{},singleSpot:{}};
 
 const spotsReducer = (state = initialState, action) => {
+    console.log("SpotsReducer---action: ", action)
   let newState;
+  let allSpots;
   switch (action.type) {
     case GET_AllSpots:
         //follow store shape
@@ -157,17 +195,34 @@ const spotsReducer = (state = initialState, action) => {
         newState = {...state, singleSpot:{...state.singleSpot}}
         // const newObjforDetails = {...action.detail[0]}
         // console.log("spotsReducer wih Get SpotsDetails data: ", newObjforDetails)
+        console.log("Reducer with ACTION DETAIL: ",action.detail[0])
         newState.singleSpot = action.detail[0]
+        console.log("SpotsDetails---action.detail: ", action.detail)
         console.log("這個是spotsDetails newState: ", newState)
         return newState
 
-    case GET_CurrentSpots:
-        console.log("hello~~~")
+    //we could use getallspots instead
+    // case GET_CurrentSpots:
+    //     console.log("hello~~~")
+    //     newState ={...state}
+    //     const newObj2 ={}
+    //     action.spot.Spots.forEach(spot => newObj2[spot.id] = spot)
+    //     newState.allSpots = newObj2
+    //     return newState
+
+    case PUT_EditSpot:
         newState ={...state}
-        const newObj2 ={}
-        action.spot.Spots.forEach(spot => newObj2[spot.id] = spot)
-        newState.allSpots = newObj2
-        return newState
+        const newObj3 ={}
+        console.log("SpotReducer---EditSpot action: ",action.editedSpot)
+        // newState.allSpots = newObj3
+        // return newState
+
+    case DELETE_deleteSpot:
+        allSpots = {...state.allSpots}
+        delete allSpots[action.id]
+        return{...state,allSpots}
+        console.log("delete spot: ", newState)
+        console.log("SpotReducer-----DeleteSpot action: ", action)
 
     case POST_newImg:
         return state
@@ -181,10 +236,10 @@ const spotsReducer = (state = initialState, action) => {
     //     console.log("spotsReducer--- createSpot newstate: ", newState)
     //     return newState
     default:
+        console.log("HIT DEFAULT")
       return state;
   }
 };
-
 
 
 export default spotsReducer;
