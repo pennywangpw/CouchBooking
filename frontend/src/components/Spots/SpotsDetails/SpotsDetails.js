@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllSpots, getSpotDetails } from "../../../store/spots";
+import { getSpotDetails } from "../../../store/spots";
 import { getReviews } from "../../../store/reviews";
 import { NavLink, useParams } from "react-router-dom";
 import AllReviews from "../../Reviews/AllReviews";
@@ -12,7 +12,7 @@ import './SpotsDetails.css'
 //reviews ('/:spotId/reviews')
 //add reserve button
 
-const SpotsDetails = () =>{
+const SpotsDetails = () => {
     const dispatch = useDispatch()
     const reviews = useSelector(state => state.reviews)
     // console.log("THIS IS SPOTSDETAILS WITH REVIEWS: ", reviews)
@@ -21,7 +21,7 @@ const SpotsDetails = () =>{
     console.log(spots)
     // console.log("SpotsDeails with spotImages url: ",spots.SpotImages[0].url)
 
-    const {id} = useParams()
+    const { id } = useParams()
     console.log("SD的id from params: ", +id)
     console.log("SD的 id from params TYPE: ", typeof id)
     useEffect(() => {
@@ -31,23 +31,50 @@ const SpotsDetails = () =>{
     }, [dispatch]);
 
     //alert function
-    function handleAlert(){
+    function handleAlert() {
         alert("Feature Coming Soon.....")
     }
 
-    if(!spots  || !spots.SpotImages ) return null
+    if (!spots || !spots.SpotImages) return null
 
     // if(spots.SpotImages.length === 0) return null
     // console.log("HEREEE URL: ",spots.SpotImages[0].url)
 
-    return(
+    //Re-assign numReviews
+    let reviewChecker;
+    let divider;
+    let reviewNum = spots.numReviews;
+    if (reviewNum === 1) {
+        reviewChecker = "review"
+        divider = <i class="fa-solid fa-circle-dot"></i>
+    } else if (reviewNum === 0) {
+        reviewChecker = "New"
+        reviewNum = ""
+    } else {
+        reviewChecker = ' reviews'
+        divider = <i class="fa-solid fa-circle-dot"></i>
+    }
+
+
+    // const noReviewsYet = () => {
+    //     if (reviewChecker === "New" && user) {
+    //         return (
+    //             <div>
+    //                 Be the first to post a review!
+    //             </div>
+    //         )
+    //     }
+    // }
+
+
+    return (
         <div className="details">
-            <br/><br/><br/><br/>
-            <br/><br/><br/><br/>
+            <br /><br /><br /><br />
+            <br /><br /><br /><br />
             <div className="name">{spots.name}</div>
             <div className="city">{spots.city}, {spots.state}, {spots.country}</div>
             <div className="images">
-                <img className="img" src={spots.SpotImages[0].url} alt='previewImg'/>
+                <img className="img" src={spots.SpotImages[0].url} alt='previewImg' />
             </div>
             <div className="descriptionNbtn">
                 <div className="description">
@@ -59,8 +86,8 @@ const SpotsDetails = () =>{
                         <div class="price">${spots.price}</div>
                         <lable class="price">night</lable>
                     </div>
-                    <div>★{spots.avgRating}</div>
-                    <div>{spots.numReviews}</div>
+                    <div>★{spots.avgRating}{divider} </div>
+                    <div>{spots.numReviews} {reviewChecker}</div>
                     <button type="button" onClick={handleAlert}>Reserve</button>
                 </div>
             </div>
@@ -72,7 +99,7 @@ const SpotsDetails = () =>{
                     </div>
 
 
-                    <AllReviews reviews={reviews}/>
+                    <AllReviews reviews={reviews} />
 
                 </div>
             </div>

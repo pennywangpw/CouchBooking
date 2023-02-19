@@ -12,7 +12,7 @@ import CreateASpotForm from "../Spots/CreateASpot/CreateASpot.js";
 export default function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [ showMenu, setShowMenu ] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
     const openMenu = () => {
@@ -45,29 +45,29 @@ export default function ProfileButton({ user }) {
     }
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-    console.log("THIS IS USER: ",user)
+    console.log("THIS IS USER: ", user)
     return (
         <div className="ProfileButton-dropdown-container">
             <button onClick={openMenu} className="ProfileButton-icons">
                 <i className="fa-sharp fa-solid fa-bars hamburger"></i>
 
                 <img src={"https://previews.123rf.com/images/vitechek/vitechek1907/vitechek190700199/126786791-user-login-or-authenticate-icon-human-person-symbol-vector.jpg"} className="ProfileButton-dropdown-profile-pic" />
-                {/* { user ? (
+                {/* {user ? (
                     <img src={user.profileImageUrl} className="ProfileButton-dropdown-profile-pic" />
                 ) :
                     <i className="fa-solid fa-circle-user user"></i>
                 } */}
             </button>
             <ul className={ulClassName} ref={ulRef}>
-                { user ? (
+                {user ? (
                     <div>
                         {/* <li className="profile-dropdown-links">{user.username}</li> */}
                         <li className="profile-dropdown-links">
-                        <div>
-                          Hello, {user.firstName} {user.lastName}<br/>
-                          {user.email}
-                        </div>
-                        <div className="profile-dropdown-divide"></div>
+                            <div>
+                                Hello, {user.firstName} {user.lastName}<br />
+                                {user.email}
+                            </div>
+                            <div className="profile-dropdown-divide"></div>
                             {/* <NavLink
                                 exact to={`/user/${user.id}`}
                                 className="profile-dropdown-user-profile"
@@ -86,9 +86,9 @@ export default function ProfileButton({ user }) {
 
                         {/* <li className="profile-dropdown-links">{user.email}</li> */}
                         <div className="profile-dropdown-divide"></div>
-                          <li className="profile-dropdown-links">
-                              <button onClick={logout} className="profile-dropdown-logout">Log Out</button>
-                          </li>
+                        <li className="profile-dropdown-links">
+                            <button onClick={logout} className="profile-dropdown-logout">Log Out</button>
+                        </li>
                     </div>
                 ) : (
                     <div>
