@@ -74,7 +74,8 @@ export default function Profile() {
                 <div className="Profile-left">
                     <div className="Profile-section-photo">
                         <div className="Profile-photo">
-                            <img src={user.profileImageUrl} alt="Profile photo" />
+                            {/* <img src={user.profileImageUrl} alt="Profile photo" /> */}
+                            <img src={"https://cdn-icons-png.flaticon.com/512/1250/1250689.png"} alt="Profile photo" />
                         </div>
                         <OpenModalButton
                             buttonText="Change Photo"

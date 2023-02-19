@@ -1,0 +1,51 @@
+.classFather {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.errorLabel {
+    color: red;
+}
+
+.spotCreation {
+    width: 25%;
+}
+
+
+.inputURL {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.inputBoxBottom {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.inputBoxTop {
+    width: 100%;
+    margin-Top: 12px;
+}
+
+.priceDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.priceBox {
+    width: 100%;
+}
+
+.labelBox {
+    width: 100%;
+}
+
+.divGap {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}

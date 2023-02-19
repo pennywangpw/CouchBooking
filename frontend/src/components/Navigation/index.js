@@ -10,7 +10,7 @@ import OpenModalButton from "../OpenModalButton";
 
 export default function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-    const [ showMenu, setShowMenu ] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
     const dispatch = useDispatch();
 
@@ -35,7 +35,6 @@ export default function Navigation({ isLoaded }) {
 
 
     const closeMenu = () => setShowMenu(false);
-
     return (
         <nav className="Navigation-container">
             <ul className="Navigation-list">
@@ -50,9 +49,9 @@ export default function Navigation({ isLoaded }) {
 
 
                 <div className="Navigation-list-right">
-                    { sessionUser &&
+                    {sessionUser &&
                         <li className="Navigation-list-modal">
-                            <NavLink exact to ='/spots/new'>
+                            <NavLink exact to='/spots/new'>
                                 <button>Create A New Spot</button>
                                 {/* <OpenModalButton
                                     buttonText="Creat A New Spot"
@@ -64,11 +63,11 @@ export default function Navigation({ isLoaded }) {
 
                         </li>
                     }
-                    { isLoaded && (
+                    {isLoaded && (
                         <li>
                             <ProfileButton user={sessionUser} />
                         </li>
-                    ) }
+                    )}
                 </div>
             </ul>
         </nav>

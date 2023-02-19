@@ -1,9 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { getAllSpots, getSpotDetails } from "../../../store/spots";
 import { NavLink, useParams, useHistory } from "react-router-dom";
-import { createASpot } from "../../../store/spots";
-import { createSpot, createNewImgs } from "../../../store/spots";
 import SpotForm from "../SpotForm/SpotForm";
 
 
@@ -16,6 +12,7 @@ const EditASpot = () =>{
     const dispatch= useDispatch()
     //get current spotId
     const{id} = useParams()
+    console.log("EditASpot id: ", id)
 
     //get current spot detail
     const currentSpotDetail = useSelector(state => state.spots.allSpots[id])

@@ -1,0 +1,49 @@
+
+
+.star{
+    display: inline-block;
+    font-size: 0;
+    position:relative;
+ }
+ .star-item{
+    display: inline-block;
+    width: 20px;
+    height:20px;
+    cursor: pointer;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAMAAADJ7yrpAAAAYFBMVEUAAAD92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92Un92UmCTPEWAAAAH3RSTlMA9iwe++hAgPLJo13i3Td8JO3Sk4xtYkYUC76cVBIjGgBFCwAAAMtJREFUKM+1kUkOhCAQRUEFBHGep67737JRlEFNJ73wbyAv9WtRD/1O3z/AqrqzDqC7spEAkPECGagwlwRJE28wbpJAk5xjcIJ5rmBBwAsp9nLpsvJYkMWWxRk6QrHZSJFJesIU2UQnjCwLwSQ0kG4zQmzzdmcCuA5VocaQGNiyQX8G1qK/8q6jNH1wtCx3RxwhfnUkM3Vs6ToSdNUDK52NI6JL+4R1JD/HYaXriOsP9xxN+p08R0JV1ZlnzxELRBSJIPccSe1IvufoCxGAFoLwSVOBAAAAAElFTkSuQmCC') center top no-repeat;
+ }
+ input[type="radio"]{
+    position: absolute;
+    clip: rect(0,0,0,0)
+ }
+ input[type="radio"]:checked+.star-item~.star-item{
+     background-position: center bottom;
+ }
+ .star:hover label.star-item{
+    background-position: center top!important;
+ }
+ label.star-item:hover~.star-item{
+    background-position: center bottom!important;
+ }
+ .star-item:after{
+    position:absolute;
+    width:100px;
+    font-size:14px;
+    height:20px;
+    line-height:20px;
+    right:0;
+    margin-right:-105px;
+    color:#666
+ }
+ .star:hover .star-item:after{
+   content:''!important
+ }
+
+
+ input[type="radio"]:checked+.star-item:after{
+    content:attr(title)
+ }
+
+ .star:hover .star-item:hover:after{
+    content:attr(title)!important
+ }

@@ -73,14 +73,21 @@ export const deleteSpot = (id) =>{
 
 //thunk action creator
 export const getAllSpots =() => async (dispatch) =>{
-    const response = await csrfFetch('/api/spots')
-    const data = await response.json()
-    console.log("from getAllSpots thunk: ", data)
-    dispatch(getSpots(data))
+    try {
+        const response = await csrfFetch('/api/spots?')
+        console.log("&&&response: ", response)
+        const data = await response.json()
+        console.log("from getAllSpots thunk: ", data)
+        dispatch(getSpots(data))
+        return data
+
+    } catch (error) {
+        console.log("Unable to retrieve spots. Please try again shortly")
+        throw error
+    }
     // if(response.ok){
     //     dispatch(getSpots(data))
     // }
-    return data
 }
 
 export const getSpotDetails =(spotId) => async (dispatch) =>{

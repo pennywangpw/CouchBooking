@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -13,7 +13,24 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [frontendErrors, setFrontendErrors] = useState("")
   const { closeModal } = useModal();
+
+//frontend check validation > if no, disable the butn
+//backend check validation > if no, show up on the modal
+
+//validation
+let frontendValidation =[]
+useEffect(()=>{
+    if(email.length ===0) frontendValidation.push("invalid")
+    if(username.length < 4 ) frontendValidation.push("invalid")
+    if(firstName.length ===0) frontendValidation.push("invalid")
+    if(lastName.length ===0) frontendValidation.push("invalid")
+    if(password.length < 6 ) frontendValidation.push("invalid")
+    if(confirmPassword !== password || confirmPassword.length === 0) frontendValidation.push("invalid")
+    setFrontendErrors(frontendValidation)
+  },[email,username,firstName,lastName,password,confirmPassword])
+  console.log("這裡是e: ",frontendValidation)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,7 +107,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled = {frontendErrors.length > 0}>Sign Up</button>
       </form>
     </>
   );

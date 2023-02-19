@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
 import { NavLink } from "react-router-dom";
 import './Spots.css';
+import SpotInfo from "./SpotInfo";
 
 const AllSpots = () =>{
     const dispatch = useDispatch()
@@ -15,26 +16,44 @@ const AllSpots = () =>{
     // const spotsArr = spots.allSpots
 
     useEffect(() => {
-        dispatch(getAllSpots());
+      dispatch(getAllSpots());
       }, [dispatch]);
 
       // return null
+
+
+
     return(
-        <div className='allSpotImg'>
-            {spotsArr.map(({id, previewImage,city,price,avgRating})=>(
-                  // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
-                  <div className="spotImgOutter" key={id} >
-                    <NavLink to ={`/spots/${id}`}>
-                      <img className="spotImg" src={previewImage} alt="spot"/>
-                    </NavLink>
-                    <div className="cityNpriceNrate">
-                      <div className="city">City, {city}</div>
-                      <div className="rate">{avgRating}</div>
-                      <div className="price">${price} night</div>
-                    </div>
-                  </div>
-              ))}
-        </div>
+      <div className='allSpotImg'>
+        <br/><br/><br/><br/>
+        <br/><br/><br/><br/>
+        <br/><br/><br/><br/>
+      {spotsArr.map((spot)=>(
+            // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
+            <div className="spotImgOutter" key={spot.id} >
+              <NavLink to ={`/spots/${spot.id}`}>
+                <img className="spotImg" src={spot.previewImage} alt="spot"/>
+              </NavLink>
+              <SpotInfo spotObj={spot}/>
+            </div>
+        ))}
+  </div>
+        // <div className='allSpotImg'>
+        //     {spotsArr.map(({id, previewImage,city,price,avgRating})=>(
+        //           // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
+        //           <div className="spotImgOutter" key={id} >
+        //             <NavLink to ={`/spots/${id}`}>
+        //               <img className="spotImg" src={previewImage} alt="spot"/>
+        //             </NavLink>
+        //             <SpotInfo spotsArr={spotsArr}/>
+        //             {/* <div className="cityNpriceNrate">
+        //               <div className="city">City, {city}</div>
+        //               <div className="rate">{avgRating}</div>
+        //               <div className="price">${price} night</div>
+        //             </div> */}
+        //           </div>
+        //       ))}+
+        // </div>
     )
 
     // //practice
