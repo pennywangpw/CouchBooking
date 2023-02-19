@@ -10,16 +10,29 @@ const SpotInfo = ({spotObj}) =>{
         spotObj.avgRating = "New"
     }else{
         if(typeof spotObj.avgRating === "number"){
-            spotObj.avgRating =spotObj.avgRating.toFixed(2)
+            spotObj.avgRating = (spotObj.avgRating.toFixed(2))
+
         }
     }
 
+// const avgRatingCaculator = ()=>{
+//     if(spotObj.avgRating ===undefined){
+//         // spotObj.avgRating = "New"
+//         return "New"
+//     }else{
+//         if(typeof spotObj.avgRating === "number"){
+//             spotObj.avgRating = spotObj.avgRating.toFixed(2)
+//             return ("★",spotObj.avgRating)
+//         }
+//     }
+// }
 
 
     return(
         <div className="cityNpriceNrate">
             <div className="city">{spotObj.city},{spotObj.state}</div>
-            <div className="rate">{spotObj.avgRating}</div>
+            {/* <div className="rate">{spotObj.avgRating}</div> */}
+            <div className="rate">★ {spotObj.avgRating }</div>
             <div className="price">${spotObj.price} night</div>
         </div>
     )

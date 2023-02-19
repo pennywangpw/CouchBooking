@@ -16,7 +16,7 @@ const AllSpots = () =>{
     // const spotsArr = spots.allSpots
 
     useEffect(() => {
-        dispatch(getAllSpots());
+      dispatch(getAllSpots());
       }, [dispatch]);
 
       // return null
@@ -25,6 +25,9 @@ const AllSpots = () =>{
 
     return(
       <div className='allSpotImg'>
+        <br/><br/><br/><br/>
+        <br/><br/><br/><br/>
+        <br/><br/><br/><br/>
       {spotsArr.map((spot)=>(
             // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
             <div className="spotImgOutter" key={spot.id} >

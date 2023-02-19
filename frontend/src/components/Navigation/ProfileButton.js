@@ -50,11 +50,12 @@ export default function ProfileButton({ user }) {
         <div className="ProfileButton-dropdown-container">
             <button onClick={openMenu} className="ProfileButton-icons">
                 <i className="fa-sharp fa-solid fa-bars hamburger"></i>
-                { user ? (
+                <img src={"https://previews.123rf.com/images/vitechek/vitechek1907/vitechek190700199/126786791-user-login-or-authenticate-icon-human-person-symbol-vector.jpg"} className="ProfileButton-dropdown-profile-pic" />
+                {/* { user ? (
                     <img src={user.profileImageUrl} className="ProfileButton-dropdown-profile-pic" />
                 ) :
                     <i className="fa-solid fa-circle-user user"></i>
-                }
+                } */}
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 { user ? (

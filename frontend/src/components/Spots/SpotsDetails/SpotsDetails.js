@@ -42,18 +42,24 @@ const SpotsDetails = () =>{
 
     return(
         <div className="details">
-            <br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/>
+            <br/><br/><br/><br/>
             <div className="name">{spots.name}</div>
             <div className="city">{spots.city}, {spots.state}, {spots.country}</div>
             <div className="images">
                 <img className="img" src={spots.SpotImages[0].url} alt='previewImg'/>
             </div>
             <div className="descriptionNbtn">
-                <div>Hosted by {spots.Owner.firstName}{spots.Owner.lastName}</div>
-                <div className="description">{spots.description}</div>
+                <div className="description">
+                    <div>Hosted by {spots.Owner.firstName}{spots.Owner.lastName}</div>
+                    <div className="description">{spots.description}</div>
+                </div>
                 <div className="actionBtn">
-                    <div>{spots.price}</div>
-                    <div>{spots.avgRating}</div>
+                    <div>
+                        <div class="price">${spots.price}</div>
+                        <lable class="price">night</lable>
+                    </div>
+                    <div>★{spots.avgRating}</div>
                     <div>{spots.numReviews}</div>
                     <button type="button" onClick={handleAlert}>Reserve</button>
                 </div>
@@ -61,7 +67,7 @@ const SpotsDetails = () =>{
             <div>
                 <div className="reviewDetails">
                     <div className="numOfcomments">
-                        <div className="rating">{spots.avgRating}</div>
+                        <div className="rating">★ {spots.avgRating}</div>
                         <div>{spots.numReviews}</div>
                     </div>
 

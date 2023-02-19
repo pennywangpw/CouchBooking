@@ -16,8 +16,8 @@ function SignupFormModal() {
   const [frontendErrors, setFrontendErrors] = useState("")
   const { closeModal } = useModal();
 
-  //frontend check validation > if no, disable the butn
-  //backend check validation > if no, show up on the modal
+//frontend check validation > if no, disable the butn
+//backend check validation > if no, show up on the modal
 
 //validation
 let frontendValidation =[]

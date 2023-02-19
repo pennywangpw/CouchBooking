@@ -1,0 +1,67 @@
+.mother{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-From{
+    width: 400px;
+    margin: 5px 0px 0px 0px;
+
+}
+.login-ModelGroup {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #c4c4c4;
+    border-radius: 8px; */
+    margin: 5px 18px 20px 18px;
+
+}
+.formType{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.divError{
+    margin: 5px 0px 5px 0px;
+    color:red;
+}
+
+
+
+.inpupBox{
+    width: 98%;
+}
+
+.buttonDiv{
+    display: flex;
+    justify-content: center ;
+    width: 100%;
+    margin-top: 10px;
+
+}
+
+.acCount{
+    margin-top: 5px;
+}
+
+.passWord{
+    margin-top: 5px;
+}
+
+.buttonType{
+    width: 100%;
+    margin-top: 10px;
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+.demoUser{
+    display: flex;
+    justify-content: center ;
+}

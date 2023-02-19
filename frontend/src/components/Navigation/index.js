@@ -35,7 +35,7 @@ export default function Navigation({ isLoaded }) {
 
 
     const closeMenu = () => setShowMenu(false);
-
+    console.log("oooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
     return (
         <nav className="Navigation-container">
             <ul className="Navigation-list">
