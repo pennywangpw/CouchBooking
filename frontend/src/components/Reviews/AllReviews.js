@@ -94,7 +94,7 @@ const AllReviews = ({ reviews, spots }) => {
     }
 
     //if reviewUserId !==
-    const havePosted = reviewsArr.find((review) => review.userId === user.id)
+    const havePosted = reviewsArr?.find((review) => review?.userId === user?.id)
 
 
 
