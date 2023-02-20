@@ -1,44 +1,153 @@
-.details{
+.BodyContainer {
     display: flex;
     flex-direction: column;
-
+    margin: 9% 30px 10px 30px;
 }
 
+/* ----------------- for actionBox ----------------- */
 
-.descriptionNbtn{
+.actionContainer {
+    width: 30%;
+}
+
+.actFormat {
+    border: 3px solid black;
+    border-radius: 10px;
+    height: 100px;
+    margin-right: 50px;
+    padding: 5%;
+    width: 70%;
+}
+
+.actLabel {
+    font-size: 12pt;
+    margin-left: 2px;
+    font-weight: bold;
+}
+
+.actPrice {
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.actText {
+    margin: 10px 10px 10px 0px;
     display: flex;
-    flex-direction: row;
-}
-
-.description{
-    width: 50%;
-}
-
-
-.actionBtn{
-    display: flex;
-    flex-wrap: wrap;
-    width: 50%;
+    align-items: center;
+    width: 100%;
     justify-content: space-around;
-    /* text-align: right; */
 }
 
-.reviewDetails{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-}
-
-
-.numOfcomments{
-    display: flex;
+.actButton {
+    margin: 10px 0px 10px 0px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 
-.img{
-    width: 50%;
+/* ----------------- for img ----------------- */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px 2px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "bigImg bigImg sImg1 sImg2"
+        "bigImg bigImg sImg3 sImg4";
+    width: 100%;
     height: 412px;
 }
 
+.sImg1 {
+    grid-area: sImg1;
+    height: 205px;
+}
 
+.sImg2 {
+    grid-area: sImg2;
+    height: 205px;
+}
+
+.sImg3 {
+    grid-area: sImg3;
+    height: 205px;
+}
+
+.sImg4 {
+    grid-area: sImg4;
+    height: 205px;
+}
+
+.bigImg {
+    grid-area: bigImg;
+    height: 412px;
+}
+
+.bimgSize {
+    height: 412px;
+    width: 100%;
+}
+
+.sImgSize {
+    height: 205px;
+    width: 100%;
+}
+
+/* --------------- for Host Note --------------- */
+.descriptionNbtn {
+    display: flex;
+    width: 100%;
+
+    margin-top: 15px;
+    /* 隔開上方圖片 */
+    padding-bottom: 15px;
+    /* 隔開下方劃線 */
+    border-bottom: 1px solid black;
+}
+
+.description {
+    width: 70%;
+}
+
+/* ----------------- for Riewer ----------------- */
+.reviewDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.numOfcomments {
+    display: flex;
+}
+
+.rating {
+    font-size: 24pt;
+    font-weight: bold;
+
+}
+
+.reviewsCount {
+    margin-left: 25px;
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+/**/
+.postBottom {
+    width: 30px;
+}
+
+.reviewName {
+    font-size: 40px;
+}
+
+.reviewDate {
+    font-size: 12pt;
+    color: beige;
+}
+
+.reviewContent {
+    font-size: 16pt;
+}

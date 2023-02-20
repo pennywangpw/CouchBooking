@@ -1,4 +1,4 @@
-.mother{
+.mother {
     margin-top: 5px;
     display: flex;
     flex-direction: column;
@@ -6,11 +6,21 @@
     align-items: center;
 }
 
-.login-From{
+.login-text {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.login-From {
     width: 400px;
     margin: 5px 0px 0px 0px;
 
 }
+
 .login-ModelGroup {
     /* display: flex;
     flex-direction: column;
@@ -20,48 +30,50 @@
     margin: 5px 18px 20px 18px;
 
 }
-.formType{
+
+.formType {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
 }
 
-.divError{
+.divError {
     margin: 5px 0px 5px 0px;
-    color:red;
+    color: red;
 }
 
 
 
-.inpupBox{
+.inpupBox {
     width: 98%;
+    margin-bottom: 10px;
 }
 
-.buttonDiv{
+.buttonDiv {
     display: flex;
-    justify-content: center ;
+    justify-content: center;
     width: 100%;
     margin-top: 10px;
 
 }
 
-.acCount{
+.acCount {
     margin-top: 5px;
 }
 
-.passWord{
+.passWord {
     margin-top: 5px;
 }
 
-.buttonType{
+.buttonType {
     width: 100%;
     margin-top: 10px;
     height: 20px;
     margin-bottom: 15px;
 }
 
-.demoUser{
+.demoUser {
     display: flex;
-    justify-content: center ;
+    justify-content: center;
 }

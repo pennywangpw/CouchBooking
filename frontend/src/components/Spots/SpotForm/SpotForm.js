@@ -70,7 +70,7 @@ const SpotForm = ({ spot, formType }) => {
 
     //1.createASpot
     //2.make sure there's url in Store
-    if (formType === "Create Spot") {
+    if (formType === "Create a New Spot") {
       let createdSpot = await dispatch(createASpot(payload));
       console.log("SpotForm---createdSpot: ", createdSpot)
 
@@ -227,7 +227,7 @@ const SpotForm = ({ spot, formType }) => {
             <div className='urlDiv'><input type="text" className="inputURL" placeholder="Image URL" value={url5} onChange={updateUrl5} /></div>
             <div className='divGap'><hr /></div>
 
-            <input type="submit" value={formType} />
+            <input type="submit" value={"Create"} />
 
           </form>
         </section>

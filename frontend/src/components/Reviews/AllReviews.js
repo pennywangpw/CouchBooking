@@ -1,19 +1,97 @@
 import { useDispatch, useSelector } from "react-redux";
-// import { useEffect } from "react";
-// import { getAllSpots, getSpotDetails } from "../../../store/spots";
 import { NavLink, useParams } from "react-router-dom";
 import PostReviewModal from '../PostReviewModal'
 import OpenModalButton from "../OpenModalButton";
 
 // dispatch all the reviews
-const AllReviews = ({ reviews }) => {
+const AllReviews = ({ reviews, spots }) => {
     console.log("AllReviews component---passed in reviews: ", reviews)
+    console.log("AllReviews component---passed in spots: ", spots)
     // const dispatch = useDispatch()
 
     const { id } = useParams()
     console.log("這裡是ALLREVIEW 的id from params: ", typeof +id)
 
-    //()it's implicit return in line25
+    const reviewsArr = Object.values(reviews)
+    console.log("這裡是revierArr: ", reviewsArr)
+
+    //display -- YYYY-MM-DD only
+    //re-assign updatedAt with YYYY-MM-DD???
+    //get updatedAt YYYY-MM-DD
+    let dayDivider;
+    for (let review of reviewsArr) {
+        const year = (review.updatedAt).split('-')[0]
+        const month = (review.updatedAt).split('-')[1]
+        const date = (review.updatedAt).split('-')[2].slice(0, 2)
+        dayDivider = year + "-" + month + "-" + date
+    }
+
+    //reviews in order by reviewId
+    // console.log("review in arrary: ", reviewsArr)
+    function compare(a, b) {
+        const reviewA = a.id
+        const reviewB = b.id
+
+        let comparison = 0;
+        if (reviewA < reviewB) {
+            comparison = 1
+        } else if (reviewB < reviewA) {
+            comparison = -1
+        }
+        return comparison
+    }
+
+    reviewsArr.sort(compare)
+
+
+
+    // console.log("AFTER review in arrary: ", reviewsArr)
+
+    //dispaly -- "Be the first to post a review!"
+    //check if user log in & not the owner
+    //const currentUser = dispatch(restoreUser())
+    //const spotDetails = dispatch(getSpotDetails())
+    //use selector to get store> ownerId
+    //currentUser !== null && id !== Ownerid
+    //check if no reviews
+    const user = useSelector(state => state.session.user)
+    const singleSpot = useSelector(state => state.spots.singleSpot)
+    console.log("這個是一個updatedStore: ", user, singleSpot)
+
+    const reviewDetails = () => {
+        if (reviewsArr.length === 0 && user.id !== singleSpot.Owner.id) {
+            console.log("是否有進到這個func: ", user.id, singleSpot.Owner.id)
+            return (
+                <div>
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <br /><br /><br /><br /><br /><br />
+                    <div>"Be the first to post a review!"</div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <ul>
+                    {reviewsArr.map(review => (
+                        <li>
+                            <h1>{review.User.firstName}</h1>
+                            <h1>{dayDivider}</h1>
+                            <h1>{review.review}</h1>
+                            {console.log("^^^^^^^^^^^: ", review)}
+                        </li>
+                    ))
+                    }
+                </ul>
+
+            )
+
+        }
+    }
+
+
+
     return (
         <div>
             <br /><br /><br /><br /><br /><br />
@@ -24,14 +102,8 @@ const AllReviews = ({ reviews }) => {
                         modalComponent={<PostReviewModal id={+id} />}
                     />
                 </div>
-                {Object.values(reviews).map(review => (
-                    <li>
-                        <h1>{review.User.firstName}</h1>
-                        <h1>{review.updatedAt}</h1>
-                        <h1>{review.review}</h1>
+                {reviewDetails()}
 
-                    </li>
-                ))}
             </ul>
 
         </div>
