@@ -15,17 +15,18 @@ function LoginFormModal() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [frontendErrors, setFrontendErrors] = useState("")
   const { closeModal } = useModal();
 
 
 
-//validation
-let e =[]
-  useEffect(()=>{
-    if(credential.length < 4) e.push("invalid")
-    if(password.length < 6) e.push("invalid")
-    setErrors(e)
-  },[credential,password])
+  //validation
+  let frontendValidation = []
+  useEffect(() => {
+    if (credential.length < 4) frontendValidation.push("invalid")
+    if (password.length < 6) frontendValidation.push("invalid")
+    setFrontendErrors(frontendValidation)
+  }, [credential, password])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,81 +44,93 @@ let e =[]
   const demoLogin = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential: "demo2023", password: "demopassword"}))
+    return dispatch(sessionActions.login({ credential: "demo2023", password: "demopassword" }))
       .then(closeModal)
   }
 
 
 
   return (
-
     <>
-    <div class="mother">
-      <h2 >Log In</h2>
-      <div class="login-From">
-        <div className="login-ModelGroup">
-        {errors.map((error, idx) => (
-          <div className="divError" key={idx}>{error}</div>
-        ))}
-        <form class="formType" onSubmit={handleSubmit}>
-          <div className="acCount">
-          <input
-            type="text"
-            className="inpupBox"
-            placeholder="Username or Email"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-            />
+      <div class="mother">
+        <div className="Login-text">
+          <h1 >Log In</h1>
+        </div>
+        <div class="login-From">
+          <div className="login-ModelGroup">
+            {errors.map((error, idx) => (
+              <div className="divError" key={idx}>{error}</div>
+            ))}
+            <form class="formType" onSubmit={handleSubmit}>
+              <div className="acCount">
+                <input
+                  type="text"
+                  className="inpupBox"
+                  placeholder="Username or Email"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="passWord">
+                <input
+                  className="inpupBox"
+                  placeholder="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="buttonDiv">
+                <button className="buttonType" type="submit">Log In</button>
+              </div>
+              <div className="demoUser" type="submit" onClick={demoLogin}><a href="">Demo User</a></div>
+            </form>
           </div>
-          <div className="passWord">
-          <input
-            className="inpupBox"
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          </div>
-          <div className="buttonDiv">
-            <button className="buttonType" type="submit">Log In</button>
-          </div>
-          <div className="demoUser" type="submit" onClick={demoLogin}><a href="">Demo User</a></div>
-          </form>
         </div>
       </div>
-    </div>
-  </>
+    </>
     // <>
-    //   <h1>Log In</h1>
-    //   <form onSubmit={handleSubmit}>
-    //     <ul>
-    //       {errors.map((error, idx) => (
-    //         <li key={idx}>{error}</li>
-    //       ))}
-    //     </ul>
-    //     <label>
-    //       Username or Email
-    //       <input
-    //         type="text"
-    //         value={credential}
-    //         onChange={(e) => setCredential(e.target.value)}
-    //         required
-    //       />
-    //     </label>
-    //     <label>
-    //       Password
-    //       <input
-    //         type="password"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //         required
-    //       />
-    //     </label>
-    //     <button type="submit" disabled = {errors.length > 0}>Log In</button>
-    //   </form>
+    //   <div class="mother">
+
+    //     <h2 >Log In</h2>
+    //     <div class="login-From">
+    //       <div className="login-ModelGroup">
+    //         {errors.map((error, idx) => (
+    //           <div className="divError" key={idx}>{error}</div>
+    //         ))}
+    //         <form class="formType" onSubmit={handleSubmit}>
+    //           <div className="acCount">
+    //             <input
+    //               type="text"
+    //               className="inpupBox"
+    //               placeholder="Username or Email"
+    //               value={credential}
+    //               onChange={(e) => setCredential(e.target.value)}
+    //               required
+    //             />
+    //           </div>
+    //           <div className="passWord">
+    //             <input
+    //               className="inpupBox"
+    //               placeholder="Password"
+    //               type="password"
+    //               value={password}
+    //               onChange={(e) => setPassword(e.target.value)}
+    //               required
+    //             />
+    //           </div>
+    //           <div className="buttonDiv">
+    //             <button className="buttonType" type="submit">Log In</button>
+    //           </div>
+    //           <div className="demoUser" type="submit" onClick={demoLogin}><a href="">Log in as Demo User</a></div>
+    //         </form>
+    //       </div>
+    //     </div>
+    //   </div>
     // </>
+
   );
 }
 

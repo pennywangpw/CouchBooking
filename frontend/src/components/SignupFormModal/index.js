@@ -16,21 +16,21 @@ function SignupFormModal() {
   const [frontendErrors, setFrontendErrors] = useState("")
   const { closeModal } = useModal();
 
-//frontend check validation > if no, disable the butn
-//backend check validation > if no, show up on the modal
+  //frontend check validation > if no, disable the butn
+  //backend check validation > if no, show up on the modal
 
-//validation
-let frontendValidation =[]
-useEffect(()=>{
-    if(email.length ===0) frontendValidation.push("invalid")
-    if(username.length < 4 ) frontendValidation.push("invalid")
-    if(firstName.length ===0) frontendValidation.push("invalid")
-    if(lastName.length ===0) frontendValidation.push("invalid")
-    if(password.length < 6 ) frontendValidation.push("invalid")
-    if(confirmPassword !== password || confirmPassword.length === 0) frontendValidation.push("invalid")
+  //validation
+  let frontendValidation = []
+  useEffect(() => {
+    if (email.length === 0) frontendValidation.push("invalid")
+    if (username.length < 4) frontendValidation.push("invalid")
+    if (firstName.length === 0) frontendValidation.push("invalid")
+    if (lastName.length === 0) frontendValidation.push("invalid")
+    if (password.length < 6) frontendValidation.push("invalid")
+    if (confirmPassword !== password || confirmPassword.length === 0) frontendValidation.push("invalid")
     setFrontendErrors(frontendValidation)
-  },[email,username,firstName,lastName,password,confirmPassword])
-  console.log("這裡是e: ",frontendValidation)
+  }, [email, username, firstName, lastName, password, confirmPassword])
+  console.log("這裡是e: ", frontendValidation)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,67 +48,95 @@ useEffect(()=>{
 
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          First Name
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Last Name
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit" disabled = {frontendErrors.length > 0}>Sign Up</button>
-      </form>
+      <div className="signUpContainer">
+        <div className="signup-text">
+          <h1>Sign Up</h1>
+        </div>
+        <form className="signupform" onSubmit={handleSubmit}>
+          <div className="signup__field__container">
+            <ul className="signupError">
+              {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
+            <div className="signup__field">
+              <label>
+                Email
+                <br /><input
+                  class="signup__input"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className="signup__field">
+              <label>
+                Username
+                <br /><input
+                  class="signup__input"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className="signup__field">
+              <label>
+                First Name
+                <br /><input
+                  class="signup__input"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className="signup__field">
+              <label>
+                Last Name
+                <br /><input
+                  class="signup__input"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className="signup__field">
+              <label>
+                Password
+                <br /><input
+                  class="signup__input"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className='signup__field'>
+              <label>
+                Confirm Password
+                <br /><input
+                  class="signup__input"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className='signup__submit'>
+              <button type="submit" className="signup__submit" disabled={frontendErrors.length > 0}>
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

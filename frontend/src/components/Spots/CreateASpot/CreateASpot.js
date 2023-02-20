@@ -6,24 +6,24 @@ import { createASpot } from "../../../store/spots";
 import { createSpot, createNewImgs } from "../../../store/spots";
 import SpotForm from "../SpotForm/SpotForm";
 
-//empty data 
-const CreateASpotForm = () =>{
+//empty data
+const CreateASpotForm = () => {
 
-    const spot= {
-        country:"",
-        address:"",
-        city:"",
-        state:"",
-        description:"",
-        name:"",
-        price:"",
-        url1:"",
-        url2:"",
-        url3:"",
-        url4:"",
-        url5:"",
-        lat:"",
-        lng:""
+    const spot = {
+        country: "",
+        address: "",
+        city: "",
+        state: "",
+        description: "",
+        name: "",
+        price: "",
+        url1: "",
+        url2: "",
+        url3: "",
+        url4: "",
+        url5: "",
+        lat: "",
+        lng: ""
 
     }
     // console.log("CreateASpotForm is running")
@@ -137,9 +137,9 @@ const CreateASpotForm = () =>{
 
     // }
 
-    return(
+    return (
 
-        <SpotForm spot={spot} formType="Create Spot"/>
+        <SpotForm spot={spot} formType="Create a New Spot" />
         // <div className="spotCreation">
         //     <div>Create a New Spot</div>
         //     <div>

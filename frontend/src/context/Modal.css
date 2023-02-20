@@ -45,7 +45,6 @@
 
 #modal-content {
   position: absolute;
-  background-color:white;
+  background-color: white;
   box-sizing: border-box;
-  height: 180px;
 }
