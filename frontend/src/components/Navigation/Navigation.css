@@ -8,12 +8,13 @@
     border-top: 1px solid #a5a5a5;
     border-bottom: 1px solid #a5a5a5;
     padding: 10px 0px;
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     background-color: #ffffff;
     font-family: Roboto, sans-serif;
     z-index: 1;
 }
+
 .Navigation-list {
     list-style-type: none;
     height: 100%;
@@ -31,7 +32,8 @@
     gap: 8px;
 }
 
-.Navigation-links:link, .Navigation-links:visited {
+.Navigation-links:link,
+.Navigation-links:visited {
     color: #000000;
     text-decoration: none;
     /* font-family: Roboto; */
