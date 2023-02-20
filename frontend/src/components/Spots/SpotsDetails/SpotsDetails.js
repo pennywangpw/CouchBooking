@@ -28,7 +28,7 @@ const SpotsDetails = () => {
         console.log("SpotsDetails---useEffect")
         dispatch(getSpotDetails(id));
         dispatch(getReviews(id));
-    }, [dispatch]);
+    }, [dispatch, JSON.stringify(reviews)]);
 
     //alert function
     function handleAlert() {

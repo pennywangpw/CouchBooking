@@ -58,9 +58,13 @@ const AllReviews = ({ reviews, spots }) => {
     const singleSpot = useSelector(state => state.spots.singleSpot)
     console.log("這個是一個updatedStore: ", user, singleSpot)
 
+
+    //{review?.User?.firstName} check if review? if yes > check next
     const reviewDetails = () => {
-        if (reviewsArr.length === 0 && user.id !== singleSpot.Owner.id) {
-            console.log("是否有進到這個func: ", user.id, singleSpot.Owner.id)
+        // console.log("$$$$$$$$$$$$$$$$$$$$是否有進到這個")
+
+        if (reviewsArr.length === 0) {
+            // console.log("是否有進到這個func: ", user.id, singleSpot.Owner.id)
             return (
                 <div>
                     <br /><br /><br /><br /><br /><br />
@@ -76,10 +80,9 @@ const AllReviews = ({ reviews, spots }) => {
                 <ul>
                     {reviewsArr.map(review => (
                         <li>
-                            <h1>{review.User.firstName}</h1>
+                            <h1>{review?.User?.firstName}</h1>
                             <h1>{dayDivider}</h1>
-                            <h1>{review.review}</h1>
-                            {console.log("^^^^^^^^^^^: ", review)}
+                            <h1>{review?.review}</h1>
                         </li>
                     ))
                     }
@@ -90,18 +93,39 @@ const AllReviews = ({ reviews, spots }) => {
         }
     }
 
+    //if reviewUserId !==
+    const havePosted = reviewsArr.find((review) => review.userId === user.id)
 
 
+
+    // if (user.id !== singleSpot.Owner.id) {
+    //     <div>
+    //         <br /><br /><br /><br /><br /><br />
+    //         <br /><br /><br /><br /><br /><br />
+    //         <br /><br /><br /><br /><br /><br />
+    //         <br /><br /><br /><br /><br /><br />
+    //         <br /><br /><br /><br /><br /><br />
+    //         return (<div>"Be the first to post a review!"</div>)
+    //     </div>
+    // }
+
+    // reviewId !== current userId
+    //()it's implicit return in line25
+    //(a,b) if both T, return b
     return (
         <div>
             <br /><br /><br /><br /><br /><br />
             <ul>
-                <div>
-                    <OpenModalButton
-                        buttonText="Post Your Review"
-                        modalComponent={<PostReviewModal id={+id} />}
-                    />
-                </div>
+                {
+                    user && (user.id !== singleSpot.Owner.id) && (havePosted === undefined) && (
+                        <div>
+                            <OpenModalButton
+                                buttonText="Post Your Review"
+                                modalComponent={<PostReviewModal id={+id} />}
+                            />
+                        </div>
+                    )
+                }
                 {reviewDetails()}
 
             </ul>
