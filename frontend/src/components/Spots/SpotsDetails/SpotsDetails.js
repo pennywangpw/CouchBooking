@@ -35,6 +35,7 @@ const SpotsDetails = () => {
         alert("Feature Coming Soon.....")
     }
 
+    //shows "Unable to retrieve details. Please try again shortly" when the page doesn't render successfully
     if (!spots || !spots.SpotImages) return (
         <div>
             <br /><br /><br /><br />
@@ -47,21 +48,23 @@ const SpotsDetails = () => {
     // if(spots.SpotImages.length === 0) return null
     // console.log("HEREEE URL: ",spots.SpotImages[0].url)
 
-    //Re-assign numReviews
+    //reviewChecker & divider(dot)
     let reviewChecker;
-    let divider;
+    let divider = " ";
     let reviewNum = spots.numReviews;
     if (reviewNum === 1) {
         reviewChecker = "review"
-        divider = <i class="fa-solid fa-circle-dot"></i>
+        reviewNum = reviewNum.toFixed(2)
+        divider = "."
     } else if (reviewNum === 0) {
         reviewChecker = "New"
-        reviewNum = ""
+        reviewNum = " "
     } else {
         reviewChecker = ' reviews'
-        divider = <i class="fa-solid fa-circle-dot"></i>
+        reviewNum = reviewNum.toFixed(2)
+        divider = "."
     }
-
+    console.log("會顯示 reviewNum, reviewChecker, divider2: ", reviewNum, reviewChecker, divider)
 
     // const noReviewsYet = () => {
     //     if (reviewChecker === "New" && user) {
@@ -108,23 +111,11 @@ const SpotsDetails = () => {
                         {!spots.SpotImages[4] || spots.SpotImages[4] === undefined ? "" : <img className="sImgSize" src={spots.SpotImages[4].url} alt='otherImg' />}
                     </div>
 
-
-                    {/* <div class="sImg1">
-                        <img className="sImgSize" src={!spots.SpotImages[1] || spots.SpotImages[1] === undefined ? "" : spots.SpotImages[1].url} alt='otherImg' />
-                    </div>
-                    <div class="sImg2">
-                        <img className="sImgSize" src={!spots.SpotImages[2] || spots.SpotImages[2] === undefined ? "" : spots.SpotImages[2].url} alt='otherImg' />
-                    </div>
-                    <div class="sImg3">
-                        <img className="sImgSize" src={!spots.SpotImages[3] || spots.SpotImages[3] === undefined ? "" : spots.SpotImages[3].url} alt='otherImg' />
-                    </div>
-                    <div class="sImg4">
-                        <img className="sImgSize" src={!spots.SpotImages[4] || spots.SpotImages[4] === undefined ? "" : spots.SpotImages[4].url} alt='otherImg' />
-                    </div> */}
                 </div>
 
 
                 <div className="descriptionNbtn">
+
                     <div className="description">
                         <h3><div>
                             Hosted by {spots.Owner.firstName}{spots.Owner.lastName}
@@ -132,6 +123,7 @@ const SpotsDetails = () => {
                         </h3>
                         <div className="description">{spots.description}</div>
                     </div>
+
                     <div className="actionContainer">
                         <div className="actFormat">
                             <div className="actText">
@@ -140,12 +132,13 @@ const SpotsDetails = () => {
                                 </div>
                                 <div class="actPrice">
 
-                                    <label className="actLabel">★{spots.avgRating}{divider}</label>
-                                    <label className="actLabel">{spots.numReviews} </label>
+                                    <label className="actLabel">★{reviewNum} </label>
+                                    <label className="actLabel">{divider} </label>
                                     <label className="actLabel">{reviewChecker}</label>
 
                                 </div>
                             </div>
+
                             <div>
                                 <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
                             </div>
@@ -156,8 +149,9 @@ const SpotsDetails = () => {
                 <div>
                     <div className="reviewDetails">
                         <div className="numOfcomments">
-                            <div className="rating">★ {spots.avgRating}</div>
-                            <div className="reviewsCount">{spots.numReviews} {reviewChecker}</div>
+                            <div className="rating">★ {reviewNum}</div>
+                            <div className="reviewsCount">{divider} </div>
+                            <div className="reviewsCount">{reviewChecker}</div>
                         </div>
                         <div>
                             <AllReviews reviews={reviews} />

@@ -1,7 +1,7 @@
 .BodyContainer {
     display: flex;
     flex-direction: column;
-    margin: 9% 30px 10px 30px;
+    margin: 10px 30px 10px 30px;
 }
 
 /* ----------------- for actionBox ----------------- */

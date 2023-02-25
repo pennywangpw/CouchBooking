@@ -20,7 +20,7 @@ function LoginFormModal() {
 
 
 
-  //validation
+  //validation--frontend
   let frontendValidation = []
   useEffect(() => {
     if (credential.length < 4) frontendValidation.push("invalid")
@@ -83,7 +83,7 @@ function LoginFormModal() {
                 />
               </div>
               <div className="buttonDiv">
-                <button className="buttonType" type="submit">Log In</button>
+                <button className="buttonType" type="submit" disabled={frontendErrors.length > 0}>Log In</button>
               </div>
               <div className="demoUser" type="submit" onClick={demoLogin}><a href="">Demo User</a></div>
             </form>

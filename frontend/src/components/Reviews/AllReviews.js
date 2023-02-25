@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import PostReviewModal from '../PostReviewModal'
 import OpenModalButton from "../OpenModalButton";
+import DeleteFormModal from "../DeleteConfirmationModal"
 
 // dispatch all the reviews
 const AllReviews = ({ reviews, spots }) => {
@@ -20,6 +21,7 @@ const AllReviews = ({ reviews, spots }) => {
     //get updatedAt YYYY-MM-DD
     let dayDivider;
     for (let review of reviewsArr) {
+        console.log("****all reviews: ", reviewsArr)
         const year = (review.updatedAt).split('-')[0]
         const month = (review.updatedAt).split('-')[1]
         const date = (review.updatedAt).split('-')[2].slice(0, 2)
@@ -62,15 +64,11 @@ const AllReviews = ({ reviews, spots }) => {
     //{review?.User?.firstName} check if review? if yes > check next
     const reviewDetails = () => {
         // console.log("$$$$$$$$$$$$$$$$$$$$是否有進到這個")
-
+        console.log("$$$$$$$$$$ HERE IS ARRAY OF REVIEWS: ", reviewsArr)
         if (reviewsArr.length === 0) {
             // console.log("是否有進到這個func: ", user.id, singleSpot.Owner.id)
             return (
                 <div>
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
-                    <br /><br /><br /><br /><br /><br />
                     <div>"Be the first to post a review!"</div>
                 </div>
             )
@@ -93,21 +91,11 @@ const AllReviews = ({ reviews, spots }) => {
         }
     }
 
-    //if reviewUserId !==
+    //check if current user have posted the review or not
     const havePosted = reviewsArr?.find((review) => review?.userId === user?.id)
 
 
-
-    // if (user.id !== singleSpot.Owner.id) {
-    //     <div>
-    //         <br /><br /><br /><br /><br /><br />
-    //         <br /><br /><br /><br /><br /><br />
-    //         <br /><br /><br /><br /><br /><br />
-    //         <br /><br /><br /><br /><br /><br />
-    //         <br /><br /><br /><br /><br /><br />
-    //         return (<div>"Be the first to post a review!"</div>)
-    //     </div>
-    // }
+    console.log("$$$$$$$$$$ HERE IS ARRAY OF REVIEWS: ", reviewsArr)
 
     // reviewId !== current userId
     //()it's implicit return in line25
@@ -115,6 +103,32 @@ const AllReviews = ({ reviews, spots }) => {
     return (
         <div>
             <br /><br /><br /><br /><br /><br />
+
+            <div>
+                {reviewsArr.map(review =>
+                    <div>
+                        <div>
+                            <h1>{review?.User?.firstName}</h1>
+                            <h1>{dayDivider}</h1>
+                            <h1>{review?.review}</h1>
+                        </div>
+                        {user.id === review.userId && <OpenModalButton
+                            buttonText="delete"
+                            modalComponent={<DeleteFormModal id={review.id} type="review" />}
+                        />}
+
+                    </div>
+
+                    // review.review
+
+                    // <OpenModalButton
+                    //     buttonText="delete"
+                    //     modalComponent={<DeleteFormModal reviews={reviews} type="review" />}
+                    // />
+                )}
+            </div>
+
+
             <ul>
                 {
                     user && (user.id !== singleSpot.Owner.id) && (havePosted === undefined) && (
@@ -126,7 +140,7 @@ const AllReviews = ({ reviews, spots }) => {
                         </div>
                     )
                 }
-                {reviewDetails()}
+                {/* {reviewDetails()} */}
 
             </ul>
 
