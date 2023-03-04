@@ -52,16 +52,16 @@ function LoginFormModal() {
 
   return (
     <>
-      <div class="mother">
+      <div className="mother">
         <div className="Login-text">
           <h1 >Log In</h1>
         </div>
-        <div class="login-From">
+        <div className="login-From">
           <div className="login-ModelGroup">
             {errors.map((error, idx) => (
               <div className="divError" key={idx}>{error}</div>
             ))}
-            <form class="formType" onSubmit={handleSubmit}>
+            <form className="formType" onSubmit={handleSubmit}>
               <div className="acCount">
                 <input
                   type="text"
@@ -92,15 +92,15 @@ function LoginFormModal() {
       </div>
     </>
     // <>
-    //   <div class="mother">
+    //   <div className="mother">
 
     //     <h2 >Log In</h2>
-    //     <div class="login-From">
+    //     <div className="login-From">
     //       <div className="login-ModelGroup">
     //         {errors.map((error, idx) => (
     //           <div className="divError" key={idx}>{error}</div>
     //         ))}
-    //         <form class="formType" onSubmit={handleSubmit}>
+    //         <form className="formType" onSubmit={handleSubmit}>
     //           <div className="acCount">
     //             <input
     //               type="text"

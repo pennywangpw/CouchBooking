@@ -68,7 +68,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     list-style-type: none;
-    font-size: 12px;
+    /* font-size: 12px; */
     position: absolute;
     right: 80px;
     top: 70px;
@@ -131,7 +131,7 @@
 .profile-dropdown-logout {
     background: none;
     border: 0;
-    font-size: 12px;
+    font-size: 15px;
     padding: 0;
 }
 
@@ -236,4 +236,20 @@
 
 li {
     list-style-type: none;
+}
+
+
+.newSpot {
+    background: none;
+    height: 40px;
+    border: 1px solid #c4c4c4;
+    border-radius: 21px;
+    padding: 5px 5px 5px 12px;
+    align-items: center;
+}
+
+
+.newSpot:hover {
+    box-shadow: 0 2px 3px 0 #c4c4c4;
+    background-color: #f7f7f7;
 }

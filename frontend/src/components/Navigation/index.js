@@ -52,7 +52,9 @@ export default function Navigation({ isLoaded }) {
                     {sessionUser &&
                         <li className="Navigation-list-modal">
                             <NavLink exact to='/spots/new'>
-                                <button>Create A New Spot</button>
+                                <button className="newSpot"> Create A New Spot </button>
+
+                                {/* i don't use this because of navigating to the new path */}
                                 {/* <OpenModalButton
                                     buttonText="Creat A New Spot"
                                     onButtonClick={closeMenu}

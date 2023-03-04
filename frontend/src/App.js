@@ -4,7 +4,7 @@ import { Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom";
-import AllSpots from './components/Spots/AllSpots'
+import AllSpots from './components/Spots/AllSpots/AllSpots'
 import SpotsDetails from "./components/Spots/SpotsDetails/SpotsDetails";
 import CreateASpotForm from "./components/Spots/CreateASpot/CreateASpot"
 import CurrentSpot from "./components/Spots/CurrentSpot/CurrentSpot";
@@ -23,26 +23,28 @@ function App() {
       {isLoaded && (
         <Switch>
           {/* exact can avoid directing to all of routes */}
-          <Route exact path = '/'>
-            <AllSpots/>
+
+          <Route excat path='/spots/new'>
+            <CreateASpotForm />
           </Route>
 
-          <Route excat path= '/spots/new'>
-            <CreateASpotForm/>
+          <Route exact path='/spots/current'>
+            <CurrentSpot />
           </Route>
 
-          <Route exact path= '/spots/current'>
-            <CurrentSpot/>
+          <Route path='/spots/:id/edit'>
+            <EditASpot />
           </Route>
 
-          <Route path= '/spots/:id/edit'>
-            <EditASpot/>
+          <Route path='/spots/:id'>
+            <SpotsDetails />
           </Route>
 
-          <Route path= '/spots/:id'>
-            <SpotsDetails/>
+          <Route exact path='/'>
+            <AllSpots />
           </Route>
 
+          <Route>Page Not Found</Route>
 
         </Switch>
       )}
