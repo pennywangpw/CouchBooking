@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PostReviewModal from '../PostReviewModal'
 import OpenModalButton from "../OpenModalButton";
 import DeleteFormModal from "../DeleteConfirmationModal"
