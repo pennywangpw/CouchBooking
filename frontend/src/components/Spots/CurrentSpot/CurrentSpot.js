@@ -45,7 +45,6 @@ const CurrentSpot = () => {
 
     return (
         <div>
-            <br /> <br /> <br /> <br /> <br /> <br />
             <div>Manage Your Spots</div>
             <div className='currentSpotCards'>
                 {userSpots.map(({ id, previewImage, city, price, avgRating, state }) => (
@@ -57,7 +56,7 @@ const CurrentSpot = () => {
                         <div className="cityNpriceNrate">
                             <div className="location">{state},{city}</div>
                             {console.log("##### CHECK TYPE ", avgRating)}
-                            <div className="rate">{typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
+                            <div className="rate"><i class="fa-solid fa-star"></i> {typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
                             <div className="priceNbtn">
                                 <div className="price">${price} night</div>
                                 <div className="actionBtn">
@@ -65,7 +64,7 @@ const CurrentSpot = () => {
                                     <div>
                                         <OpenModalButton
                                             buttonText="delete"
-                                            modalComponent={<DeleteFormModal id={id} />}
+                                            modalComponent={<DeleteFormModal id={id} type="spot" />}
                                         />
                                     </div>
                                 </div>

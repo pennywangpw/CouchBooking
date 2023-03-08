@@ -125,7 +125,7 @@ const SpotForm = ({ spot, formType }) => {
     // </div>
     <div className="classFather">
       <div className='spotCreation'>
-        <br /><br /><br /><br /><br /><br />
+        <br /><br />
 
         <div><h2>{formType}</h2></div>
 
@@ -135,7 +135,105 @@ const SpotForm = ({ spot, formType }) => {
         </div>
         <section>
           <form onSubmit={handleSubmit}>
+
             <div>
+              <label htmlFor='country'>
+                Country
+                {country.length === 0 && <label htmlFor='country' className="errorLabel"> Country is required</label>}
+              </label>
+
+              <input id="country" type="text" className="inputBoxBottom" placeholder="Country" value={country} onChange={updateCountry} />
+            </div>
+
+            <div>
+              <label htmlFor='address'>
+                Address
+                {address.length === 0 && <label htmlFor='address' className="errorLabel"> Address is required</label>}
+              </label>
+              <input id="address" type="text" className="inputBoxBottom" placeholder="Address" value={address} onChange={updateAddress} />
+            </div>
+
+            <div>
+              <label htmlFor='city'>
+                City {
+                  city.length === 0 && <label htmlFor='city' className="errorLabel"> City is required</label>}
+              </label>
+              <input id="city" type="text" className="inputBoxBottom" placeholder="City" value={city} onChange={updateCity} />
+            </div>
+
+            <div>
+              <label htmlFor='state'>
+                State {
+                  state.length === 0 && <label htmlFor='state' className="errorLabel"> State is required</label>}
+              </label>
+              <input id="state" type="text" className="inputBoxBottom" placeholder="State" value={state} onChange={updateState} />
+            </div>
+
+
+            <div className='divGap'><hr /></div>
+
+            {/* <input type="text" placeholder="lat" value={lat} onChange={updatelat}/>
+            <input type="text" placeholder="lng" value={lng} onChange={updatelng}/> */}
+
+            <div>
+              <h3> Describe your place to guests </h3>
+              <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</p>
+              {/* <lable for = "description">Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</lable> */}
+              <textarea id="description" className="labelBox" value={description} onChange={updateDescription}>Please write at least 30 characters</textarea>
+            </div>
+            {
+              description.length < 30 && <label className="errorLabel"> Description needs a minimum of 30 characters</label>
+            }
+            <div className='divGap'><hr /></div>
+            <div>
+              <h3>Create a title for your spot</h3>
+              <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+              <input type="text" className="inputBoxTop" placeholder="Name of your spot" value={name} onChange={updateName} />
+              <div>
+                {
+                  name.length === 0 && <label className="errorLabel"> Name is required</label>
+                }
+              </div>
+            </div>
+
+            <div className='divGap'><hr /></div>
+
+            <div>
+              <h3>Set a base price for your spot</h3>
+              <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+              <div className='priceDiv'>
+                <lable for="pricetag">$</lable>
+                <input id="pricetag" className="priceBox" type="text" placeholder="Price per night(USD)" value={price} onChange={updatePrice} />
+              </div>
+            </div>
+            <div>
+              {
+                price.length === 0 && <label className="errorLabel"> Price is required</label>
+              }
+            </div>
+            <div className='divGap'><hr /></div>
+            <h3>Liven up your spot with photos</h3>
+            <p>Submit a link to at least one photo to publish your spot.</p>
+            <div className='urlDiv'><input type="text" className="inputURL" placeholder="Preview Image URL" value={url1} onChange={updateUrl1} /></div>
+            {
+              (!url1 || url1 === undefined)
+              && <label className="errorLabel">Preview image is required</label>
+            }
+
+            <div className='urlDiv'><input type="text" className="inputURL" placeholder="Image URL" value={url2} onChange={updateUrl2} /></div>
+            {
+              (!url1 || url1 === undefined)
+              && <label className="errorLabel">Image URL must end in .png .jpg, or .jpeg</label>
+            }
+            <div className='urlDiv'><input type="text" className="inputURL" placeholder="Image URL" value={url3} onChange={updateUrl3} /></div>
+            <div className='urlDiv'><input type="text" className="inputURL" placeholder="Image URL" value={url4} onChange={updateUrl4} /></div>
+            <div className='urlDiv'><input type="text" className="inputURL" placeholder="Image URL" value={url5} onChange={updateUrl5} /></div>
+            <div className='divGap'><hr /></div>
+
+            <input type="submit" value={"Create"} />
+            <br /><br /><br />
+
+            {/* <div>
               Country {
                 country.length === 0 && <label className="errorLabel"> Country is required</label>}
             </div>
@@ -228,6 +326,8 @@ const SpotForm = ({ spot, formType }) => {
             <div className='divGap'><hr /></div>
 
             <input type="submit" value={"Create"} />
+            <br /><br /><br /> */}
+
 
           </form>
         </section>
