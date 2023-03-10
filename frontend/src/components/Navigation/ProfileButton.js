@@ -16,6 +16,7 @@ export default function ProfileButton({ user }) {
     const ulRef = useRef();
 
     const openMenu = () => {
+        // e.stopPropagation()
         if (showMenu) return;
         setShowMenu(true);
     };
@@ -24,6 +25,7 @@ export default function ProfileButton({ user }) {
         if (!showMenu) return;
 
         const closeMenu = (e) => {
+            //click outside of the modal
             if (!ulRef.current.contains(e.target)) {
                 setShowMenu(false);
             }
