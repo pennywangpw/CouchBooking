@@ -10,6 +10,7 @@ import SignupFormModal from "../SignupFormModal";
 import CreateASpotForm from "../Spots/CreateASpot/CreateASpot.js";
 
 export default function ProfileButton({ user }) {
+
     const dispatch = useDispatch();
     const history = useHistory();
     const [showMenu, setShowMenu] = useState(false);
@@ -76,7 +77,7 @@ export default function ProfileButton({ user }) {
                                 {user.firstName} {user.lastName}
                             </NavLink> */}
                         </li>
-                        <li className="profile-dropdown-links">
+                        <li className="profile-dropdown-links" onClick={closeMenu}>
                             <NavLink
                                 exact to="/spots/current"
                                 className="profile-dropdown-my-spots"

@@ -265,15 +265,15 @@ const SpotForm = ({ spot, formType }) => {
               <input type="text" className="inputBoxBottom" placeholder="State" value={state} onChange={updateState} />
             </div>
 
-            <div className='divGap'><hr /></div>
+            <div className='divGap'><hr /></div> */}
 
             {/* <input type="text" placeholder="lat" value={lat} onChange={updatelat}/>
             <input type="text" placeholder="lng" value={lng} onChange={updatelng}/> */}
 
-            <div>
+            {/* <div>
               <h3> Describe your place to guests </h3>
               <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</p>
-              {/* <lable for = "description">Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</lable> */}
+              <lable for = "description">Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</lable>
               <textarea id="description" className="labelBox" value={description} onChange={updateDescription}>Please write at least 30 characters</textarea>
             </div>
             {
@@ -326,7 +326,7 @@ const SpotForm = ({ spot, formType }) => {
             <div className='divGap'><hr /></div>
 
             <input type="submit" value={"Create"} />
-            <br /><br /><br /> */}
+            <br /><br /><br />  */}
 
 
           </form>
