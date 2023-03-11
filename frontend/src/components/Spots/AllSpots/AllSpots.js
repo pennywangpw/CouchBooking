@@ -32,6 +32,7 @@ const AllSpots = () => {
 
   return (
     <div className='allSpotImg'>
+
       {spotsArr.map((spot) => (
         // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
         <div className="spotImgOutter" key={spot.id}>
