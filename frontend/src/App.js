@@ -44,7 +44,7 @@ function App() {
             <AllSpots />
           </Route>
 
-          <Route>Page Not Found</Route>
+          {/* <Route>Page Not Found</Route> */}
 
         </Switch>
       )}
