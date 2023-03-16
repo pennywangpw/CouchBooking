@@ -52,7 +52,7 @@ function LoginFormModal() {
 
   return (
     <>
-      <div className="mother">
+      <div className="loginform">
         <div className="Login-text">
           <h1 >Log In</h1>
         </div>
