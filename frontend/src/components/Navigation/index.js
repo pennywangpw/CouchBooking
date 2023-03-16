@@ -42,7 +42,7 @@ export default function Navigation({ isLoaded }) {
                     <NavLink exact to="/" className="Navigation-links">
                         <div className="Navigation-logo-container">
                             <img src={logo} className="Navigation-logo" alt="logo" />
-                            <div>
+                            <div className="Navigation-sitename">
                                 CouchBooking
                             </div>
                         </div>
