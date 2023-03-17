@@ -1,16 +1,15 @@
-
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { getAllSpots, deleteASpot } from "../../store/spots"
+import { getAllSpots, deleteASpot, getSpotDetails } from "../../store/spots"
 import { getReviews, deleteAReview } from "../../store/reviews"
 import "./DeleteConfirmation.css"
 
 
 
-const DeleteFormModal = ({ id, type }) => {
-  console.log("DeleteFORModal裡面的id: ", id)
-  console.log("DeleteFORModal裡面的reviews: ", id)
+const DeleteFormModal = ({ reviewid, type, spot }) => {
+  console.log("DeleteFORModal裡面的id: ", reviewid)
+  console.log("DeleteFORModal裡面的spots: ", spot)
   const dispatch = useDispatch();
 
   const { closeModal } = useModal();
@@ -30,13 +29,13 @@ const DeleteFormModal = ({ id, type }) => {
   //check if type === review
   //delete review
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (reviewid) => {
     if (type === "spot") {
-      console.log("落入spot和傳入的id: ", id)
-      dispatch(deleteASpot(id)).then(closeModal)
+      console.log("落入spot和傳入的reviewid: ", reviewid)
+      dispatch(deleteASpot(reviewid)).then(closeModal)
     } else if (type === "review") {
       console.log("落入review")
-      dispatch(deleteAReview(id)).then(closeModal)
+      dispatch(deleteAReview(reviewid)).then(dispatch(getSpotDetails(spot.id))).then(closeModal)
     }
 
   }
@@ -61,11 +60,10 @@ const DeleteFormModal = ({ id, type }) => {
 
         <div className="buttonbox">
 
-          <button type="button" className="button yes" onClick={() => deleteHandler(id)}>Yes -Delete {item}</button>
+          <button type="button" className="button yes" onClick={() => deleteHandler(reviewid)}>Yes -Delete {item}</button>
 
 
           <button type="button" className="button no" onClick={() => keepHandler()}>No -Keep {item}</button>
-
 
 
 
