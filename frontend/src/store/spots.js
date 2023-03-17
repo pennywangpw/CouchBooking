@@ -200,11 +200,12 @@ const spotsReducer = (state = initialState, action) => {
             // console.log("spotsReducer with newState: ", newState)
             return newState
         case GET_SpotsDetails:
-            newState = { ...state, singleSpot: { ...state.singleSpot } }
+            newState = { ...state, singleSpot: { ...action.detail[0] } }
+            // newState = { ...state, singleSpot: { ...state.singleSpot } }
             // const newObjforDetails = {...action.detail[0]}
             // console.log("spotsReducer wih Get SpotsDetails data: ", newObjforDetails)
             console.log("Reducer with ACTION DETAIL: ", action.detail[0])
-            newState.singleSpot = action.detail[0]
+            // newState.singleSpot = action.detail[0]
             console.log("SpotsDetails---action.detail: ", action.detail)
             console.log("這個是spotsDetails newState: ", newState)
             return newState

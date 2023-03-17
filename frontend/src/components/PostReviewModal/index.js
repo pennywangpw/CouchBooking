@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { getSpotDetails } from "../../store/spots"
 import { createAReview } from "../../store/reviews"
 import { NavLink, useParams } from "react-router-dom";
 import './PostReview.css'
@@ -37,17 +38,7 @@ function PostReviewModal({ id }) {
         <h1>How was your stay?</h1>
 
         <textarea placeholder="Leave your review here...." onChange={(e) => setReview(e.target.value)}></textarea>
-        {/*
-        <div>
-          <lable for="star">Rate (1-5)</lable>
-          <input type="number" id="star" min="1" max="5" onChange={(e) => setStars(e.target.value)} />
-        </div> */}
 
-        {/* <div className="ratingStars">
-          <i class="fa-regular fa-star"></i>
-          <i class="fa-regular fa-star"></i>
-          <i class="fa-regular fa-star"></i>
-        </div> */}
 
         <ul className="rate-area">
           <input type="radio" id="5-star" name="crating" value="5" onChange={(e) => setStars(e.target.value)} />
@@ -70,11 +61,10 @@ function PostReviewModal({ id }) {
 
 
 
-
         <div>
-          <button type="button" onClick={() => {
+          <button className="button" type="button" onClick={() => {
             if (review.length >= 10) {
-              dispatch(createAReview({ id, newReview })).then(closeModal)
+              dispatch(createAReview({ id, newReview })).then(dispatch(getSpotDetails(id))).then(closeModal)
             }
           }}
             disabled={review.length < 10}>Submit Your Review</button>

@@ -212,7 +212,7 @@ const SpotForm = ({ spot, formType }) => {
               <h3> Describe your place to guests </h3>
               <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</p>
               {/* <lable for = "description">Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</lable> */}
-              <textarea id="description" className="labelBox" value={description} onChange={updateDescription}>Please write at least 30 characters</textarea>
+              <textarea id="description" className="labelBox" value={description} onChange={updateDescription} placeholder="Please write at least 30 characters">Please write at least 30 characters</textarea>
             </div>
 
             {errors.includes("Description  needs a minimum of 30 characters") ? <label htmlFor="description" className="errorLabel"> Description needs a minimum of 30 characters</label> : null}
@@ -254,7 +254,7 @@ const SpotForm = ({ spot, formType }) => {
 
             <div className='urlDiv'>
               <input type="url" className="inputURL" id="url1" placeholder="Preview Image URL" value={url1} onChange={updateUrl1} />
-              {/* {errors.includes("Preview image is required") ? <label htmlFor='url1' className="errorLabel"> Preview image is required</label> : null} */}
+              {errors.includes("Preview image is required") ? <label htmlFor='url1' className="errorLabel"> Preview image is required</label> : null}
             </div>
 
             {/* {
@@ -288,7 +288,7 @@ const SpotForm = ({ spot, formType }) => {
             </div>
             <div className='divGap'><hr /></div>
 
-            <input type="submit" value={"Create"} />
+            <input type="submit" value={"Create Spot"} />
             <br /><br /><br />
           </form>
         </section>

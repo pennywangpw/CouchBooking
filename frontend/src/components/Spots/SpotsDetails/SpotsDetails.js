@@ -22,9 +22,14 @@ const defaultUrl = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-no
 
 const SpotsDetails = () => {
     const dispatch = useDispatch()
+    const state = useSelector(state => state)
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => state.reviews)
+    // const spot = state.spots.singleSpot
+    // const reviews = state.reviews
 
+    console.log("SpotsDetails with state: ")
+    console.log(state)
     console.log("SpotsDetails with spot: ")
     console.log(spot)
     console.log("SpotsDetails with reviews: ")
@@ -38,13 +43,9 @@ const SpotsDetails = () => {
         // console.log("SpotsDetails---useEffect")
         dispatch(getSpotDetails(id));
         dispatch(getReviews(id));
-    }, []);
+    }, [id]);
 
-    // useEffect(() => {
-    //     // console.log("SpotsDetails---useEffect")
-    //     dispatch(getSpotDetails(id));
-    //     dispatch(getReviews(id));
-    // }, [JSON.stringify(reviews)]);
+
 
     //alert function for Reserve button
     function handleAlert() {
@@ -85,7 +86,6 @@ const SpotsDetails = () => {
                 </h3>
 
                 <div className="imgContainer">
-                    {/* {spotImagesArr.map((img, i) => <ImageCreator spotImg={spotImagesArr} index={i} />)} */}
 
                     {[...spot.SpotImages, ...Array(5 - spot.SpotImages.length).fill({ url: defaultUrl })].map(img => {
                         return <ImageCreator spotImg={img.url} />
@@ -93,7 +93,6 @@ const SpotsDetails = () => {
                     })}
 
                 </div>
-
 
                 <div className="descriptionNbtn">
 
@@ -109,11 +108,11 @@ const SpotsDetails = () => {
                     <div className="actionContainer">
                         <div className="actFormat">
                             <div className="actText">
-                                <div className="actPrice">${spot.price}
-                                    <label htmlFor="actPrice" className="actLabel">night</label>
+                                <div className="actInfo">${spot.price}
+                                    <label htmlFor="actInfo" className="actLabel">night</label>
                                     {/* <label className="actLabel">night</label> */}
                                 </div>
-                                <div className="actPrice">
+                                <div className="actInfo">
                                     <ReviewSummaryInfo spot={spot} reviews={reviews} />
                                     {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
                                 <label className="actLabel">{divider} </label>
@@ -130,7 +129,6 @@ const SpotsDetails = () => {
 
                 </div>
 
-
                 <div className="reviewDetails">
                     <div className="numOfcomments">
                         <ReviewSummaryInfo spot={spot} />
@@ -139,13 +137,85 @@ const SpotsDetails = () => {
                     <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
                     </div>
                     <div>
-                        <AllReviews reviews={reviews} />
+                        <AllReviews reviews={reviews} spot={spot} />
                     </div>
                 </div>
 
 
             </div>
         </div>
+
+        // <div className="detailspage">
+        //     <div className="details">
+        //         <h2>
+        //             <div className="name">{spot.name}</div>
+        //         </h2>
+        //         <h3>
+        //             <div className="city">{spot.city}, {spot.state}, {spot.country}</div>
+        //         </h3>
+
+        //         <div className="imgContainer">
+        //             {/* {spotImagesArr.map((img, i) => <ImageCreator spotImg={spotImagesArr} index={i} />)} */}
+
+        //             {[...spot.SpotImages, ...Array(5 - spot.SpotImages.length).fill({ url: defaultUrl })].map(img => {
+        //                 return <ImageCreator spotImg={img.url} />
+        //                 // return <img className="sImgSize" src={img.url} alt='image' key={img.id} />
+        //             })}
+
+        //         </div>
+
+
+        //         <div className="descriptionNbtn">
+
+        //             <div className="description">
+        //                 <h3>
+        //                     <div>
+        //                         Hosted by {spot.Owner.firstName}{spot.Owner.lastName}
+        //                     </div>
+        //                 </h3>
+        //                 <div className="description">{spot.description}</div>
+        //             </div>
+
+        //             <div className="actionContainer">
+        //                 <div className="actFormat">
+        //                     <div className="actText">
+        //                         <div className="actInfo">${spot.price}
+        //                             <label htmlFor="actInfo" className="actLabel">night</label>
+        //                             {/* <label className="actLabel">night</label> */}
+        //                         </div>
+        //                         <div className="actInfo">
+        //                             <ReviewSummaryInfo spot={spot} reviews={reviews} />
+        //                             {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
+        //                         <label className="actLabel">{divider} </label>
+        //                         <label className="actLabel">{reviewNum} {reviewChecker}</label> */}
+
+        //                         </div>
+        //                     </div>
+
+        //                     <div>
+        //                         <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
+        //                     </div>
+        //                 </div>
+        //             </div>
+
+        //         </div>
+
+
+        //         <div className="reviewDetails">
+        //             <div className="numOfcomments">
+        //                 <ReviewSummaryInfo spot={spot} />
+        //                 {/* <div className="rating"><i className="fa-solid fa-star"></i> {avgStars}</div>
+        //             <div className="reviewsCount">{divider} </div>
+        //             <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
+        //             </div>
+        //             <div>
+        //                 <AllReviews reviews={reviews} />
+        //             </div>
+        //         </div>
+
+
+        //     </div>
+        // </div>
     )
 
 }

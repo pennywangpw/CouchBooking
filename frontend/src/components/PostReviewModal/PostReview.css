@@ -1,8 +1,25 @@
-/* ----------------- for form ----------------- */
+/* ----------------- form ----------------- */
 
 .postReviewForm {
-   width: 300px;
-   height: 300px;
+   margin-top: 5px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+}
+
+/* ----------------- for textarea ----------------- */
+textarea {
+   margin: 10px;
+   width: 270px;
+   height: 100px;
+}
+
+/* ----------------- for button ----------------- */
+
+.button {
+   margin: 5px;
 }
 
 /* ----------------- for ratingStar ----------------- */
@@ -19,6 +36,7 @@
 .rate-area {
    float: left;
    border-style: none;
+
 }
 
 .rate-area:not(:checked)>input {

@@ -8,9 +8,9 @@ import DeleteFormModal from "../DeleteConfirmationModal"
 //2.the review should be in
 
 // dispatch all the reviews
-const AllReviews = ({ reviews, spots }) => {
+const AllReviews = ({ reviews, spot }) => {
     console.log("AllReviews component---passed in reviews: ", reviews)
-    console.log("AllReviews component---passed in spots: ", spots)
+    console.log("AllReviews component---passed in spot: ", spot)
 
 
     const { id } = useParams()
@@ -148,7 +148,7 @@ const AllReviews = ({ reviews, spots }) => {
                         </div>
                         {user?.id === review.userId && <OpenModalButton
                             buttonText="delete"
-                            modalComponent={<DeleteFormModal id={review.id} type="review" />}
+                            modalComponent={<DeleteFormModal reviewid={review.id} type="review" spot={spot} />}
                         />}
 
                     </div>
