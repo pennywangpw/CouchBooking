@@ -6,8 +6,6 @@ import LoginFormModal from "../LoginFormModal";
 import OpenModalButton from "../OpenModalButton";
 // import Profile from "../Profile";
 import SignupFormModal from "../SignupFormModal";
-// import CreateSpotForm from "../Spots/CreateSpot";
-import CreateASpotForm from "../Spots/CreateASpot/CreateASpot.js";
 
 export default function ProfileButton({ user }) {
 

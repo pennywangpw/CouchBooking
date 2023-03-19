@@ -64,7 +64,7 @@ const CurrentSpot = () => {
                                     <div>
                                         <OpenModalButton
                                             buttonText="delete"
-                                            modalComponent={<DeleteFormModal id={id} type="spot" />}
+                                            modalComponent={<DeleteFormModal spotId={id} type="spot" />}
                                         />
                                     </div>
                                 </div>

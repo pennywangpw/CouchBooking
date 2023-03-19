@@ -37,13 +37,13 @@ const SpotsDetails = () => {
 
 
     //get the spotId from the path and fetch the data from db
-    const { id } = useParams()
+    const { spotId } = useParams()
 
     useEffect(() => {
         // console.log("SpotsDetails---useEffect")
-        dispatch(getSpotDetails(id));
-        dispatch(getReviews(id));
-    }, [id]);
+        dispatch(getSpotDetails(spotId));
+        dispatch(getReviews(spotId));
+    }, [spotId]);
 
 
 
