@@ -129,6 +129,7 @@ const SpotsDetails = () => {
 
                 </div>
 
+
                 <div className="reviewDetails">
                     <div className="numOfcomments">
                         <ReviewSummaryInfo spot={spot} />

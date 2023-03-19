@@ -256,5 +256,6 @@ li {
 
 
 .Navigation-sitename {
+    font: bold 24px sans-serif;
     margin: 10px;
 }

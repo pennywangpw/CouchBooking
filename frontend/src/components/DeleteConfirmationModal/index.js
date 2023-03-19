@@ -46,9 +46,9 @@ const DeleteFormModal = ({ reviewid, type, spotId }) => {
 
         <div className="buttonbox">
 
-          <button type="button" className="button yes" onClick={() => deleteHandler()}>Yes -Delete {type}</button>
+          <button type="button" className="button yes" onClick={() => deleteHandler()}>Yes (Delete {type[0].toUpperCase() + type.slice(1)})</button>
 
-          <button type="button" className="button no" onClick={() => keepHandler()}>No -Keep {type}</button>
+          <button type="button" className="button no" onClick={() => keepHandler()}>No (Keep {type[0].toUpperCase() + type.slice(1)})</button>
 
         </div>
       </div>

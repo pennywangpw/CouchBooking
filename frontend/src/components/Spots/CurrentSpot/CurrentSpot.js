@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { getCurrentSpots } from "../../../store/spots";
+import { getCurrentSpots, getAllSpots } from "../../../store/spots";
 import { useHistory } from "react-router-dom";
 import DeleteFormModal from '../../DeleteConfirmationModal';
 import OpenModalButton from "../../OpenModalButton";
@@ -13,6 +13,7 @@ import './CurrentSpot.css';
 //display on the browser
 
 const CurrentSpot = () => {
+
     //define dispatch & history
     const dispatch = useDispatch()
     const history = useHistory()
@@ -47,30 +48,32 @@ const CurrentSpot = () => {
         <div>
             <div>Manage Your Spots</div>
             <div className='currentSpotCards'>
-                {userSpots.map(({ id, previewImage, city, price, avgRating, state }) => (
+                {userSpots.length === 0 ? (<NavLink to="/spots/new" style={{ textDecoration: 'none', color: 'black' }}><div id="creatBtn">Create a New Spot</div></NavLink>) : userSpots.map(({ id, previewImage, city, price, avgRating, state }) => (
                     // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
-                    <div className="spotImgOutter" key={id} >
-                        <NavLink to={`/spots/${id}`}>
-                            <img className="spotImg" src={previewImage} alt="spot" />
-                        </NavLink>
-                        <div className="cityNpriceNrate">
-                            <div className="location">{state},{city}</div>
-                            {console.log("##### CHECK TYPE ", avgRating)}
-                            <div className="rate"><i class="fa-solid fa-star"></i> {typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
-                            <div className="priceNbtn">
-                                <div className="price">${price} night</div>
-                                <div className="actionBtn">
-                                    <button type="button" onClick={() => { history.push(`/spots/${id}/edit`) }}>Update</button>
-                                    <div>
-                                        <OpenModalButton
-                                            buttonText="delete"
-                                            modalComponent={<DeleteFormModal spotId={id} type="spot" />}
-                                        />
+                    <>
+                        <NavLink to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                            <div className="spotImgOutter" key={id} >
+                                <img className="spotImg" src={previewImage} alt="spot" />
+                                <div className="cityNpriceNrate">
+                                    <div className="location">{city},{state}</div>
+                                    {console.log("##### CHECK TYPE ", avgRating)}
+                                    <div className="rate"><i class="fa-solid fa-star"></i> {typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
+                                    <div className="priceNbtn">
+                                        <div className="price">${price} night</div>
                                     </div>
                                 </div>
                             </div>
+                        </NavLink>
+                        <div className="actionBtn">
+                            <button type="button" onClick={() => { history.push(`/spots/${id}/edit`) }}>Update</button>
+                            <div>
+                                <OpenModalButton
+                                    buttonText="delete"
+                                    modalComponent={<DeleteFormModal spotId={id} type="spot" />}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </>
                 ))}
             </div>
         </div>
