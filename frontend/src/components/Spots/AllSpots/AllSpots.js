@@ -38,7 +38,7 @@ const AllSpots = () => {
         <div className="spotImgOutter">
           <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
             <div className="img" key={spot.id}>
-              <img className="spotImg" src={spot.previewImage} alt="spotPreviewImg" />
+              <img className="spotImg" src={spot.previewImage} alt="spotPreviewImg" title={spot.name} />
               <SpotInfo spotObj={spot} />
             </div>
           </NavLink>
