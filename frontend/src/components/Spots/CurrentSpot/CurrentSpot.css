@@ -1,4 +1,13 @@
-.currentSpotCards {
+#currentSpot {
+    display: flex;
+    flex-direction: column;
+}
+
+.manageSpot {
+    height: 50px;
+}
+
+.allSpotImg {
 
     width: 95%;
     display: flex;
@@ -48,7 +57,8 @@
 }
 
 .actionBtn {
-    width: 50%;
+    display: flex;
+    padding: 0 0 0 30px;
 }
 
 
