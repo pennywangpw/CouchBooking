@@ -1,7 +1,7 @@
 //reducer . action creators
 //import the token
 import { csrfFetch } from './csrf';
-
+import { getSpotDetails } from "./spots"
 
 //constant
 const GET_Reviews = 'reviews/getReviews'
@@ -33,9 +33,9 @@ export const deleteReview = (id) => {
 
 
 //THUNK - get the review by spot
-export const getReviews = (id) => async (dispatch) => {
+export const getReviews = (spotId) => async (dispatch) => {
     console.log("是否有hit getreview ")
-    const response = await csrfFetch(`/api/spots/${id}/reviews`)
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
     const data = await response.json()
     console.log("THUNK---getReviews: ", data)
     dispatch(getReviewsbySpot(data))
@@ -55,18 +55,20 @@ export const createAReview = ({ id, newReview }) => async (dispatch) => {
         const newReview = await response.json()
         console.log("THUNK----createReview: ", newReview)
         dispatch(createReview(newReview))
+        dispatch(getSpotDetails(id))
         return newReview
     }
 }
 
 //THUNK - deletde a review
-export const deleteAReview = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/reviews/${id}`, {
+export const deleteAReview = (reviewid, spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/${reviewid}`, {
         method: "DELETE"
     })
 
     if (response.ok) {
-        dispatch(deleteReview(id))
+        dispatch(deleteReview(reviewid))
+        dispatch(getSpotDetails(spotId))
     }
 }
 

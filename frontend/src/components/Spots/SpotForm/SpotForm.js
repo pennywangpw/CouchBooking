@@ -136,18 +136,15 @@ const SpotForm = ({ spot, formType }) => {
 
     }
 
-    //FormType is Edit Spot
+    //FormType is Update your Spot
     //find the spot === parmas id (in EditAspot)
     //update the current spot
-    if (formType === "Edit Spot") {
-      console.log("HIT EDIT SPOT with passed in exsiting spot: ", spot)
-      console.log("HIT EDIT SPOT with revised spot: ", payload)
+    if (formType === "Update your Spot") {
+      console.log("HIT Update your Spot with passed in exsiting spot: ", spot)
+      console.log("HIT Update your Spot with revised spot: ", payload)
       const updatedSpot = dispatch(editASpot(payload));
       if (updatedSpot) history.push(`/spots/${spot.id}`);
     }
-
-
-
 
   };
 
@@ -165,130 +162,142 @@ const SpotForm = ({ spot, formType }) => {
         <section>
           <form onSubmit={handleSubmit}>
 
-            <div>
-              <label htmlFor='country'>
-                Country
-                {errors.includes("Country is required") ? <label htmlFor='country' className="errorLabel"> Country is required</label> : null}
-                {/* {country.length === 0 && <label htmlFor='country' className="errorLabel"> Country is required</label>} */}
-              </label>
+            <section id='section1'>
+              <div>
+                <label htmlFor='country'>
+                  Country
+                  {errors.includes("Country is required") ? <label htmlFor='country' className="errorLabel"> Country is required</label> : null}
+                  {/* {country.length === 0 && <label htmlFor='country' className="errorLabel"> Country is required</label>} */}
+                </label>
 
-              <input id="country" type="text" className="inputBoxBottom" placeholder="Country" value={country} onChange={updateCountry} />
-            </div>
+                <input id="country" type="text" className="inputBoxBottom" placeholder="Country" value={country} onChange={updateCountry} />
+              </div>
 
-            <div>
-              <label htmlFor='address'>
-                Address
-                {errors.includes("Address is required") ? <label htmlFor='address' className="errorLabel"> Address is required</label> : null}
-                {/* {address.length === 0 && <label htmlFor='address' className="errorLabel"> Address is required</label>} */}
-              </label>
-              <input id="address" type="text" className="inputBoxBottom" placeholder="Address" value={address} onChange={updateAddress} />
-            </div>
+              <div>
+                <label htmlFor='address'>
+                  Address
+                  {errors.includes("Address is required") ? <label htmlFor='address' className="errorLabel"> Address is required</label> : null}
+                  {/* {address.length === 0 && <label htmlFor='address' className="errorLabel"> Address is required</label>} */}
+                </label>
+                <input id="address" type="text" className="inputBoxBottom" placeholder="Address" value={address} onChange={updateAddress} />
+              </div>
 
-            <div>
-              <label htmlFor='city'>
-                City
-                {errors.includes("City is required") ? <label htmlFor='city' className="errorLabel"> City is required</label> : null}
-                {/* {city.length === 0 && <label htmlFor='city' className="errorLabel"> City is required</label>} */}
-              </label>
-              <input id="city" type="text" className="inputBoxBottom" placeholder="City" value={city} onChange={updateCity} />
-            </div>
+              <div>
+                <label htmlFor='city'>
+                  City
+                  {errors.includes("City is required") ? <label htmlFor='city' className="errorLabel"> City is required</label> : null}
+                  {/* {city.length === 0 && <label htmlFor='city' className="errorLabel"> City is required</label>} */}
+                </label>
+                <input id="city" type="text" className="inputBoxBottom" placeholder="City" value={city} onChange={updateCity} />
+              </div>
 
-            <div>
-              <label htmlFor='state'>
-                State
-                {errors.includes("State is required") ? <label htmlFor='state' className="errorLabel"> State is required</label> : null}
-                {/* {state.length === 0 && <label htmlFor='state' className="errorLabel"> State is required</label>} */}
-              </label>
-              <input id="state" type="text" className="inputBoxBottom" placeholder="State" value={state} onChange={updateState} />
-            </div>
+              <div>
+                <label htmlFor='state'>
+                  State
+                  {errors.includes("State is required") ? <label htmlFor='state' className="errorLabel"> State is required</label> : null}
+                  {/* {state.length === 0 && <label htmlFor='state' className="errorLabel"> State is required</label>} */}
+                </label>
+                <input id="state" type="text" className="inputBoxBottom" placeholder="State" value={state} onChange={updateState} />
+              </div>
+            </section>
 
 
-            <div className='divGap'><hr /></div>
+            <div className='divider'><hr /></div>
 
             {/* <input type="text" placeholder="lat" value={lat} onChange={updatelat}/>
             <input type="text" placeholder="lng" value={lng} onChange={updatelng}/> */}
+            <section id='section2'>
+              <div>
+                <h3> Describe your place to guests </h3>
+                <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</p>
+                {/* <lable for = "description">Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</lable> */}
+                <textarea id="description" className="labelBox" value={description} onChange={updateDescription} placeholder="Please write at least 30 characters">Please write at least 30 characters</textarea>
+              </div>
 
-            <div>
-              <h3> Describe your place to guests </h3>
-              <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</p>
-              {/* <lable for = "description">Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neightborhood.</lable> */}
-              <textarea id="description" className="labelBox" value={description} onChange={updateDescription} placeholder="Please write at least 30 characters">Please write at least 30 characters</textarea>
-            </div>
-
-            {errors.includes("Description  needs a minimum of 30 characters") ? <label htmlFor="description" className="errorLabel"> Description needs a minimum of 30 characters</label> : null}
-            {/* {
+              {errors.includes("Description  needs a minimum of 30 characters") ? <label htmlFor="description" className="errorLabel"> Description needs a minimum of 30 characters</label> : null}
+              {/* {
               description.length < 30 && <label className="errorLabel"> Description needs a minimum of 30 characters</label>
             } */}
-            <div className='divGap'><hr /></div>
-            <div>
-              <h3>Create a title for your spot</h3>
-              <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
-              <input type="text" id="title" className="inputBoxTop" placeholder="Name of your spot" value={name} onChange={updateName} />
+            </section>
+
+            <div className='divider'><hr /></div>
+
+            <section id='section3'>
               <div>
-                {errors.includes("Name is required") ? <label htmlFor='title' className="errorLabel"> Name is required</label> : null}
-                {/* {
-                  name.length === 0 && <label className="errorLabel"> Name is required</label>
-                } */}
+                <h3>Create a title for your spot</h3>
+                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <input type="text" id="title" className="inputBoxTop" placeholder="Name of your spot" value={name} onChange={updateName} />
+                <div>
+                  {errors.includes("Name is required") ? <label htmlFor='title' className="errorLabel"> Name is required</label> : null}
+                  {/* {
+                    name.length === 0 && <label className="errorLabel"> Name is required</label>
+                  } */}
+                </div>
               </div>
-            </div>
+            </section>
 
-            <div className='divGap'><hr /></div>
+            <div className='divider'><hr /></div>
 
-            <div>
-              <h3>Set a base price for your spot</h3>
-              <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-              <div className='priceDiv'>
-                {/* <lable for="pricetag">$</lable> */}
-                <input id="pricetag" className="priceBox" type="text" placeholder="Price per night(USD)" value={price} onChange={updatePrice} />
+            <section id="section4">
+              <div>
+                <h3>Set a base price for your spot</h3>
+                <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                <div className='priceDiv'>
+                  {/* <lable for="pricetag">$</lable> */}
+                  <input id="pricetag" className="priceBox" type="text" placeholder="Price per night(USD)" value={price} onChange={updatePrice} />
+                </div>
               </div>
-            </div>
-            <div>
-              {errors.includes("Price is required") ? <label htmlFor='pricetag' className="errorLabel"> Price is required</label> : null}
+              <div>
+                {errors.includes("Price is required") ? <label htmlFor='pricetag' className="errorLabel"> Price is required</label> : null}
+              </div>
+
+            </section>
+
+            <div className='divider'><hr /></div>
+
+            <section id="setion5">
+              <h3>Liven up your spot with photos</h3>
+              <p>Submit a link to at least one photo to publish your spot.</p>
+
+              <div className='urlDiv'>
+                <input type="url" className="inputURL" id="url1" placeholder="Preview Image URL" value={url1} onChange={updateUrl1} />
+                {errors.includes("Preview image is required") ? <label htmlFor='url1' className="errorLabel"> Preview image is required</label> : null}
+              </div>
+
               {/* {
-                price.length === 0 && <label className="errorLabel"> Price is required</label>
+                (!url1 || url1 === undefined)
+                && <label className="errorLabel">Preview image is required</label>
               } */}
-            </div>
-            <div className='divGap'><hr /></div>
-            <h3>Liven up your spot with photos</h3>
-            <p>Submit a link to at least one photo to publish your spot.</p>
 
-            <div className='urlDiv'>
-              <input type="url" className="inputURL" id="url1" placeholder="Preview Image URL" value={url1} onChange={updateUrl1} />
-              {errors.includes("Preview image is required") ? <label htmlFor='url1' className="errorLabel"> Preview image is required</label> : null}
-            </div>
+              <div className='urlDiv'>
+                <input type="url" className="inputURL" placeholder="Image URL" id="url2" value={url2} onChange={updateUrl2} />
+                {/* {url2 === "pls provide the valid" ? <label htmlFor='url2' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
+                {/* {url2 === "" ? <label htmlFor='url2' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
+                {/* {errors.includes("Image URL must end in .png .jpg, or .jpeg") ? <label htmlFor='url2' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
+              </div>
 
-            {/* {
-              (!url1 || url1 === undefined)
-              && <label className="errorLabel">Preview image is required</label>
-            } */}
+              {/* {
+                (!url1 || url1 === undefined)
+                && <label className="errorLabel">Image URL must end in .png .jpg, or .jpeg</label>
+              } */}
+              <div className='urlDiv'>
+                <input type="url" className="inputURL" placeholder="Image URL" value={url3} onChange={updateUrl3} />
+                {/* {url3 === "pls provide the valid" ? <label htmlFor='url3' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
+              </div>
 
-            <div className='urlDiv'>
-              <input type="url" className="inputURL" placeholder="Image URL" id="url2" value={url2} onChange={updateUrl2} />
-              {/* {url2 === "pls provide the valid" ? <label htmlFor='url2' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
-              {/* {url2 === "" ? <label htmlFor='url2' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
-              {/* {errors.includes("Image URL must end in .png .jpg, or .jpeg") ? <label htmlFor='url2' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
-            </div>
+              <div className='urlDiv'>
+                <input type="url" className="inputURL" placeholder="Image URL" value={url4} onChange={updateUrl4} />
+                {/* {url4 === "pls provide the valid" ? <label htmlFor='url4' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
+              </div>
+              <div className='urlDiv'>
+                <input type="url" className="inputURL" placeholder="Image URL" value={url5} onChange={updateUrl5} />
+                {/* {url5 === "pls provide the valid" ? <label htmlFor='url5' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
+              </div>
+            </section>
 
-            {/* {
-              (!url1 || url1 === undefined)
-              && <label className="errorLabel">Image URL must end in .png .jpg, or .jpeg</label>
-            } */}
-            <div className='urlDiv'>
-              <input type="url" className="inputURL" placeholder="Image URL" value={url3} onChange={updateUrl3} />
-              {/* {url3 === "pls provide the valid" ? <label htmlFor='url3' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
-            </div>
+            <div className='divider'><hr /></div>
 
-            <div className='urlDiv'>
-              <input type="url" className="inputURL" placeholder="Image URL" value={url4} onChange={updateUrl4} />
-              {/* {url4 === "pls provide the valid" ? <label htmlFor='url4' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
-            </div>
-            <div className='urlDiv'>
-              <input type="url" className="inputURL" placeholder="Image URL" value={url5} onChange={updateUrl5} />
-              {/* {url5 === "pls provide the valid" ? <label htmlFor='url5' className="errorLabel"> Image URL must end in .png .jpg, or .jpeg</label> : null} */}
-            </div>
-            <div className='divGap'><hr /></div>
-
-            <input type="submit" value={"Create Spot"} />
+            <input type="submit" value={formType} />
             <br /><br /><br />
           </form>
         </section>

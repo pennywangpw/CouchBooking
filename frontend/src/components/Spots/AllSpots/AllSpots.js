@@ -35,12 +35,14 @@ const AllSpots = () => {
 
       {spotsArr.map((spot) => (
         // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
-        <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-          <div className="spotImgOutter" key={spot.id}>
-            <img className="spotImg" src={spot.previewImage} alt="spotPreviewImg" />
-            <SpotInfo spotObj={spot} />
-          </div>
-        </NavLink>
+        <div className="spotImgOutter">
+          <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <div className="img" key={spot.id}>
+              <img className="spotImg" src={spot.previewImage} alt="spotPreviewImg" />
+              <SpotInfo spotObj={spot} />
+            </div>
+          </NavLink>
+        </div>
       ))
       }
     </div >
