@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSpotDetails } from "../../../store/spots";
 import { getReviews } from "../../../store/reviews";
 import { useParams } from "react-router-dom";
 import AllReviews from "../../Reviews/AllReviews";
-import ReviewSummaryInfo from "../ReviewSummaryInfo"
-import './SpotsDetails.css'
+import ReviewSummaryInfo from "../ReviewSummaryInfo";
+import ImageCreator from "../SpotImages";
+import './SpotsDetails.css';
 
 //1.fetch spotDetails by spotId
 //2.fetch allreveiws by spotId
@@ -17,33 +18,48 @@ import './SpotsDetails.css'
 //reviews ('/:spotId/reviews')
 //add reserve button
 
+const defaultUrl = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png"
+
 const SpotsDetails = () => {
     const dispatch = useDispatch()
+    const state = useSelector(state => state)
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => state.reviews)
+    // const spot = state.spots.singleSpot
+    // const reviews = state.reviews
 
-    // console.log("SpotsDetails with spot: ")
-    // console.log(spot)
-    // console.log("SpotsDetails with reviews: ")
-    // console.log(reviews)
-    // console.log("SpotsDeails with spotImages url: ",spot.SpotImages[0].url)
+    console.log("SpotsDetails with state: ")
+    console.log(state)
+    console.log("SpotsDetails with spot: ")
+    console.log(spot)
+    console.log("SpotsDetails with reviews: ")
+    console.log(reviews)
+
 
     //get the spotId from the path and fetch the data from db
-    const { id } = useParams()
-    console.log("SD的id from params: ", +id)
-    console.log("SD的 id from params TYPE: ", typeof id)
+    const { spotId } = useParams()
 
     useEffect(() => {
-        console.log("SpotsDetails---useEffect")
-        dispatch(getSpotDetails(id));
-        dispatch(getReviews(id));
-    }, [dispatch, JSON.stringify(reviews)]);
+        // console.log("SpotsDetails---useEffect")
+        dispatch(getSpotDetails(spotId));
+        dispatch(getReviews(spotId));
+    }, [spotId]);
 
 
-    //alert function
+
+    //alert function for Reserve button
     function handleAlert() {
         alert("Feature Coming Soon.....")
     }
+
+
+    // //create a new array with 5
+    // let spotImagesArr = ["", "", "", "", ""]
+    // useEffect(() => {
+    //     spot.SpotImages?.forEach((spot, i) => spotImagesArr[i] = spot.url)
+    // }, [spot])
+
+    // console.log("spotImagesArr : ", spotImagesArr)
 
     //shows "Unable to retrieve details. Please try again shortly" when the page doesn't render successfully
     if (!spot || !spot.SpotImages) return (
@@ -55,120 +71,152 @@ const SpotsDetails = () => {
         </div>
     )
 
-    // if(spot.SpotImages.length === 0) return null
-    // console.log("HEREEE URL: ",spot.SpotImages[0].url)
-
-    // //reviewChecker & divider(dot)
-    // let avgStars = spot.avgRating;
-    // let divider = " ";
-    // let reviewNum = spot.numReviews
-    // let reviewChecker;
-    // if (reviewNum === 1) {
-    //     reviewChecker = "review"
-    //     avgStars = avgStars.toFixed(2)
-    //     divider = "·"
-    // } else if (reviewNum === 0) {
-    //     reviewChecker = "New"
-    //     avgStars = ""
-    //     reviewNum = ""
-    // } else {
-    //     reviewChecker = ' reviews'
-    //     avgStars = avgStars.toFixed(2)
-    //     divider = "·"
-    // }
-    // console.log("會顯示 reviewNum, reviewChecker, divider2: ", reviewNum, reviewChecker, divider)
 
 
-    // console.log("列印前的reviewNum: ", reviewNum)
 
     //to display the images we have to make a loop to create div to store it
     return (
+        <div className="detailspage">
+            <div className="details">
+                <h2>
+                    <div className="name">{spot.name}</div>
+                </h2>
+                <h3>
+                    <div className="city">{spot.city}, {spot.state}, {spot.country}</div>
+                </h3>
 
-        <div className="details">
-            <h1>
-                <div className="name">{spot.name}</div>
-            </h1>
-            <h2>
-                <div className="city">{spot.city}, {spot.state}, {spot.country}</div>
-            </h2>
+                <div className="imgContainer">
 
-            <div className="imgContainer">
+                    {[...spot.SpotImages, ...Array(5 - spot.SpotImages.length).fill({ url: defaultUrl })].map(img => {
+                        return <ImageCreator spotImg={img.url} />
+                        // return <img className="sImgSize" src={img.url} alt='image' key={img.id} />
+                    })}
 
-                {spot.SpotImages.map(img =>
-                    <img className="sImgSize" src={img.url} alt='image' key={img.id} />
-                )}
-
-                {/* <div className="bigImg">
-                    <img className="bimgSize" src={spot.SpotImages[0].url} alt='previewImg' />
                 </div>
 
+                <div className="descriptionNbtn">
 
-                <div className="smallImg1">
-                    {!spot.SpotImages[1] || spot.SpotImages[1] === undefined ? "" : <img className="sImgSize" src={spot.SpotImages[1].url} alt='otherImg' />}
-                </div>
-                <div className="smallImg2">
-                    {!spot.SpotImages[2] || spot.SpotImages[2] === undefined ? "" : <img className="sImgSize" src={spot.SpotImages[2].url} alt='otherImg' />}
-                </div>
-                <div className="smallImg3">
-                    {!spot.SpotImages[3] || spot.SpotImages[3] === undefined ? "" : <img className="sImgSize" src={spot.SpotImages[3].url} alt='otherImg' />}
-                </div>
-                <div className="smallImg4">
-                    {!spot.SpotImages[4] || spot.SpotImages[4] === undefined ? "" : <img className="sImgSize" src={spot.SpotImages[4].url} alt='otherImg' />}
-                </div> */}
-
-            </div>
-
-
-            <div className="descriptionNbtn">
-
-                <div className="description">
-                    <h3>
-                        <div>
-                            Hosted by {spot.Owner.firstName}{spot.Owner.lastName}
-                        </div>
-                    </h3>
-                    <div className="description">{spot.description}</div>
-                </div>
-
-                <div className="actionContainer">
-                    <div className="actFormat">
-                        <div className="actText">
-                            <div className="actPrice">${spot.price}
-                                <label className="actLabel">night</label>
+                    <div className="description">
+                        <h3>
+                            <div>
+                                Hosted by {spot.Owner.firstName}{spot.Owner.lastName}
                             </div>
-                            <div className="actPrice">
-                                <ReviewSummaryInfo spot={spot} reviews={reviews} />
-                                {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
+                        </h3>
+                        <div className="description">{spot.description}</div>
+                    </div>
+
+                    <div className="actionContainer">
+                        <div className="actFormat">
+                            <div className="actText">
+                                <div className="actInfo">${spot.price}
+                                    <label htmlFor="actInfo" className="actLabel">night</label>
+                                    {/* <label className="actLabel">night</label> */}
+                                </div>
+                                <div className="actInfo">
+                                    <ReviewSummaryInfo spot={spot} reviews={reviews} />
+                                    {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
                                 <label className="actLabel">{divider} </label>
                                 <label className="actLabel">{reviewNum} {reviewChecker}</label> */}
 
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
                             </div>
                         </div>
+                    </div>
 
-                        <div>
-                            <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
-                        </div>
+                </div>
+
+
+                <div className="reviewDetails">
+                    <div className="numOfcomments">
+                        <ReviewSummaryInfo spot={spot} />
+                        {/* <div className="rating"><i className="fa-solid fa-star"></i> {avgStars}</div>
+                    <div className="reviewsCount">{divider} </div>
+                    <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
+                    </div>
+                    <div>
+                        <AllReviews reviews={reviews} spot={spot} />
                     </div>
                 </div>
 
+
             </div>
-
-
-            <div className="reviewDetails">
-                <div className="numOfcomments">
-                    <ReviewSummaryInfo spot={spot} />
-                    {/* <div className="rating"><i className="fa-solid fa-star"></i> {avgStars}</div>
-                    <div className="reviewsCount">{divider} </div>
-                    <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
-                </div>
-                <div>
-                    <AllReviews reviews={reviews} />
-                </div>
-            </div>
-
-
         </div>
 
+        // <div className="detailspage">
+        //     <div className="details">
+        //         <h2>
+        //             <div className="name">{spot.name}</div>
+        //         </h2>
+        //         <h3>
+        //             <div className="city">{spot.city}, {spot.state}, {spot.country}</div>
+        //         </h3>
+
+        //         <div className="imgContainer">
+        //             {/* {spotImagesArr.map((img, i) => <ImageCreator spotImg={spotImagesArr} index={i} />)} */}
+
+        //             {[...spot.SpotImages, ...Array(5 - spot.SpotImages.length).fill({ url: defaultUrl })].map(img => {
+        //                 return <ImageCreator spotImg={img.url} />
+        //                 // return <img className="sImgSize" src={img.url} alt='image' key={img.id} />
+        //             })}
+
+        //         </div>
+
+
+        //         <div className="descriptionNbtn">
+
+        //             <div className="description">
+        //                 <h3>
+        //                     <div>
+        //                         Hosted by {spot.Owner.firstName}{spot.Owner.lastName}
+        //                     </div>
+        //                 </h3>
+        //                 <div className="description">{spot.description}</div>
+        //             </div>
+
+        //             <div className="actionContainer">
+        //                 <div className="actFormat">
+        //                     <div className="actText">
+        //                         <div className="actInfo">${spot.price}
+        //                             <label htmlFor="actInfo" className="actLabel">night</label>
+        //                             {/* <label className="actLabel">night</label> */}
+        //                         </div>
+        //                         <div className="actInfo">
+        //                             <ReviewSummaryInfo spot={spot} reviews={reviews} />
+        //                             {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
+        //                         <label className="actLabel">{divider} </label>
+        //                         <label className="actLabel">{reviewNum} {reviewChecker}</label> */}
+
+        //                         </div>
+        //                     </div>
+
+        //                     <div>
+        //                         <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
+        //                     </div>
+        //                 </div>
+        //             </div>
+
+        //         </div>
+
+
+        //         <div className="reviewDetails">
+        //             <div className="numOfcomments">
+        //                 <ReviewSummaryInfo spot={spot} />
+        //                 {/* <div className="rating"><i className="fa-solid fa-star"></i> {avgStars}</div>
+        //             <div className="reviewsCount">{divider} </div>
+        //             <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
+        //             </div>
+        //             <div>
+        //                 <AllReviews reviews={reviews} />
+        //             </div>
+        //         </div>
+
+
+        //     </div>
+        // </div>
     )
 
 }

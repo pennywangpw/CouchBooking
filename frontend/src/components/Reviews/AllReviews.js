@@ -8,13 +8,13 @@ import DeleteFormModal from "../DeleteConfirmationModal"
 //2.the review should be in
 
 // dispatch all the reviews
-const AllReviews = ({ reviews, spots }) => {
+const AllReviews = ({ reviews, spot }) => {
     console.log("AllReviews component---passed in reviews: ", reviews)
-    console.log("AllReviews component---passed in spots: ", spots)
+    console.log("AllReviews component---passed in spot: ", spot)
 
 
-    const { id } = useParams()
-    console.log("這裡是ALLREVIEW 的id from params: ", typeof +id)
+    const { spotId } = useParams()
+    console.log("這裡是ALLREVIEW 的id from params: ", typeof spotId)
 
     //convert reviews obj into array
     const reviewsArr = Object.values(reviews)
@@ -50,8 +50,6 @@ const AllReviews = ({ reviews, spots }) => {
     reviewsArr.sort(compare)
 
 
-
-    // console.log("AFTER review in arrary: ", reviewsArr)
 
     //dispaly -- "Be the first to post a review!"
     //check if user log in & not the owner
@@ -117,7 +115,7 @@ const AllReviews = ({ reviews, spots }) => {
                             <div>
                                 <OpenModalButton
                                     buttonText="Post Your Review"
-                                    modalComponent={<PostReviewModal id={+id} />}
+                                    modalComponent={<PostReviewModal id={spotId} />}
                                 />
                             </div>
                         )
@@ -133,7 +131,6 @@ const AllReviews = ({ reviews, spots }) => {
                     }
                 </div>
 
-                {/* {reviewDetails()} */}
 
             </div>
 
@@ -148,7 +145,7 @@ const AllReviews = ({ reviews, spots }) => {
                         </div>
                         {user?.id === review.userId && <OpenModalButton
                             buttonText="delete"
-                            modalComponent={<DeleteFormModal id={review.id} type="review" />}
+                            modalComponent={<DeleteFormModal reviewid={review.id} type="review" spotId={spotId} />}
                         />}
 
                     </div>

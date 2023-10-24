@@ -1,0 +1,56 @@
+.deleteForm {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between; */
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+
+
+h1 {
+    margin: 10px;
+}
+
+/* actionbox with question and button */
+
+.actionbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 80%;
+    margin: 0 10px 0 10px;
+}
+
+
+.question {
+    height: 50%;
+    line-height: 100px;
+}
+
+.buttonbox {
+    height: 50%;
+    line-height: 100px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.button {
+    height: 50px;
+    width: 150px;
+}
+
+.yes {
+    background-color: red;
+    width: 50%;
+}
+
+.no {
+    background-color: rgb(95, 92, 92);
+    width: 50%;
+}

@@ -6,16 +6,16 @@ import LoginFormModal from "../LoginFormModal";
 import OpenModalButton from "../OpenModalButton";
 // import Profile from "../Profile";
 import SignupFormModal from "../SignupFormModal";
-// import CreateSpotForm from "../Spots/CreateSpot";
-import CreateASpotForm from "../Spots/CreateASpot/CreateASpot.js";
 
 export default function ProfileButton({ user }) {
+
     const dispatch = useDispatch();
     const history = useHistory();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
     const openMenu = () => {
+        // e.stopPropagation()
         if (showMenu) return;
         setShowMenu(true);
     };
@@ -24,6 +24,7 @@ export default function ProfileButton({ user }) {
         if (!showMenu) return;
 
         const closeMenu = (e) => {
+            //click outside of the modal
             if (!ulRef.current.contains(e.target)) {
                 setShowMenu(false);
             }
@@ -74,7 +75,7 @@ export default function ProfileButton({ user }) {
                                 {user.firstName} {user.lastName}
                             </NavLink> */}
                         </li>
-                        <li className="profile-dropdown-links">
+                        <li className="profile-dropdown-links" onClick={closeMenu}>
                             <NavLink
                                 exact to="/spots/current"
                                 className="profile-dropdown-my-spots"

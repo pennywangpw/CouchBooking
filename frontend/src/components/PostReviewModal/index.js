@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { getSpotDetails } from "../../store/spots"
 import { createAReview } from "../../store/reviews"
 import { NavLink, useParams } from "react-router-dom";
 import './PostReview.css'
@@ -37,44 +38,39 @@ function PostReviewModal({ id }) {
         <h1>How was your stay?</h1>
 
         <textarea placeholder="Leave your review here...." onChange={(e) => setReview(e.target.value)}></textarea>
-        {/*
-        <div>
-          <lable for="star">Rate (1-5)</lable>
-          <input type="number" id="star" min="1" max="5" onChange={(e) => setStars(e.target.value)} />
-        </div> */}
 
-        {/* <div className="ratingStars">
-          <i class="fa-regular fa-star"></i>
-          <i class="fa-regular fa-star"></i>
-          <i class="fa-regular fa-star"></i>
-        </div> */}
+        <div id="rate-area">
 
-        <ul className="rate-area">
-          <input type="radio" id="5-star" name="crating" value="5" onChange={(e) => setStars(e.target.value)} />
-          <label for="5-star" title="Amazing">5 stars</label>
+          <div className="stars">
 
-          <input type="radio" id="4-star" name="crating" value="4" onChange={(e) => setStars(e.target.value)} />
-          <label for="4-star" title="Good">4 stars</label>
+            <input type="radio" id="5-star" name="crating" value="5" onChange={(e) => setStars(e.target.value)} />
+            <label for="5-star" title="Amazing">5 stars</label>
 
-          <input type="radio" id="3-star" name="crating" value="3" onChange={(e) => setStars(e.target.value)} />
-          <label for="3-star" title="Average">3 stars</label>
+            <input type="radio" id="4-star" name="crating" value="4" onChange={(e) => setStars(e.target.value)} />
+            <label for="4-star" title="Good">4 stars</label>
 
-          <input type="radio" id="2-star" name="crating" value="2" onChange={(e) => setStars(e.target.value)} />
-          <label for="2-star" title="Not Good">2 stars</label>
+            <input type="radio" id="3-star" name="crating" value="3" onChange={(e) => setStars(e.target.value)} />
+            <label for="3-star" title="Average">3 stars</label>
 
-          <input type="radio" id="1-star" required="" name="crating" value="1" aria-required="true" onChange={(e) => setStars(e.target.value)} />
-          <label for="1-star" title="Bad">1 star</label>
+            <input type="radio" id="2-star" name="crating" value="2" onChange={(e) => setStars(e.target.value)} />
+            <label for="2-star" title="Not Good">2 stars</label>
 
-        </ul>
+            <input type="radio" id="1-star" required="" name="crating" value="1" aria-required="true" onChange={(e) => setStars(e.target.value)} />
+            <label for="1-star" title="Bad">1 star</label>
 
+          </div>
+          <label htmlFor="stars">Stars</label>
 
+        </div>
 
 
 
         <div>
-          <button type="button" onClick={() => {
+          <button className="button" type="button" onClick={() => {
             if (review.length >= 10) {
+              console.log("this is post review when we click it : ", id, typeof id)
               dispatch(createAReview({ id, newReview })).then(closeModal)
+              // dispatch(createAReview({ id, newReview })).then(dispatch(getSpotDetails(id))).then(closeModal)
             }
           }}
             disabled={review.length < 10}>Submit Your Review</button>

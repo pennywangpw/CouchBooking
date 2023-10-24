@@ -1,33 +1,52 @@
-/* ----------------- for form ----------------- */
+/* ----------------- form ----------------- */
 
 .postReviewForm {
-   width: 300px;
-   height: 300px;
+   margin-top: 5px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+}
+
+/* ----------------- for textarea ----------------- */
+textarea {
+   margin: 10px;
+   width: 270px;
+   height: 100px;
+}
+
+/* ----------------- for button ----------------- */
+
+.button {
+   margin: 5px;
 }
 
 /* ----------------- for ratingStar ----------------- */
 
 
-/* .ratingStars {
+/* .rating.stars {
    color: #cfcfcf
 }
 
-.ratingStars i:hover~i {
+.rating.stars i:hover~i {
    color: yellow;
 } */
 
-.rate-area {
+.stars {
+   /* display: flex; */
    float: left;
    border-style: none;
+
 }
 
-.rate-area:not(:checked)>input {
+.stars:not(:checked)>input {
    position: absolute;
    top: -9999px;
    clip: rect(0, 0, 0, 0);
 }
 
-.rate-area:not(:checked)>label {
+.stars:not(:checked)>label {
    float: right;
    width: .80em;
    overflow: hidden;
@@ -39,32 +58,32 @@
    margin-bottom: 10px !important;
 }
 
-.rate-area:not(:checked)>label:before {
+.stars:not(:checked)>label:before {
    content: '★';
 }
 
-.rate-area>input:checked~label {
+.stars>input:checked~label {
    color: rgb(243, 223, 46);
    text-shadow: none;
 }
 
-.rate-area:not(:checked)>label:hover,
-.rate-area:not(:checked)>label:hover~label {
+.stars:not(:checked)>label:hover,
+.stars:not(:checked)>label:hover~label {
    color: rgb(243, 223, 46);
 
 }
 
-.rate-area>input:checked+label:hover,
-.rate-area>input:checked+label:hover~label,
-.rate-area>input:checked~label:hover,
-.rate-area>input:checked~label:hover~label,
-.rate-area>label:hover~input:checked~label {
+.stars>input:checked+label:hover,
+.stars>input:checked+label:hover~label,
+.stars>input:checked~label:hover,
+.stars>input:checked~label:hover~label,
+.stars>label:hover~input:checked~label {
    color: rgb(243, 223, 46);
    text-shadow: none;
 
 }
 
-.rate-area>label:active {
+.stars>label:active {
    position: relative;
    top: 0px;
    left: 0px;

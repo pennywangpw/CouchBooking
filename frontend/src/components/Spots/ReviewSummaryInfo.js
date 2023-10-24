@@ -23,7 +23,7 @@ const ReviewSummaryInfo = ({ spot }) => {
 
 
     return (
-        <div>
+        <div className="reviewInfo">
             <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
             <label className="actLabel">{divider} </label>
             <label className="actLabel">{reviewNum} {reviewChecker}</label>

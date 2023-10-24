@@ -36,8 +36,12 @@
     text-align: right;
 } */
 
-.allSpotImg {
+/* body {
+    background: rgb(238, 174, 202);
+    background: linear-gradient(0deg, rgba(238, 174, 202, 1) 0%, rgba(192, 181, 218, 1) 51%, rgba(148, 187, 233, 1) 100%);
+} */
 
+.allSpotImg {
     width: 95%;
     display: flex;
     flex-wrap: wrap;
@@ -62,13 +66,14 @@
     box-sizing: border-box;
     /* background-color: aquamarine; */
     margin-left: 30px;
-    flex: 0 0 22%;
+    flex: 0 0 25%;
     min-width: 269.99px;
 }
 
 .spotImg {
     height: 250px;
     width: 270px;
+    border-radius: 10px;
 }
 
 .cityNpriceNrate {

@@ -148,7 +148,7 @@
 }
 
 .Navigation-logo {
-    padding-left: 80px;
+    padding-left: 20px;
     height: 40px;
 }
 
@@ -252,4 +252,10 @@ li {
 .newSpot:hover {
     box-shadow: 0 2px 3px 0 #c4c4c4;
     background-color: #f7f7f7;
+}
+
+
+.Navigation-sitename {
+    font: bold 24px sans-serif;
+    margin: 10px;
 }

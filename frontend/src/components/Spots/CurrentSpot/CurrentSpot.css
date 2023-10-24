@@ -1,6 +1,6 @@
-.currentSpotCards{
+.currentSpotCards {
 
-    width:95%;
+    width: 95%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -11,43 +11,48 @@
 
 
 
-.spotImgOutter{
+.spotImgOutter {
     box-sizing: border-box;
-    /* background-color: aquamarine; */
     margin-left: 30px;
     flex: 0 0 22%;
 }
 
-.spotImg{
+.spotImg {
     height: 250px;
     width: 270px;
 }
 
-.cityNpriceNrate{
+.cityNpriceNrate {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     max-width: 270px;
 }
 
-.location{
+.location {
     width: 50%;
 }
 
-.rate{
+.rate {
     width: 50%;
     text-align: right;
 }
 
 
-.priceNbtn{
+.priceNbtn {
     display: flex;
 }
 
-.price{
+.price {
     width: 50%;
 }
 
-.actionBtn{
+.actionBtn {
     width: 50%;
+}
+
+
+#creatBtn {
+    background-color: rgb(190, 190, 190);
+    border: solid black 2px;
 }

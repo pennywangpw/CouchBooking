@@ -24,7 +24,7 @@ function App() {
         <Switch>
           {/* exact can avoid directing to all of routes */}
 
-          <Route excat path='/spots/new'>
+          <Route exact path='/spots/new'>
             <CreateASpotForm />
           </Route>
 
@@ -32,11 +32,11 @@ function App() {
             <CurrentSpot />
           </Route>
 
-          <Route path='/spots/:id/edit'>
+          <Route exact path='/spots/:id/edit'>
             <EditASpot />
           </Route>
 
-          <Route path='/spots/:id'>
+          <Route path='/spots/:spotId'>
             <SpotsDetails />
           </Route>
 
@@ -44,7 +44,7 @@ function App() {
             <AllSpots />
           </Route>
 
-          <Route>Page Not Found</Route>
+          {/* <Route>Page Not Found</Route> */}
 
         </Switch>
       )}
