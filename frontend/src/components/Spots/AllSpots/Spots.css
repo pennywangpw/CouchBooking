@@ -81,6 +81,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     max-width: 270px;
+    margin-bottom: 10px;
 }
 
 .city {
