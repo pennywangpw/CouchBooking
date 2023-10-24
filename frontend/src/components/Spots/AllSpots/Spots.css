@@ -45,7 +45,7 @@
     /* 這是 上下&左右間距 */
     padding: 3% 5%;
     align-content: space-around;
-    background-image: linear-gradient(rgb(138, 243, 229), rgb(155, 225, 206), rgb(100, 222, 240));
+    background-image: linear-gradient(rgb(170, 241, 232), rgb(155, 225, 206), rgb(100, 222, 240));
     /* Grid 布局 */
     /* display: grid;
     grid-template-columns: repeat(4, 20%);
