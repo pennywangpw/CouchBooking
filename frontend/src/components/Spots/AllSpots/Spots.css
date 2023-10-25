@@ -74,6 +74,7 @@
     height: 250px;
     width: 270px;
     border-radius: 10px;
+    min-height: 270px;
 }
 
 .cityNpriceNrate {
