@@ -36,8 +36,9 @@ const AllSpots = () => {
       {spotsArr.map((spot) => (
         // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
         <div className="spotImgOutter">
-          <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+          <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }} className="tooltip">
             <div className="img" key={spot.id}>
+              <span class="tooltiptext">{spot.name}</span>
               <img className="spotImg" src={spot.previewImage} alt="spotPreviewImg" />
               <SpotInfo spotObj={spot} />
             </div>
