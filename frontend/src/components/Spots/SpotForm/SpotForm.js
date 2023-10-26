@@ -41,12 +41,12 @@ const SpotForm = ({ spot, formType }) => {
     if (description.length < 30) e.push("Description  needs a minimum of 30 characters")
     if (name.length === 0) e.push("Name is required")
     if (price.length === 0) e.push("Price is required")
+    if (!Number(price)) e.push("Price is required")
     if (url1.length === 0) e.push("Preview image is required")
     if (url2.length === 0) e.push("Image URL must end in .png .jpg, or .jpeg")
     console.log("rerender every time")
     setErrors(e)
   }, [country, address, city, state, description, name, price, url1])
-
 
   //onChange takes cb function
   const updateCountry = (e) => setCountry(e.target.value)
@@ -68,6 +68,7 @@ const SpotForm = ({ spot, formType }) => {
     // issue-- create a spot we don't need previewImg, however when we want to display it we need it
     const payload = { ...spot, country, address, city, state, description, name, price, lat, lng, url1, url2, url3, url4, url5 };
     console.log("這裡是payload: ", payload)
+    console.log("typeof price: ", typeof price)
 
 
 
@@ -129,6 +130,8 @@ const SpotForm = ({ spot, formType }) => {
       if (url4) createImg4 = await dispatch(createNewImgs({ newUrl: url4, spotId: createdSpot.id }))
       if (url5) createImg5 = await dispatch(createNewImgs({ newUrl: url5, spotId: createdSpot.id }))
 
+
+      if (errors.includes("Preview image is required")) return
 
       if (createASpot) {
         history.push(`/spots/${createdSpot.id}`);
@@ -261,7 +264,7 @@ const SpotForm = ({ spot, formType }) => {
 
               <div className='urlDiv'>
                 <input type="url" className="inputURL" id="url1" placeholder="Preview Image URL" value={url1} onChange={updateUrl1} />
-                {errors.includes("Preview image is required") ? <label htmlFor='url1' className="errorLabel"> Preview image is required</label> : null}
+                {errors.includes("Preview image is required") ? (<label htmlFor='url1' className="errorLabel"> Preview image is required</label>) : null}
               </div>
 
               {/* {
