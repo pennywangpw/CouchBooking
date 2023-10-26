@@ -95,6 +95,7 @@ export default function ProfileButton({ user }) {
                         <li className="profile-dropdown-links">
                             <OpenModalButton
                                 buttonText="Log In"
+                                style={{ backgroundColor: 'blue', color: 'white', borderRadius: '5px' }}
                                 onButtonClick={closeMenu}
                                 modalComponent={<LoginFormModal />}
                             />

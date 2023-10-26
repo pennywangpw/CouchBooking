@@ -259,3 +259,8 @@ li {
     font: bold 24px sans-serif;
     margin: 10px;
 }
+
+
+.Navigation-btn {
+    background-color: transparent;
+}

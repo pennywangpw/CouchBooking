@@ -18,6 +18,7 @@
 /* ----------------- Spot Name and Location ----------------- */
 h2 {
     margin: 15px 0 0 0;
+    font-size: 1.7em;
 }
 
 h3 {
@@ -165,6 +166,7 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    font-size: 8px;
 }
 
 .numOfcomments {

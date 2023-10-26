@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ModalProvider, Modal } from './context/Modal';
 import App from './App';
+import "./index.css";
+
 
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from "./store/csrf";
