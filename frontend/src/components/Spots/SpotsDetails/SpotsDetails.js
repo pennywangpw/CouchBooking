@@ -112,7 +112,7 @@ const SpotsDetails = () => {
                                     <label htmlFor="actInfo" className="actLabel">night</label>
                                     {/* <label className="actLabel">night</label> */}
                                 </div>
-                                <div className="actInfo">
+                                <div className="actInfo2">
                                     <ReviewSummaryInfo spot={spot} reviews={reviews} />
                                     {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
                                 <label className="actLabel">{divider} </label>
