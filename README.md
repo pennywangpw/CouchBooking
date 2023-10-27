@@ -1,7 +1,7 @@
 # CouchBooking
 ## Database Schema Design
+![image](https://github.com/pennywangpw/CouchBooking/assets/114206215/62c66ad3-b83b-4091-ad58-056de94e157d)
 
-`<insert database schema design here>`
 
 ## API Documentation
 
