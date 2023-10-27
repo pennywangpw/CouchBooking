@@ -56,6 +56,7 @@ export const createAReview = ({ id, newReview }) => async (dispatch) => {
         console.log("THUNK----createReview: ", newReview)
         dispatch(createReview(newReview))
         dispatch(getSpotDetails(id))
+        dispatch(getReviews(id))
         return newReview
     }
 }
@@ -85,6 +86,9 @@ const reviewsReducer = (state = initialState, action) => {
             // action.reviews.Reviews.forEach(review=> newObj[review.id] = review)
             // console.log("有hit這個條件")
             // return{...state, newState}
+
+
+
             newState = {}
             action.reviews.Reviews.forEach(review => {
                 newState[review.id] = review

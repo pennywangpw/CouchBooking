@@ -28,12 +28,12 @@ const SpotsDetails = () => {
     // const spot = state.spots.singleSpot
     // const reviews = state.reviews
 
-    console.log("SpotsDetails with state: ")
-    console.log(state)
-    console.log("SpotsDetails with spot: ")
-    console.log(spot)
-    console.log("SpotsDetails with reviews: ")
-    console.log(reviews)
+    // console.log("SpotsDetails with state: ")
+    // console.log(state)
+    // console.log("SpotsDetails with spot: ")
+    // console.log(spot)
+    console.log("++++++++++++++++SpotsDetails with reviews: ", reviews)
+    // console.log(reviews)
 
 
     //get the spotId from the path and fetch the data from db
