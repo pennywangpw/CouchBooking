@@ -61,6 +61,16 @@ body {
     /* border: 1px solid black; */
 }
 
+@media screen and (max-width: 320px) {
+
+    .allSpotImg {
+        display: grid;
+        grid-template-columns: repeat(3, 33%);
+        padding: 3%;
+        justify-items: center;
+        line-height: 20px;
+    }
+}
 
 .spotImgOutter {
     box-sizing: border-box;

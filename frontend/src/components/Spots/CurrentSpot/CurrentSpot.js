@@ -18,16 +18,15 @@ const CurrentSpot = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    console.log("This is CurrentSpot !!!")
     //get all spots
     const spots = useSelector(state => state.spots.allSpots)
-    console.log("CurrentSpot---spots: ", spots)
+
     //get user data from Store
     const user = useSelector(state => state.session.user)
-    console.log("CurrentSpot--- user: ", user)
+
     //convert obj into arr
     const spotsArr = Object.values(spots)
-    console.log("spotsArr 在這裡: ", spotsArr)
+
     //get the spot which spot's ownerId === userId
     const userSpots = []
     spotsArr.forEach(spot => {
@@ -35,7 +34,7 @@ const CurrentSpot = () => {
             userSpots.push(spot)
         }
     })
-    console.log("this is userSpots: ", userSpots)
+
 
     //to get other images from db, those are not in spot
     //userEffect will happend after 1st render
@@ -47,7 +46,7 @@ const CurrentSpot = () => {
     return (
         <div>
             <div className="manageSpot">Manage Your Spots</div>
-            <div className='allSpotImg'>
+            <div className='currentallSpotImg'>
                 {userSpots.length === 0 ? (<NavLink to="/spots/new" style={{ textDecoration: 'none', color: 'black' }}><div id="creatBtn">Create a New Spot</div></NavLink>) : userSpots.map(({ id, previewImage, city, price, avgRating, state }) => (
                     // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
                     <div id="currentSpot">
@@ -56,7 +55,6 @@ const CurrentSpot = () => {
                                 <img className="spotImg" src={previewImage} alt="spot" />
                                 <div className="cityNpriceNrate">
                                     <div className="location">{city},{state}</div>
-                                    {console.log("##### CHECK TYPE ", avgRating)}
                                     <div className="rate"><i class="fa-solid fa-star"></i> {typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
                                     {/* <div className="priceNbtn"> */}
                                     <div className="price">${price} night</div>
