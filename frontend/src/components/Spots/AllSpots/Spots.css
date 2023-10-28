@@ -48,8 +48,6 @@ body {
     flex-direction: row;
     padding: 3% 5%;
     align-content: space-around;
-    background: rgb(238, 174, 202);
-    background: linear-gradient(0deg, rgba(238, 174, 202, 1) 0%, rgba(192, 181, 218, 1) 51%, rgba(148, 187, 233, 1) 100%); */
 
     /* Grid 布局 */
     display: grid;
@@ -61,11 +59,22 @@ body {
     /* border: 1px solid black; */
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (width <=1200px) {
 
     .allSpotImg {
         display: grid;
         grid-template-columns: repeat(3, 33%);
+        padding: 3%;
+        justify-items: center;
+        line-height: 20px;
+    }
+}
+
+@media screen and (100px <=width <=249px) {
+
+    .allSpotImg {
+        display: grid;
+        grid-template-columns: repeat(2, 50%);
         padding: 3%;
         justify-items: center;
         line-height: 20px;
