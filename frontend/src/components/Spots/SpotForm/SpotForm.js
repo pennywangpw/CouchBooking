@@ -9,7 +9,6 @@ import './SpotForm.css';
 const SpotForm = ({ spot, formType }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  console.log("有沒有spot, formType: ", spot)
   const [id, setId] = useState(spot.id)
   const [country, setCountry] = useState(spot.country)
   const [address, setAddress] = useState(spot.address)
@@ -44,7 +43,6 @@ const SpotForm = ({ spot, formType }) => {
     if (!Number(price)) e.push("Price is required")
     if (url1.length === 0) e.push("Preview image is required")
     if (url2.length === 0) e.push("Image URL must end in .png .jpg, or .jpeg")
-    console.log("rerender every time")
     setErrors(e)
   }, [country, address, city, state, description, name, price, url1])
 
@@ -67,8 +65,7 @@ const SpotForm = ({ spot, formType }) => {
     //payload
     // issue-- create a spot we don't need previewImg, however when we want to display it we need it
     const payload = { ...spot, country, address, city, state, description, name, price, lat, lng, url1, url2, url3, url4, url5 };
-    console.log("這裡是payload: ", payload)
-    console.log("typeof price: ", typeof price)
+
 
 
 
@@ -115,7 +112,6 @@ const SpotForm = ({ spot, formType }) => {
     if (formType === "Create a New Spot") {
 
       let createdSpot = await dispatch(createASpot(payload));
-      console.log("SpotForm---createdSpot: ", createdSpot)
 
 
       let createImg1;
@@ -143,8 +139,6 @@ const SpotForm = ({ spot, formType }) => {
     //find the spot === parmas id (in EditAspot)
     //update the current spot
     if (formType === "Update your Spot") {
-      console.log("HIT Update your Spot with passed in exsiting spot: ", spot)
-      console.log("HIT Update your Spot with revised spot: ", payload)
       const updatedSpot = dispatch(editASpot(payload));
       if (updatedSpot) history.push(`/spots/${spot.id}`);
     }

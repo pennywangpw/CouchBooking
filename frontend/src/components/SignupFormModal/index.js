@@ -30,7 +30,7 @@ function SignupFormModal() {
     if (confirmPassword !== password || confirmPassword.length === 0) frontendValidation.push("invalid")
     setFrontendErrors(frontendValidation)
   }, [email, username, firstName, lastName, password, confirmPassword])
-  console.log("這裡是e: ", frontendValidation)
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

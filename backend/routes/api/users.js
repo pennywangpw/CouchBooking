@@ -86,7 +86,7 @@ router.post(
 
     // //check if user exsits in the system
     // const allUsers = await User.findAll()
-    // console.log("所有user: ", allUsers)
+
     // // if(email === deletSpot.ownerId){
 
     // // }

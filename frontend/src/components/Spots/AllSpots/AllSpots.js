@@ -11,11 +11,11 @@ import './Spots.css';
 const AllSpots = () => {
   const dispatch = useDispatch()
   const spots = useSelector(state => state.spots.allSpots)
-  // console.log("ths is AllSpots functional component spots: ", spots)
+
 
   //convert into array
   const spotsArr = Object.values(spots)
-  // console.log("AllSpots with spotsArr: ", spotsArr)
+
 
   useEffect(() => {
     dispatch(getAllSpots());

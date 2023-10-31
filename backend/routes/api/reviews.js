@@ -1,6 +1,6 @@
 const express = require('express')
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Spot, Review, SpotImage, Booking, ReviewImage} = require('../../db/models');
+const { User, Spot, Review, SpotImage, Booking, ReviewImage } = require('../../db/models');
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -9,51 +9,51 @@ const Sequelize = require('sequelize')
 
 const validateEdit = [
     check('review')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Review text is required'),
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
     check('stars')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isNumeric()
-      .withMessage('Stars must be an integer from 1 to 5'),
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isNumeric()
+        .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
-  ];
+];
 
 
 //check if the reviewId exsits
-const exsitingReviewId = async(req,res,next)=>{
+const exsitingReviewId = async (req, res, next) => {
     const reviewId = req.params.reviewId
     const review = await Review.findByPk(reviewId)
-    if(!review){
+    if (!review) {
         return res.status(404).json({
-            "message":"Review couldn't be found",
-            "statusCode":404
+            "message": "Review couldn't be found",
+            "statusCode": 404
         })
     }
-return next()
+    return next()
 }
 
 //check if current user is the owner of the review
-const validateCurrentUser = async(req,res,next)=>{
+const validateCurrentUser = async (req, res, next) => {
     const userId = req.user.id
     const reviewId = Number(req.params.reviewId)
     const review = await Review.findByPk(reviewId)
 
-    if(userId !== review.userId){
+    if (userId !== review.userId) {
         return res.status(403).json({
-            "message":"Spot must belong to the current user",
-            "statusCode":403
+            "message": "Spot must belong to the current user",
+            "statusCode": 403
         })
     }
     return next()
-  }
+}
 
 
 
 
 //0. Get all Reviews
-router.get('/', requireAuth, async(req,res)=>{
+router.get('/', requireAuth, async (req, res) => {
     const userId = req.user.id
 
     const allReviews = await Review.findAll()
@@ -62,29 +62,29 @@ router.get('/', requireAuth, async(req,res)=>{
 })
 
 //1. Get all Reviews of the Current User
-router.get('/current', requireAuth, async(req,res)=>{
+router.get('/current', requireAuth, async (req, res) => {
     const userId = req.user.id
 
     const allReview = await Review.findAll({
-        where:{
-            userId : userId
+        where: {
+            userId: userId
         },
-        include:[
+        include: [
             {
                 model: User,
-                attributes:["id","firstName","lastName"]
+                attributes: ["id", "firstName", "lastName"]
 
             },
             {
                 model: Spot,
-                attributes:["id","ownerId","address","city","state","country","lat","lng","name","price"],
-                include:[
-                    {model: SpotImage}
+                attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"],
+                include: [
+                    { model: SpotImage }
                 ]
             },
             {
                 model: ReviewImage,
-                attributes:["id","url"]
+                attributes: ["id", "url"]
             },
 
         ]
@@ -92,32 +92,32 @@ router.get('/current', requireAuth, async(req,res)=>{
 
 
     let reviewList = []
-    allReview.forEach(review=>{reviewList.push(review.toJSON())})
+    allReview.forEach(review => { reviewList.push(review.toJSON()) })
 
-    reviewList.forEach(review=>{
+    reviewList.forEach(review => {
         let reviewSpot = review.Spot
         let reviewSpotImage = reviewSpot.SpotImages
 
-        if(reviewSpotImage.length > 0){
-            reviewSpotImage.forEach(img=>{
+        if (reviewSpotImage.length > 0) {
+            reviewSpotImage.forEach(img => {
                 reviewSpot.previewImage = img.url
             })
         }
         delete reviewSpot.SpotImages
     })
 
-    res.json({"Reviews": reviewList})
+    res.json({ "Reviews": reviewList })
 })
 
 //2. Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', exsitingReviewId,validateCurrentUser, async(req,res,next)=>{
+router.post('/:reviewId/images', exsitingReviewId, validateCurrentUser, async (req, res, next) => {
     const reviewId = req.params.reviewId
 
 
-    const reviewTobeAddedImg = await Review.findByPk(reviewId,{
-        include:{model: ReviewImage}
+    const reviewTobeAddedImg = await Review.findByPk(reviewId, {
+        include: { model: ReviewImage }
     })
-    // console.log("here: ", reviewTobeAddedImg.ReviewImages.length)
+
 
     if (reviewTobeAddedImg.ReviewImages.length >= 10) {
         return res.status(403).json({
@@ -127,7 +127,7 @@ router.post('/:reviewId/images', exsitingReviewId,validateCurrentUser, async(req
     }
 
 
-    const {url} = req.body
+    const { url } = req.body
 
 
     const newImage = await reviewTobeAddedImg.createReviewImage({
@@ -136,7 +136,7 @@ router.post('/:reviewId/images', exsitingReviewId,validateCurrentUser, async(req
     })
 
     res.json({
-        id:newImage.id,
+        id: newImage.id,
         url: newImage.url
     })
 })
@@ -155,10 +155,10 @@ router.post('/:reviewId/images', exsitingReviewId,validateCurrentUser, async(req
 // })
 
 //3. Edit a Review
-router.put('/:reviewId', requireAuth, exsitingReviewId, validateCurrentUser, validateEdit, async(req,res,next)=>{
+router.put('/:reviewId', requireAuth, exsitingReviewId, validateCurrentUser, validateEdit, async (req, res, next) => {
     //check if stars must be 1-5
-    const{stars} = req.body
-    if(stars <=0 || stars > 5){
+    const { stars } = req.body
+    if (stars <= 0 || stars > 5) {
         res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
@@ -180,7 +180,7 @@ router.put('/:reviewId', requireAuth, exsitingReviewId, validateCurrentUser, val
 })
 
 //4. Delete a Review
-router.delete('/:reviewId', requireAuth, exsitingReviewId, validateCurrentUser, async(req,res,next)=>{
+router.delete('/:reviewId', requireAuth, exsitingReviewId, validateCurrentUser, async (req, res, next) => {
     const reviewId = req.params.reviewId
 
     const deleteReview = await Review.findByPk(reviewId)

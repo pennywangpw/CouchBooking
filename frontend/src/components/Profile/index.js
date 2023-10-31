@@ -14,15 +14,12 @@ export default function Profile() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const { userId } = useParams();
-    const [ showMenu, setShowMenu ] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
     const reviewsObj = useSelector(state => state.reviews.user);
     const reviewsArr = Object.values(reviewsObj);
-    console.log("Profile - user:", user);
-    console.log("Profile - userId:", +userId);
-    console.log("user.id === userId:", user.id === +userId)
-    // console.log("Profile - reviews:", reviewsObj, Object.values(reviewsObj).length);
+
 
     const openMenu = () => {
         if (showMenu) return;
@@ -51,8 +48,6 @@ export default function Profile() {
 
     if (!user) return null;
 
-    console.log("Profile - profile pic:", user.profileImageUrl)
-
     if (!reviewsObj) return null;
 
     const confirmedText = ["Identity", "Email address"];
@@ -67,7 +62,7 @@ export default function Profile() {
         )
     }
 
-    console.log("Profile - userId:", userId)
+
     if (user.id === +userId && reviewsArr) {
         return (
             <div className="Profile-container">
@@ -127,12 +122,12 @@ export default function Profile() {
                             <i className="fa-solid fa-star profile-icons"></i>
                             {reviewsArr.length} reviews
                         </h2>
-                        { reviewsArr && reviewsArr.length ? (reviewsArr.map((review) => (
+                        {reviewsArr && reviewsArr.length ? (reviewsArr.map((review) => (
                             <div
                                 key={review.id}
                                 className="Profile-review-card"
                             >
-                                {/* {console.log(review)} */}
+
                                 <div className="Profile-review-card-date-review">
                                     {getMonthYear(review.createdAt)}
                                     <p className="Review-content">{review.review}</p>
@@ -204,12 +199,11 @@ export default function Profile() {
                         <i className="fa-solid fa-star profile-icons"></i>
                         {reviewsArr.length} reviews
                     </h2>
-                    { reviewsArr && reviewsArr.length ? (reviewsArr.map((review) => (
+                    {reviewsArr && reviewsArr.length ? (reviewsArr.map((review) => (
                         <div
                             key={review.id}
                             className="Profile-review-card"
                         >
-                            {/* {console.log(review)} */}
                             <div className="Profile-review-card-date-review">
                                 {getMonthYear(review.createdAt)}
                                 <p className="Review-content">{review.review}</p>

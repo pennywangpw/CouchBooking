@@ -7,9 +7,6 @@ import "./DeleteConfirmation.css"
 
 
 const DeleteFormModal = ({ reviewid, type, spotId }) => {
-  console.log("DeleteFORModal裡面的review id: ", reviewid)
-  console.log("落入spot和傳入的reviewid: ", spotId)
-
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
