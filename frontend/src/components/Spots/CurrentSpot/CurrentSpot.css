@@ -5,6 +5,8 @@
 
 .manageSpot {
     height: 50px;
+    margin: 15px;
+    font-size: 30px;
 }
 
 .currentallSpotImg {
@@ -59,10 +61,47 @@
 .actionBtn {
     display: flex;
     padding: 0 0 0 30px;
+    justify-content: space-around;
 }
 
 
 #creatBtn {
     background-color: rgb(190, 190, 190);
     border: solid black 2px;
+}
+
+
+.button-13 {
+    display: flex;
+    padding: 0 0 0 30px;
+    background-color: #fff;
+    border: 1px solid #d5d9d9;
+    border-radius: 8px;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    box-sizing: border-box;
+    color: #0f1111;
+    cursor: pointer;
+    display: inline-block;
+    font-family: cursive;
+    font-size: 13px;
+    line-height: 29px;
+    padding: 0 10px 0 11px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    /* width: 100px; */
+}
+
+.button-13:hover {
+    background-color: #f7fafa;
+}
+
+.button-13:focus {
+    border-color: #008296;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    outline: 0;
 }
