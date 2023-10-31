@@ -300,7 +300,7 @@ const SpotForm = ({ spot, formType }) => {
 
             <div className='divider'><hr /></div>
 
-            <input type="submit" value={formType} />
+            <input type="submit" className='button-13' value={formType} />
             <br /><br /><br />
           </form>
         </section>

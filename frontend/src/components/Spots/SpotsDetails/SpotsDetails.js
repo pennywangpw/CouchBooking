@@ -122,7 +122,7 @@ const SpotsDetails = () => {
                             </div>
 
                             <div>
-                                <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
+                                <button type="button" className="button-14 " onClick={handleAlert}>Reserve</button>
                             </div>
                         </div>
                     </div>
