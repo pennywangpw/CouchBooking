@@ -18,8 +18,6 @@ function PostReviewModal({ id }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
-  // const {id} = useParams()
-
 
   const [review, setReview] = useState("")
   const [stars, setStars] = useState("")

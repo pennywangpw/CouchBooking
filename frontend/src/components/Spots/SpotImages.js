@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+
 //iterate through spotImg to check if there's url
 //if yes, return img tag
 //if no, return img tag with error
