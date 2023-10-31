@@ -94,6 +94,7 @@ const AllReviews = ({ reviews, spot }) => {
                             <div>
                                 <OpenModalButton
                                     buttonText="Post Your Review"
+                                    className="button-13"
                                     modalComponent={<PostReviewModal id={spotId} />}
                                 />
                             </div>

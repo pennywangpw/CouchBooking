@@ -63,13 +63,14 @@ const CurrentSpot = () => {
                             </div>
                         </NavLink>
                         <div className="actionBtn">
-                            <button type="button" onClick={() => { history.push(`/spots/${id}/edit`) }}>Update</button>
-                            <div>
-                                <OpenModalButton
-                                    buttonText="delete"
-                                    modalComponent={<DeleteFormModal spotId={id} type="spot" />}
-                                />
-                            </div>
+                            <button type="button" className="button-13" onClick={() => { history.push(`/spots/${id}/edit`) }}>Update</button>
+
+                            <OpenModalButton
+                                buttonText="delete"
+                                className="button-13"
+                                modalComponent={<DeleteFormModal spotId={id} type="spot" />}
+                            />
+
                         </div>
                     </div>
                 ))}
