@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getSpotDetails } from "../../../store/spots";
 import { getReviews } from "../../../store/reviews";
 import { useParams } from "react-router-dom";
-import AllReviews from "../../Reviews/AllReviews";
+import AllReviews from "../../Reviews";
 import ReviewSummaryInfo from "../ReviewSummaryInfo";
 import ImageCreator from "../SpotImages";
 import './SpotsDetails.css';

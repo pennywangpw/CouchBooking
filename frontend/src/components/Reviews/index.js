@@ -5,6 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteFormModal from "../DeleteConfirmationModal"
 import { useEffect } from "react";
 import { getReviews } from "../../store/reviews"
+import './AllReview.css'
 
 //1.dispaly review details
 //2.the review should be in
@@ -120,6 +121,7 @@ const AllReviews = ({ reviews, spot }) => {
                         </div>
                         {user?.id === review.userId && <OpenModalButton
                             buttonText="delete"
+                            className="button-13"
                             modalComponent={<DeleteFormModal reviewid={review.id} type="review" spotId={spotId} />}
                         />}
 
