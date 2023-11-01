@@ -22,13 +22,8 @@ const defaultUrl = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-no
 
 const SpotsDetails = () => {
     const dispatch = useDispatch()
-    const state = useSelector(state => state)
     const spot = useSelector(state => state.spots.singleSpot)
-    const reviews = useSelector(state => state.reviews)
-    // const spot = state.spots.singleSpot
-    // const reviews = state.reviews
-
-
+    const reviewsbyspotId = useSelector(state => state.reviews)
 
 
     //get the spotId from the path and fetch the data from db
@@ -47,13 +42,6 @@ const SpotsDetails = () => {
     }
 
 
-    // //create a new array with 5
-    // let spotImagesArr = ["", "", "", "", ""]
-    // useEffect(() => {
-    //     spot.SpotImages?.forEach((spot, i) => spotImagesArr[i] = spot.url)
-    // }, [spot])
-
-
     //shows "Unable to retrieve details. Please try again shortly" when the page doesn't render successfully
     if (!spot || !spot.SpotImages) return (
         <div>
@@ -65,9 +53,6 @@ const SpotsDetails = () => {
     )
 
 
-
-
-    //to display the images we have to make a loop to create div to store it
     return (
         <div className="detailspage">
             <div className="details">
@@ -106,11 +91,7 @@ const SpotsDetails = () => {
                                     {/* <label className="actLabel">night</label> */}
                                 </div>
                                 <div className="actInfo2">
-                                    <ReviewSummaryInfo spot={spot} reviews={reviews} />
-                                    {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
-                                <label className="actLabel">{divider} </label>
-                                <label className="actLabel">{reviewNum} {reviewChecker}</label> */}
-
+                                    <ReviewSummaryInfo spot={spot} reviews={reviewsbyspotId} />
                                 </div>
                             </div>
 
@@ -126,12 +107,9 @@ const SpotsDetails = () => {
                 <div className="reviewDetails">
                     <div className="numOfcomments">
                         <ReviewSummaryInfo spot={spot} />
-                        {/* <div className="rating"><i className="fa-solid fa-star"></i> {avgStars}</div>
-                    <div className="reviewsCount">{divider} </div>
-                    <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
                     </div>
                     <div>
-                        <AllReviews reviews={reviews} spot={spot} />
+                        <AllReviews reviews={reviewsbyspotId} />
                     </div>
                 </div>
 
@@ -139,77 +117,6 @@ const SpotsDetails = () => {
             </div>
         </div>
 
-        // <div className="detailspage">
-        //     <div className="details">
-        //         <h2>
-        //             <div className="name">{spot.name}</div>
-        //         </h2>
-        //         <h3>
-        //             <div className="city">{spot.city}, {spot.state}, {spot.country}</div>
-        //         </h3>
-
-        //         <div className="imgContainer">
-        //             {/* {spotImagesArr.map((img, i) => <ImageCreator spotImg={spotImagesArr} index={i} />)} */}
-
-        //             {[...spot.SpotImages, ...Array(5 - spot.SpotImages.length).fill({ url: defaultUrl })].map(img => {
-        //                 return <ImageCreator spotImg={img.url} />
-        //                 // return <img className="sImgSize" src={img.url} alt='image' key={img.id} />
-        //             })}
-
-        //         </div>
-
-
-        //         <div className="descriptionNbtn">
-
-        //             <div className="description">
-        //                 <h3>
-        //                     <div>
-        //                         Hosted by {spot.Owner.firstName}{spot.Owner.lastName}
-        //                     </div>
-        //                 </h3>
-        //                 <div className="description">{spot.description}</div>
-        //             </div>
-
-        //             <div className="actionContainer">
-        //                 <div className="actFormat">
-        //                     <div className="actText">
-        //                         <div className="actInfo">${spot.price}
-        //                             <label htmlFor="actInfo" className="actLabel">night</label>
-        //                             {/* <label className="actLabel">night</label> */}
-        //                         </div>
-        //                         <div className="actInfo">
-        //                             <ReviewSummaryInfo spot={spot} reviews={reviews} />
-        //                             {/* <label className="actLabel"><i className="fa-solid fa-star"></i>{avgStars} </label>
-        //                         <label className="actLabel">{divider} </label>
-        //                         <label className="actLabel">{reviewNum} {reviewChecker}</label> */}
-
-        //                         </div>
-        //                     </div>
-
-        //                     <div>
-        //                         <button type="button" className="actButton" onClick={handleAlert}>Reserve</button>
-        //                     </div>
-        //                 </div>
-        //             </div>
-
-        //         </div>
-
-
-        //         <div className="reviewDetails">
-        //             <div className="numOfcomments">
-        //                 <ReviewSummaryInfo spot={spot} />
-        //                 {/* <div className="rating"><i className="fa-solid fa-star"></i> {avgStars}</div>
-        //             <div className="reviewsCount">{divider} </div>
-        //             <div className="reviewsCount">{reviewNum} {reviewChecker}</div> */}
-        //             </div>
-        //             <div>
-        //                 <AllReviews reviews={reviews} />
-        //             </div>
-        //         </div>
-
-
-        //     </div>
-        // </div>
     )
 
 }
