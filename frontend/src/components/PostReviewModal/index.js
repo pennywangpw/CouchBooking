@@ -19,7 +19,6 @@ function PostReviewModal({ id }) {
   const { closeModal } = useModal();
 
   // const {id} = useParams()
-  console.log("POSTREVIEWMODAL 有接收到ID: ", typeof id)
 
 
   const [review, setReview] = useState("")
@@ -68,7 +67,6 @@ function PostReviewModal({ id }) {
         <div>
           <button className="button" type="button" onClick={() => {
             if (review.length >= 10) {
-              console.log("this is post review when we click it : ", id, typeof id)
               dispatch(createAReview({ id, newReview })).then(closeModal)
               // dispatch(createAReview({ id, newReview })).then(dispatch(getSpotDetails(id))).then(closeModal)
             }

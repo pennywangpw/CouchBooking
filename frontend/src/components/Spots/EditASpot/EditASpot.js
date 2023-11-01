@@ -12,11 +12,11 @@ const EditASpot = () => {
     const dispatch = useDispatch()
     //get current spotId
     const { id } = useParams()
-    console.log("EditASpot id: ", id)
+
 
     //get current spot detail
     const currentSpotDetail = useSelector(state => state.spots.allSpots[id])
-    console.log("EditASpot -- currentSpotDetail: ", currentSpotDetail)
+
     // useEffect(()=>{
     //     const currentSpotDetail = dispatch(getSpotDetails(id))
     // },[dispatch])

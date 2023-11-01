@@ -11,11 +11,11 @@ import './Spots.css';
 const AllSpots = () => {
   const dispatch = useDispatch()
   const spots = useSelector(state => state.spots.allSpots)
-  // console.log("ths is AllSpots functional component spots: ", spots)
+
 
   //convert into array
   const spotsArr = Object.values(spots)
-  // console.log("AllSpots with spotsArr: ", spotsArr)
+
 
   useEffect(() => {
     dispatch(getAllSpots());
@@ -32,9 +32,7 @@ const AllSpots = () => {
 
   return (
     <div className='allSpotImg'>
-      {/* <div>testagain</div> */}
       {spotsArr.map((spot) => (
-        // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
         <div className="spotImgOutter">
           <NavLink to={`/spots/${spot.id}`} style={{ textDecoration: 'none', color: 'black' }} className="tooltip">
             <div className="img" key={spot.id}>
@@ -49,17 +47,6 @@ const AllSpots = () => {
     </div >
   )
 
-  // //practice
-  // const generateSpot = ()=>{
-  //     <button>hello</button>
-  //     dispatch(getAllSpots())
-  // }
-
-
-  // return(
-  //     <button onClick={generateSpot}>hello</button>
-
-  // )
 }
 
 

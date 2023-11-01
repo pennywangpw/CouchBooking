@@ -13,7 +13,6 @@ const ImageCreator = ({ spotImg }) => {
     const onError = () => {
         setImgSrc("https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png")
     }
-    console.log("THIS IS IMG COMPONENT: ", imgSrc)
     return <img className="sImgSize" src={imgSrc} onError={onError} alt="image" />;
 }
 export default ImageCreator

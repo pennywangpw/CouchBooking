@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getSpotDetails } from "../../../store/spots";
 import { getReviews } from "../../../store/reviews";
 import { useParams } from "react-router-dom";
-import AllReviews from "../../Reviews/AllReviews";
+import AllReviews from "../../Reviews";
 import ReviewSummaryInfo from "../ReviewSummaryInfo";
 import ImageCreator from "../SpotImages";
 import './SpotsDetails.css';
@@ -28,19 +28,13 @@ const SpotsDetails = () => {
     // const spot = state.spots.singleSpot
     // const reviews = state.reviews
 
-    // console.log("SpotsDetails with state: ")
-    // console.log(state)
-    // console.log("SpotsDetails with spot: ")
-    // console.log(spot)
-    console.log("++++++++++++++++SpotsDetails with reviews: ", reviews)
-    // console.log(reviews)
+
 
 
     //get the spotId from the path and fetch the data from db
     const { spotId } = useParams()
 
     useEffect(() => {
-        // console.log("SpotsDetails---useEffect")
         dispatch(getSpotDetails(spotId));
         dispatch(getReviews(spotId));
     }, [spotId]);
@@ -59,7 +53,6 @@ const SpotsDetails = () => {
     //     spot.SpotImages?.forEach((spot, i) => spotImagesArr[i] = spot.url)
     // }, [spot])
 
-    // console.log("spotImagesArr : ", spotImagesArr)
 
     //shows "Unable to retrieve details. Please try again shortly" when the page doesn't render successfully
     if (!spot || !spot.SpotImages) return (

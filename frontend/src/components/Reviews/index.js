@@ -5,22 +5,22 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteFormModal from "../DeleteConfirmationModal"
 import { useEffect } from "react";
 import { getReviews } from "../../store/reviews"
+import './AllReview.css'
 
 //1.dispaly review details
 //2.the review should be in
 
 // dispatch all the reviews
 const AllReviews = ({ reviews, spot }) => {
-    console.log("AllReviews component---passed in reviews: ", reviews)
-    // console.log("AllReviews component---passed in spot: ", spot)
+
 
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    // console.log("這裡是ALLREVIEW 的id from params: ", typeof spotId)
+
 
     // //convert reviews obj into array
     // const reviewsArr = Object.values(reviews)
-    // console.log("這裡是revierArr: ", reviewsArr)
+
 
 
     //dispaly -- "Be the first to post a review!"
@@ -48,7 +48,6 @@ const AllReviews = ({ reviews, spot }) => {
     //get updatedAt YYYY-MM-DD
     let dayDivider;
     for (let review of reviewsArr) {
-        console.log("****all reviews: ", reviewsArr)
         const year = (review.updatedAt).split('-')[0]
         const month = (review.updatedAt).split('-')[1]
         const date = (review.updatedAt).split('-')[2].slice(0, 2)
@@ -57,7 +56,6 @@ const AllReviews = ({ reviews, spot }) => {
 
 
     //reviews in order by reviewId
-    // console.log("review in arrary: ", reviewsArr)
     function compare(a, b) {
         const reviewA = a.id
         const reviewB = b.id
@@ -77,9 +75,6 @@ const AllReviews = ({ reviews, spot }) => {
     //check if current user have posted the review or not
     const havePosted = reviewsArr?.find((review) => review?.userId === user?.id)
 
-
-    console.log("沒有POST過: ", havePosted)
-    console.log("$$$$$$$$$$ HERE IS ARRAY OF REVIEWS: ", reviewsArr)
 
     // reviewId !== current userId
     //(a&&b) if both T, return b
@@ -126,6 +121,7 @@ const AllReviews = ({ reviews, spot }) => {
                         </div>
                         {user?.id === review.userId && <OpenModalButton
                             buttonText="delete"
+                            className="button-13"
                             modalComponent={<DeleteFormModal reviewid={review.id} type="review" spotId={spotId} />}
                         />}
 
