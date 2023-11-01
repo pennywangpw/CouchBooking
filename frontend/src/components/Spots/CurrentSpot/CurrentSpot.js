@@ -47,33 +47,36 @@ const CurrentSpot = () => {
         <div>
             <div className="manageSpot">Manage Your Spots</div>
             <div className='currentallSpotImg'>
-                {userSpots.length === 0 ? (<NavLink to="/spots/new" style={{ textDecoration: 'none', color: 'black' }}><div id="creatBtn">Create a New Spot</div></NavLink>) : userSpots.map(({ id, previewImage, city, price, avgRating, state }) => (
-                    // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
-                    <div id="currentSpot">
-                        <NavLink to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                            <div className="spotImgOutter" key={id} >
-                                <img className="spotImg" src={previewImage} alt="spot" />
-                                <div className="cityNpriceNrate">
-                                    <div className="location">{city},{state}</div>
-                                    <div className="rate"><i class="fa-solid fa-star"></i> {typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
-                                    {/* <div className="priceNbtn"> */}
-                                    <div className="price">${price} night</div>
-                                    {/* </div> */}
+                {userSpots.length === 0 ?
+                    (<NavLink to="/spots/new" style={{ textDecoration: 'none', color: 'black' }}><div id="creatBtn">Create a New Spot</div></NavLink>)
+                    :
+                    userSpots.map(({ id, previewImage, city, price, avgRating, state }) => (
+                        // <div key={id}><NavLink to ={`/spots/${id}`}>{previewImage}</NavLink></div>
+                        <div id="currentSpot">
+                            <NavLink to={`/spots/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <div className="spotImgOutter" key={id} >
+                                    <img className="spotImg" src={previewImage} alt="spot" />
+                                    <div className="cityNpriceNrate">
+                                        <div className="location">{city},{state}</div>
+                                        <div className="rate"><i class="fa-solid fa-star"></i> {typeof avgRating === "number" ? avgRating.toFixed(2) : "0"}</div>
+                                        {/* <div className="priceNbtn"> */}
+                                        <div className="price">${price} night</div>
+                                        {/* </div> */}
+                                    </div>
                                 </div>
+                            </NavLink>
+                            <div className="actionBtn">
+                                <button type="button" className="button-13" onClick={() => { history.push(`/spots/${id}/edit`) }}>Update</button>
+
+                                <OpenModalButton
+                                    buttonText="delete"
+                                    className="button-13"
+                                    modalComponent={<DeleteFormModal spotId={id} type="spot" />}
+                                />
+
                             </div>
-                        </NavLink>
-                        <div className="actionBtn">
-                            <button type="button" className="button-13" onClick={() => { history.push(`/spots/${id}/edit`) }}>Update</button>
-
-                            <OpenModalButton
-                                buttonText="delete"
-                                className="button-13"
-                                modalComponent={<DeleteFormModal spotId={id} type="spot" />}
-                            />
-
                         </div>
-                    </div>
-                ))}
+                    ))}
             </div>
         </div>
     )

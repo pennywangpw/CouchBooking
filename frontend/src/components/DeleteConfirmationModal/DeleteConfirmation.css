@@ -43,6 +43,8 @@ h1 {
 .button {
     height: 50px;
     width: 150px;
+    cursor: pointer;
+    border-radius: 8px;
 }
 
 .yes {
@@ -53,4 +55,15 @@ h1 {
 .no {
     background-color: rgb(95, 92, 92);
     width: 50%;
+}
+
+
+.button:hover {
+    background-color: #f7fafa;
+}
+
+.button:focus {
+    border-color: #008296;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    outline: 0;
 }
