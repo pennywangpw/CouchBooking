@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 options.tableName = 'SpotImages';
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
@@ -33,7 +33,7 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: "https://a0.muscache.com/im/pictures/73a903f8-cda3-49d0-8f51-4a43c241543b.jpg?im_w=1200",
+        url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-49618152/original/4d314a57-c42d-4ee1-9593-2bbc0bfe1583.jpeg?im_w=720",
         preview: true
       },
       {
@@ -43,7 +43,7 @@ module.exports = {
       },
       {
         spotId: 5,
-        url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-44916744/original/bd312917-46fc-4f1b-8375-0b63b9310c58.png?im_w=1200",
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-54105603/original/df8ddc39-ebed-4094-a69b-ee26985bb700.jpeg?im_w=720",
         preview: true
       },
       {
@@ -65,11 +65,16 @@ module.exports = {
         spotId: 9,
         url: "https://a0.muscache.com/im/pictures/f7b14845-1c89-450b-83f0-40f17eab3df0.jpg?im_w=1200",
         preview: true
+      },
+      {
+        spotId: 10,
+        url: "https://a0.muscache.com/im/pictures/3c76f067-3535-41ca-bac2-5273f9ff6c3b.jpg?im_w=720",
+        preview: true
       }
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
@@ -79,7 +84,7 @@ module.exports = {
 
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['image url1', 'image url2','image url3'] }
+      url: { [Op.in]: ['image url1', 'image url2', 'image url3'] }
     }, {});
   }
 };
