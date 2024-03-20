@@ -1,8 +1,45 @@
 # CouchBooking
+
+# Introdution
+A clone of Airbnb, you can discover a delightful couch and ambiance to enjoy, opting for a unique experience by residing in a local home instead of a hotel.
+
+Here is the link to <a href="https://penny-couchbooking.onrender.com/">CouchBooking</a>
+
+# Technology
+   React, Redux, Express, SQLite3, PostgresQL
+  
+# Getting started
+
+1. Clone this repository:
+
+    * ` https://github.com/pennywangpw/CouchBooking.git`
+
+    OR
+
+    * `git@github.com:pennywangpw/CouchBooking.git`
+
+   
+
+2. Create a **.env** file 
+
+
+3. Start the app frontend using:
+   *  Get into frontend directory
+   * `npm install`
+   * `npm start`
+
+4. Start the app backend using:
+   
+   *  Get into backend directory
+   * `npm install`
+   * `npm start`
+   
+
+
 ## Database Schema Design
 ![image](https://github.com/pennywangpw/CouchBooking/assets/114206215/62c66ad3-b83b-4091-ad58-056de94e157d)
 
-Here is the link to <a href="https://penny-couchbooking.onrender.com/">CouchBooking</a>
+
 
 
 ## API Documentation
