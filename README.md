@@ -1,4 +1,3 @@
-# CouchBooking
 
 # Introdution
 A clone of Airbnb, you can discover a delightful couch and ambiance to enjoy, opting for a unique experience by residing in a local home instead of a hotel.
@@ -7,33 +6,63 @@ Here is the link to <a href="https://penny-couchbooking.onrender.com/">CouchBook
 
 # Technology
    React, Redux, Express, SQLite3, PostgresQL
+
+# Screenshot of Project
+
+![image](https://github.com/pennywangpw/CouchBooking/assets/114206215/4c94506a-6046-477b-8f65-2a82e9ab609c)
+
   
-# Getting started
+# Set up
 
 1. Clone this repository:
 
-    * ` https://github.com/pennywangpw/CouchBooking.git`
+      ```bash
+      https://github.com/pennywangpw/CouchBooking.git
+      ```
 
     OR
 
-    * `git@github.com:pennywangpw/CouchBooking.git`
-
-   
+      ```bash
+      git@github.com:pennywangpw/CouchBooking.git
+      ```
 
 2. Create a **.env** file 
 
 
 3. Start the app frontend using:
    *  Get into frontend directory
-   * `npm install`
-   * `npm start`
+
+      ```bash
+      npm install
+      ```
+
+      ```bash
+      npm start
+      ```
 
 4. Start the app backend using:
    
    *  Get into backend directory
-   * `npm install`
-   * `npm start`
+  
+        you may need to run pending migrations:
+         ```bash
+         npx dotenv sequelize-cli db:migrate
+         ```
    
+         you may also need to run all pending seeds:
+         ```bash
+         npx dotenv sequelize-cli db:seed:all
+         ```
+   
+   
+              
+         ```bash
+         npm install
+         ```
+   
+         ```bash
+         npm start
+         ```
 
 
 ## Database Schema Design
