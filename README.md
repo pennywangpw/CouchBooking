@@ -4,7 +4,7 @@ A clone of Airbnb, you can discover a delightful couch and ambiance to enjoy, op
 
 <!-- Here is the link to <a href="https://penny-couchbooking.onrender.com/">CouchBooking</a> -->
 
-Here is the link to <a href="https://104.50.142.226:3000/">CouchBooking</a>
+Here is the link to <a href="http://104.50.142.226:3000/">CouchBooking</a>
 
 # Technology
 
